@@ -5,7 +5,7 @@ import Topnav from "./Topnav";
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const toggle = () => {
     setOpen(!open);
@@ -19,7 +19,7 @@ const Layout = () => {
         </div>
         <div className={`${open ? "" : "content"}`}>
           <Topnav toggle={toggle} />
-          <div>
+          <div className={`${open ? "" : "outlet"}`}>
             <Outlet />
           </div>
         </div>

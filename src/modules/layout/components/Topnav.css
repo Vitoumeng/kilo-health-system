@@ -76,3 +76,15 @@
 .dropdown li:hover {
   background: #f2f2f2;
 }
+
+.dropdown .t-logout {
+  background-color: #f8f9fa;
+  text-decoration: none;
+  color: #c0392b;
+  border-top: 1px solid #dcdcdc;
+  transition: 0.4s;
+}
+
+.dropdown .t-logout:hover {
+  background-color: #f2d7d5;
+}

@@ -35,7 +35,7 @@ const Sidebar = () => {
             activeItem === "Dashboard" ? "active" : ""
           }`}
         >
-          <Link to="/" onClick={() => handleItemClick("Dashboard")}>
+          <Link to="/dashboard" onClick={() => handleItemClick("Dashboard")}>
             <span>
               <FaChartLine />
             </span>
@@ -45,7 +45,7 @@ const Sidebar = () => {
         <li
           className={`sidebar-item ${activeItem === "Order" ? "active" : ""}`}
         >
-          <Link to="/" onClick={() => handleItemClick("Order")}>
+          <Link to="/order" onClick={() => handleItemClick("Order")}>
             <span>
               <FaBoxes />
             </span>
@@ -53,7 +53,7 @@ const Sidebar = () => {
           </Link>
         </li>
         <li className={`sidebar-item ${activeItem === "Food" ? "active" : ""}`}>
-          <Link to="/" onClick={() => handleItemClick("Food")}>
+          <Link to="/food" onClick={() => handleItemClick("Food")}>
             <span>
               <FaHamburger />
             </span>
@@ -63,7 +63,7 @@ const Sidebar = () => {
         <li
           className={`sidebar-item ${activeItem === "Table" ? "active" : ""}`}
         >
-          <Link to="/" onClick={() => handleItemClick("Table")}>
+          <Link to="/table" onClick={() => handleItemClick("Table")}>
             <span>
               <FaTh />
             </span>
@@ -76,17 +76,17 @@ const Sidebar = () => {
             activeItem === "Food Report" ? "active" : ""
           }`}
         >
-          <Link to="/" onClick={() => handleItemClick("Food Report")}>
+          <Link to="/foods" onClick={() => handleItemClick("Food Report")}>
             <span>
               <FaHamburger />
             </span>
-            <span>Food</span>
+            <span>Foods</span>
           </Link>
         </li>
         <li
           className={`sidebar-item ${activeItem === "Income" ? "active" : ""}`}
         >
-          <Link to="/" onClick={() => handleItemClick("Income")}>
+          <Link to="/income" onClick={() => handleItemClick("Income")}>
             <span>
               <FaDollarSign />
             </span>
@@ -99,7 +99,10 @@ const Sidebar = () => {
             activeItem === "User Management" ? "active" : ""
           }`}
         >
-          <Link to="/" onClick={() => handleItemClick("User Management")}>
+          <Link
+            to="/user-management"
+            onClick={() => handleItemClick("User Management")}
+          >
             <span>
               <FaUserCircle />
             </span>
@@ -109,7 +112,7 @@ const Sidebar = () => {
         <li
           className={`sidebar-item ${activeItem === "Roles" ? "active" : ""}`}
         >
-          <Link to="/" onClick={() => handleItemClick("Roles")}>
+          <Link to="/roles" onClick={() => handleItemClick("Roles")}>
             <span>
               <FaUserCheck />
             </span>

@@ -2,7 +2,8 @@
   transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.content {
+.content,
+.outlet {
   margin-left: 260px;
 }
 
