@@ -1,0 +1,11 @@
+.wrapper div {
+  transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.content {
+  margin-left: 260px;
+}
+
+.sidebar-hide {
+  display: none;
+}

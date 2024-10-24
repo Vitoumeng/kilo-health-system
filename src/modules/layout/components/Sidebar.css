@@ -1,0 +1,127 @@
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #dcdcdc;
+  background-color: #f8f9fa;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.sidebar header {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1rem 1.5rem;
+}
+
+.sidebar header a {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  text-decoration: none;
+}
+
+.sidebar header a img {
+  width: 40px;
+  height: 40px;
+}
+
+.sidebar header a span {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #3498db;
+}
+
+.sidebar-list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-list .title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #3498db;
+  margin: 1rem 1.5rem 0.5rem;
+  text-transform: uppercase;
+}
+
+.sidebar-list .sidebar-item {
+  margin: 0.15rem 0;
+}
+
+.sidebar-list .sidebar-item a {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-left: 4px solid transparent;
+  transition: all 0.3s;
+  background-color: transparent;
+}
+
+.sidebar-list .sidebar-item a:hover {
+  background-color: #ebf5fb;
+  border-left-color: #3498db;
+}
+
+.sidebar-list .sidebar-item.active a {
+  padding: 0.75rem 2rem;
+  background-color: #3498db;
+}
+
+.sidebar-list .sidebar-item.active a span:nth-child(1),
+.sidebar-list .sidebar-item.active a span:nth-child(2) {
+  color: #fff;
+}
+
+.sidebar-list .sidebar-item a span:nth-child(1) {
+  font-size: 1.5rem;
+  color: #7f8c8d;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-list .sidebar-item a span:nth-child(2) {
+  font-size: 1.15rem;
+  color: #2c3e50;
+}
+
+.sidebar-list .sidebar-item.active a span:nth-child(2) {
+  color: #fff;
+}
+
+.sidebar-list .sidebar-item a:not(.active) {
+  color: #666;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  margin-top: auto;
+  background-color: #f8f9fa;
+  text-decoration: none;
+  color: #c0392b;
+  border-top: 1px solid #dcdcdc;
+  transition: all 0.3s;
+}
+
+.logout:hover {
+  background-color: #f2d7d5;
+}
+
+.logout span:nth-child(1) {
+  font-size: 1.5rem;
+  color: #e74c3c;
+}
+
+.logout span:nth-child(2) {
+  font-size: 1.15rem;
+  margin-left: 0.5rem;
+  color: #c0392b;
+}
