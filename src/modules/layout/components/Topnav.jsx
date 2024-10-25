@@ -30,8 +30,8 @@ const Topnav = ({ toggle }) => {
 
         <div className="info" ref={infoRef}>
           <div className="profile" onClick={() => setShowInfo(!showInfo)}>
-            <span>John Doe</span>
             <img src={profileImg} alt="Profile" />
+            <span>Admin</span>
           </div>
 
           <ul className={`dropdown ${showInfo ? "show" : ""}`}>

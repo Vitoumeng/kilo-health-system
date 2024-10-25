@@ -35,7 +35,7 @@ const Sidebar = () => {
             activeItem === "Dashboard" ? "active" : ""
           }`}
         >
-          <Link to="/dashboard" onClick={() => handleItemClick("Dashboard")}>
+          <Link to="/" onClick={() => handleItemClick("Dashboard")}>
             <span>
               <FaChartLine />
             </span>

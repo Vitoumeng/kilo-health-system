@@ -19,7 +19,7 @@ const Layout = () => {
         </div>
         <div className={`${open ? "" : "content"}`}>
           <Topnav toggle={toggle} />
-          <div className={`${open ? "" : "outlet"}`}>
+          <div className="outlet">
             <Outlet />
           </div>
         </div>

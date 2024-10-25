@@ -1,7 +1,7 @@
 import React from "react";
 
 const Table = () => {
-  return <div>Food</div>;
+  return <div>Table</div>;
 };
 
 export default Table;

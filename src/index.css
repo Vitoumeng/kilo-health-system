@@ -40,3 +40,16 @@ select {
   border: none;
   outline: none;
 }
+
+.button {
+  padding: 12px 32px;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.button:hover {
+  background-color: #2980b9;
+}

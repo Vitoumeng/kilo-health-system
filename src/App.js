@@ -8,21 +8,23 @@ import Foods from "./modules/foods/Foods";
 import UserManagement from "./modules/usermange/UserManagement";
 import Roles from "./modules/role/Roles";
 import Income from "./modules/income/Income";
+import Login from "./modules/login/Login";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index path="/dashboard" component={<Dashboard />} />
-          <Route path="/order" component={<Order />} />
-          <Route path="/food" component={<Food />} />
-          <Route path="/income" component={<Income />} />
-          <Route path="/table" component={<Table />} />
-          <Route path="/foods" component={<Foods />} />
-          <Route path="/user-management" component={<UserManagement />} />
-          <Route path="/roles" component={<Roles />} />
+          <Route index element={<Dashboard />} />
+          <Route path="order" element={<Order />} />
+          <Route path="food" element={<Food />} />
+          <Route path="income" element={<Income />} />
+          <Route path="table" element={<Table />} />
+          <Route path="foods" element={<Foods />} />
+          <Route path="user-management" element={<UserManagement />} />
+          <Route path="roles" element={<Roles />} />
         </Route>
+        <Route path="login" element={<Login />} />
       </Routes>
     </>
   );
