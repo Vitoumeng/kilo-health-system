@@ -3,5 +3,4 @@ import { rootReducers } from "./combineReducer";
 
 export default configureStore({
     reducer: rootReducers,
-    
 })

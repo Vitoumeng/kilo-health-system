@@ -1,9 +1,14 @@
 import { FaBars } from "react-icons/fa";
 import "./Topnav.css";
-import profileImg from "../../../assets/img/dog.jpg";
 import { useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useAuth } from "../../auth/core/action";
 
 const Topnav = ({ toggle }) => {
+  const { logout } = useAuth();
+  const { auth } = useSelector((state) => state.auth);
+  console.log(auth.user);
+
   const [showInfo, setShowInfo] = useState(false);
   const infoRef = useRef(null);
 
@@ -30,14 +35,20 @@ const Topnav = ({ toggle }) => {
 
         <div className="info" ref={infoRef}>
           <div className="profile" onClick={() => setShowInfo(!showInfo)}>
-            <img src={profileImg} alt="Profile" />
-            <span>Admin</span>
+            <img src={auth.user.avatar} alt="Profile" />
+            <span>{auth.user.username}</span>
           </div>
 
           <ul className={`dropdown ${showInfo ? "show" : ""}`}>
             <li onClick={() => setShowInfo(!showInfo)}>Profile</li>
             <li onClick={() => setShowInfo(!showInfo)}>Dashboard</li>
-            <li onClick={() => setShowInfo(!showInfo)} className="t-logout">
+            <li
+              onClick={() => {
+                setShowInfo(!showInfo);
+                logout();
+              }}
+              className="t-logout"
+            >
               Logout
             </li>
           </ul>

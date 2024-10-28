@@ -1,22 +1,29 @@
 import { useState } from "react";
 import "./Login.css";
+import { useAuth } from "../core/action";
+
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+  });
+
+  const { username, password } = user;
+
   const [errMessage, setErrMessage] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (username === "admin" && password === "123") {
-      window.location.href = "/";
-    } else if (username !== "admin") {
-      setErrMessage("Incorrect username");
-    } else if (password !== "123") {
-      setErrMessage("Incorrect password");
-    }
+  const { login } = useAuth();
+
+  const handleChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  console.log(username, password);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (username && password) {
+      login(user);
+    }
+  };
 
   return (
     <section id="login">
@@ -29,7 +36,7 @@ const Login = () => {
               name="username"
               id="username"
               placeholder=""
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={handleChange}
             />
             <label htmlFor="username">Username</label>
           </div>
@@ -39,7 +46,7 @@ const Login = () => {
               placeholder=""
               name="password"
               id="password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleChange}
             />
             <label htmlFor="password">Password</label>
           </div>

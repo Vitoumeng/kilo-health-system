@@ -12,19 +12,17 @@ const Layout = () => {
   };
 
   return (
-    <>
-      <div className="wrapper">
-        <div className={`sidenav ${open ? "sidebar-hide" : ""}`}>
-          <Sidebar />
-        </div>
-        <div className={`${open ? "" : "content"}`}>
-          <Topnav toggle={toggle} />
-          <div className="outlet">
-            <Outlet />
-          </div>
+    <div className="wrapper">
+      <div className={`sidenav ${open ? "sidebar-hide" : ""}`}>
+        <Sidebar />
+      </div>
+      <div className={`${open ? "" : "content"}`}>
+        <Topnav toggle={toggle} />
+        <div className="outlet">
+          <Outlet />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

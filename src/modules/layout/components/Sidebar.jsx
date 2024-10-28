@@ -1,20 +1,14 @@
 import React, { useState } from "react";
-import {
-  FaChartLine,
-  FaDollarSign,
-  FaUserCircle,
-  FaTh,
-  FaHamburger,
-  FaSignOutAlt,
-  FaBoxes,
-  FaUserCheck,
-} from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { FaSignOutAlt } from "react-icons/fa";
 import logoImg from "../../../assets/img/logo.svg";
 import "./Sidebar.css";
+import { sidebarData } from "../../../constant/data";
+import { useAuth } from "../../auth/core/action";
 
 const Sidebar = () => {
   const [activeItem, setActiveItem] = useState("Dashboard");
+  const { logout } = useAuth();
 
   const handleItemClick = (item) => {
     setActiveItem(item);
@@ -29,103 +23,36 @@ const Sidebar = () => {
         </Link>
       </header>
       <ul className="sidebar-list">
-        <li className="title">Home</li>
-        <li
-          className={`sidebar-item ${
-            activeItem === "Dashboard" ? "active" : ""
-          }`}
-        >
-          <Link to="/" onClick={() => handleItemClick("Dashboard")}>
-            <span>
-              <FaChartLine />
-            </span>
-            <span>Dashboard</span>
-          </Link>
-        </li>
-        <li
-          className={`sidebar-item ${activeItem === "Order" ? "active" : ""}`}
-        >
-          <Link to="/order" onClick={() => handleItemClick("Order")}>
-            <span>
-              <FaBoxes />
-            </span>
-            <span>Order</span>
-          </Link>
-        </li>
-        <li className={`sidebar-item ${activeItem === "Food" ? "active" : ""}`}>
-          <Link to="/food" onClick={() => handleItemClick("Food")}>
-            <span>
-              <FaHamburger />
-            </span>
-            <span>Food</span>
-          </Link>
-        </li>
-        <li
-          className={`sidebar-item ${activeItem === "Table" ? "active" : ""}`}
-        >
-          <Link to="/table" onClick={() => handleItemClick("Table")}>
-            <span>
-              <FaTh />
-            </span>
-            <span>Table</span>
-          </Link>
-        </li>
-        <li className="title">Report</li>
-        <li
-          className={`sidebar-item ${
-            activeItem === "Food Report" ? "active" : ""
-          }`}
-        >
-          <Link to="/foods" onClick={() => handleItemClick("Food Report")}>
-            <span>
-              <FaHamburger />
-            </span>
-            <span>Foods</span>
-          </Link>
-        </li>
-        <li
-          className={`sidebar-item ${activeItem === "Income" ? "active" : ""}`}
-        >
-          <Link to="/income" onClick={() => handleItemClick("Income")}>
-            <span>
-              <FaDollarSign />
-            </span>
-            <span>Income</span>
-          </Link>
-        </li>
-        <li className="title">Administrator</li>
-        <li
-          className={`sidebar-item ${
-            activeItem === "User Management" ? "active" : ""
-          }`}
-        >
-          <Link
-            to="/user-management"
-            onClick={() => handleItemClick("User Management")}
-          >
-            <span>
-              <FaUserCircle />
-            </span>
-            <span>User Management</span>
-          </Link>
-        </li>
-        <li
-          className={`sidebar-item ${activeItem === "Roles" ? "active" : ""}`}
-        >
-          <Link to="/roles" onClick={() => handleItemClick("Roles")}>
-            <span>
-              <FaUserCheck />
-            </span>
-            <span>Roles</span>
-          </Link>
-        </li>
+        {sidebarData.map((item, index) => {
+          if (item.category) {
+            return (
+              <li key={index} className="title">
+                {item.category}
+              </li>
+            );
+          }
+
+          return (
+            <li
+              key={index}
+              className={`sidebar-item ${
+                activeItem === item.title ? "active" : ""
+              }`}
+            >
+              <Link to={item.path} onClick={() => handleItemClick(item.title)}>
+                <span>{item.icon}</span>
+                <span>{item.title}</span>
+              </Link>
+            </li>
+          );
+        })}
       </ul>
-      <Link to="/" className="logout">
+      <button className="logout" onClick={logout}>
         <span>
           <FaSignOutAlt />
         </span>
         <span>Logout</span>
-      </Link>
+      </button>
     </div>
   );
 };
