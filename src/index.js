@@ -1,24 +1,23 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { Provider } from "react-redux";
-import store from "./redux/store";
-import { BrowserRouter } from "react-router-dom";
-import { setUpAxios } from "./helper/axiosHelper";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import reportWebVitals from './reportWebVitals';
+import AppRoute from "./app/routing/AppRoute";
+import {store} from "./app/redux/store";
+import {Provider} from "react-redux";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './_template/style/sass/main.scss'
+import {setUpAxios} from "./app/helper/axiosHelper";
 
-setUpAxios();
+setUpAxios()
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+        <React.StrictMode>
+            <AppRoute/>
+        </React.StrictMode>
     </Provider>
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
