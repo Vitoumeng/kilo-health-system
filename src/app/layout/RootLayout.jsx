@@ -28,7 +28,7 @@ const RootLayout = () => {
 
                 <Header storedTheme={storedTheme} toggleTheme={toggleTheme} show={show} />
 
-                <main className={`main py-5 ${show ? "hide" : "show"} ${storedTheme.storedTheme === "dark" ? "dark" : "light"} `}>
+                <main className={`main p-4 ${show ? "hide" : "show"} ${storedTheme.storedTheme === "dark" ? "dark" : "light"} `}>
                     <Outlet />
                 </main>
             </div>

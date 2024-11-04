@@ -6,6 +6,7 @@ import AppRoute from "./app/routing/AppRoute";
 import {store} from "./app/redux/store";
 import {Provider} from "react-redux";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
 import './_template/style/sass/main.scss'
 import {setUpAxios} from "./app/helper/axiosHelper";
 

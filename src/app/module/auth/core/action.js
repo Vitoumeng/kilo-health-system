@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
-import {setAuth} from "./authSlice";
+import {setAuth} from "./slice";
 import {reqLogin} from "./request";
 import Swal from 'sweetalert2';
 
