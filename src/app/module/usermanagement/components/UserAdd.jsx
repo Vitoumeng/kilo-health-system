@@ -2,8 +2,14 @@ import { useEffect, useState } from "react";
 import useUser from "../core/action";
 
 export const UserAdd = () => {
-  const { role, fetchRole, onCreateUser, userInfo, handleInputChangeAdd } =
-    useUser();
+  const {
+    role,
+    fetchRole,
+    onCreateUser,
+    userInfo,
+    handleInputChangeAdd,
+    navigate,
+  } = useUser();
 
   const [avatar, setAvatar] = useState(null);
 
@@ -17,7 +23,7 @@ export const UserAdd = () => {
     setAvatar(e.target.files[0]);
   };
 
-  console.log(userInfo);
+  // console.log(userInfo);
 
   return (
     <>
@@ -172,7 +178,13 @@ export const UserAdd = () => {
             </div>
 
             <div className="mt-3">
-              <button type="button" className="btn btn-secondary me-2">
+              <button
+                type="button"
+                onClick={() => {
+                  navigate("/user-management");
+                }}
+                className="btn btn-secondary me-2"
+              >
                 Discard
               </button>
               <button type="submit" className="btn btn-primary">

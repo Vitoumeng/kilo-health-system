@@ -3,19 +3,19 @@ import { useParams } from "react-router";
 import useUser from "../core/action";
 
 export const UserEdit = () => {
-  const { fetchUserById, role, fetchRole } = useUser();
+  const {
+    userDetails,
+    fetchUserById,
+    role,
+    fetchRole,
+    handleInputChangeEdit,
+    navigate,
+    onEditUser,
+  } = useUser();
+
   const { id } = useParams();
-  const [user, setUser] = useState({
-    avatar: null,
-    name: "",
-    username: "",
-    roleId: "",
-    email: "",
-    address: "",
-    password: "",
-    phone: "",
-    bio: "",
-  });
+
+  const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
     fetchRole().then(() => {
@@ -23,13 +23,13 @@ export const UserEdit = () => {
     });
   }, [id]);
 
-  const handleInputChange = (e) => {
-    const { name, value, type, files } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
-      [name]: type === "file" ? files[0] : value,
-    }));
+  let { name, roleId, address, phone, bio } = userDetails;
+
+  const handleFileChange = (e) => {
+    setAvatar(e.target.files[0]);
   };
+
+  console.log(userDetails);
 
   return (
     <>
@@ -39,7 +39,10 @@ export const UserEdit = () => {
           User Management <span className="ms-2 text-dark">Edit User</span>
         </p>
         <div className="container bg-body p-3 rounded-2">
-          <form className="form-control border-0">
+          <form
+            className="form-control border-0"
+            onSubmit={(e) => onEditUser(e, { ...userDetails, avatar })}
+          >
             <div className="mb-3">
               <label htmlFor="avatar" className="form-label text-start">
                 Avatar <span className="text-danger">*</span>
@@ -49,8 +52,8 @@ export const UserEdit = () => {
                 className="form-control"
                 id="avatar"
                 name="avatar"
-                onChange={handleInputChange}
                 required
+                onChange={handleFileChange}
               />
             </div>
 
@@ -63,9 +66,9 @@ export const UserEdit = () => {
                 className="form-control"
                 id="name"
                 name="name"
-                value={user.name}
-                onChange={handleInputChange}
                 required
+                onChange={handleInputChangeEdit}
+                value={name}
               />
             </div>
 
@@ -77,19 +80,17 @@ export const UserEdit = () => {
                 className="form-select"
                 id="roleId"
                 name="roleId"
-                value={user.roleId}
-                onChange={handleInputChange}
                 required
+                onChange={handleInputChangeEdit}
               >
-                <option value="" disabled>
+                <option value="" selected disabled>
                   Select Role <span className=" text-danger">*</span>
                 </option>
-                {role.role &&
-                  role.role.map((roleItem) => (
-                    <option key={roleItem.id} value={roleItem.id}>
-                      {roleItem.name}
-                    </option>
-                  ))}
+                {role.map((roleItem) => (
+                  <option key={roleItem.id} value={roleItem.id}>
+                    {roleItem.name}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -102,9 +103,9 @@ export const UserEdit = () => {
                 className="form-control"
                 id="address"
                 name="address"
-                value={user.address}
-                onChange={handleInputChange}
                 required
+                onChange={handleInputChangeEdit}
+                value={address}
               />
             </div>
 
@@ -117,9 +118,9 @@ export const UserEdit = () => {
                 className="form-control"
                 id="phone"
                 name="phone"
-                value={user.phone}
-                onChange={handleInputChange}
                 required
+                onChange={handleInputChangeEdit}
+                value={phone}
               />
             </div>
 
@@ -132,13 +133,17 @@ export const UserEdit = () => {
                 id="bio"
                 name="bio"
                 rows="3"
-                value={user.bio}
-                onChange={handleInputChange}
+                onChange={handleInputChangeEdit}
+                value={bio}
               ></textarea>
             </div>
 
             <div className="mt-3">
-              <button type="button" className="btn btn-secondary me-2">
+              <button
+                type="button"
+                onClick={() => navigate("/user-management")}
+                className="btn btn-secondary me-2"
+              >
                 Discard
               </button>
               <button type="submit" className="btn btn-primary">

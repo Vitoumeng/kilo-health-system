@@ -27,3 +27,11 @@ export const reqGetUserById = (id) => {
 export const reqGetRole = () => {
   return axios.get("api/v1.0.0/role");
 };
+
+export const reqUpdateUser = (id, payload) => {
+  return axios.put(`/api/v1.0.0/user/${id}`, payload, {
+    headers: {
+      "Content-Type": "multipart/form-data", 
+    },
+  });
+};

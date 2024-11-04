@@ -6,8 +6,9 @@ import {
   reqGetUserById,
   reqGetUserProfile,
   reqGetUsers,
+  reqUpdateUser,
 } from "./request";
-import { setRole, setUser, setUserInfo } from "./slice";
+import { setRole, setUser, setUserDetails, setUserInfo } from "./slice";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
@@ -91,9 +92,9 @@ const useUser = () => {
     const { avatar, ...otherUserData } = user;
 
     const formData = new FormData();
-    
+
     if (avatar) {
-      formData.append("avatar", avatar); 
+      formData.append("avatar", avatar);
     }
 
     Object.keys(otherUserData).forEach((key) => {
@@ -112,7 +113,7 @@ const useUser = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: err.response.data.message,
+        text: "Error Creating user",
       });
     }
   };
@@ -120,12 +121,56 @@ const useUser = () => {
   const fetchUserById = (id) => {
     reqGetUserById(id)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data.data);
+        dispatch(setUserDetails(res.data.data));
       })
       .catch((err) => {
         console.log("Error");
       });
   };
+
+  const handleInputChangeEdit = (e) => {
+    dispatch(
+      setUserDetails({
+        ...user.userDetails,
+        [e.target.name]: e.target.value,
+      })
+    );
+  };
+
+  const onEditUser = (e, user) => {
+    e.preventDefault();
+  
+    const { avatar, ...otherUserData } = user; 
+  
+    const formData = new FormData(); 
+  
+    if (avatar) {
+      formData.append("avatar", avatar); 
+    }
+  
+    Object.keys(otherUserData).forEach((key) => {
+      formData.append(key, otherUserData[key]);
+    });
+  
+    reqUpdateUser(user.id, formData)
+      .then(() => {
+        Swal.fire({
+          icon: "success",
+          title: "Edit User",
+          text: "Successfully edited user",
+        });
+        navigate("/user-management");
+      })
+      .catch(() => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Error editing user",
+        });
+      });
+  };
+  
 
   return {
     ...user,
@@ -136,6 +181,9 @@ const useUser = () => {
     fetchUserById,
     fetchRole,
     handleInputChangeAdd,
+    handleInputChangeEdit,
+    navigate,
+    onEditUser,
   };
 };
 
