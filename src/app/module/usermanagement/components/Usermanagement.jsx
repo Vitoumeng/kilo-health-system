@@ -11,7 +11,7 @@ export const Usermanagement = () => {
     fetchUser(1);
   }, []);
 
-  console.log(pagination);
+  // console.log(pagination);
 
   return (
     <div className="d-flex gap-0 flex-column align-items-baseline">

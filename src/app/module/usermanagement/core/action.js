@@ -1,11 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
-import { reqDeleteUser, reqGetUserProfile, reqGetUsers } from "./request";
+import {
+  reqCreateUser,
+  reqDeleteUser,
+  reqGetUserProfile,
+  reqGetUsers,
+} from "./request";
 import { setUser } from "./slice";
 import Swal from "sweetalert2";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 const useUser = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {}, []);
 
   const fetchUser = async (params) => {
     try {
@@ -23,7 +33,7 @@ const useUser = () => {
   const fetchUserProfile = async (payload) => {
     try {
       const res = await reqGetUserProfile(payload);
-      console.log(res.data);
+      // console.log(res.data);
     } catch (err) {
       console.log("Error");
     }
@@ -58,7 +68,35 @@ const useUser = () => {
     });
   };
 
-  return { ...user, fetchUser, fetchUserProfile, onDeleteUser };
+  const onCreateUser = async (e, user) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    Object.keys(user).forEach((key) => {
+      formData.append(key, user[key]);
+    });
+
+    reqCreateUser(formData)
+      .then(() => {
+        Swal.fire({
+          icon: "success",
+          title: "Create User",
+          text: "Successfully created",
+        });
+        navigate("/user-management");
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
+      });
+  };
+  
+
+  return { ...user, fetchUser, fetchUserProfile, onDeleteUser, onCreateUser };
 };
 
 export default useUser;

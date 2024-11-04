@@ -13,7 +13,7 @@ const RootLayout = () => {
 
     useEffect(() => {
 
-        console.log(storedTheme.storedTheme);
+        // console.log(storedTheme.storedTheme);
 
     }, [storedTheme.storedTheme])
 
