@@ -20,7 +20,7 @@ const PrivateRoute = () => {
           <Route path="user-management">
             <Route index element={<Usermanagement />} />
             <Route path="add" element={<UserAdd />} />
-            <Route path="edit" element={<UserEdit />} />
+            <Route path="edit/:id" element={<UserEdit />} />
           </Route>
           <Route path="role" element={<h1>Role</h1>} />
         </Route>

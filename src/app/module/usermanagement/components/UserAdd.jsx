@@ -1,35 +1,23 @@
 import { useEffect, useState } from "react";
-import useRole from "../../role/core/action";
 import useUser from "../core/action";
 
 export const UserAdd = () => {
-  const { role, fetchRole } = useRole();
-  const { onCreateUser } = useUser();
-  const [user, setUser] = useState({
-    avatar: null,
-    name: "",
-    username: "",
-    roleId: "",
-    email: "",
-    address: "",
-    password: "",
-    phone: "",
-    bio: "",
-  });
+  const { role, fetchRole, onCreateUser, userInfo, handleInputChangeAdd } =
+    useUser();
 
-  console.log(user);
+  const [avatar, setAvatar] = useState(null);
+
+  let { name, username, email, address, password, phone, bio } = userInfo;
 
   useEffect(() => {
     fetchRole();
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value, type, files } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
-      [name]: type === "file" ? files[0] : value,
-    }));
+  const handleFileChange = (e) => {
+    setAvatar(e.target.files[0]);
   };
+
+  console.log(userInfo);
 
   return (
     <>
@@ -40,7 +28,7 @@ export const UserAdd = () => {
         </p>
         <div className="container bg-body p-3 rounded-2">
           <form
-            onSubmit={(e) => onCreateUser(e, user)}
+            onSubmit={(e) => onCreateUser(e, { ...userInfo, avatar })}
             className="form-control border-0"
           >
             <div className="mb-3">
@@ -52,7 +40,7 @@ export const UserAdd = () => {
                 className="form-control"
                 id="avatar"
                 name="avatar"
-                onChange={handleInputChange}
+                onChange={handleFileChange}
                 required
               />
             </div>
@@ -66,8 +54,8 @@ export const UserAdd = () => {
                 className="form-control"
                 id="name"
                 name="name"
-                value={user.name}
-                onChange={handleInputChange}
+                value={name}
+                onChange={handleInputChangeAdd}
                 required
               />
             </div>
@@ -81,8 +69,8 @@ export const UserAdd = () => {
                 className="form-control"
                 id="username"
                 name="username"
-                value={user.username}
-                onChange={handleInputChange}
+                value={username}
+                onChange={handleInputChangeAdd}
                 required
               />
             </div>
@@ -95,19 +83,17 @@ export const UserAdd = () => {
                 className="form-select"
                 id="roleId"
                 name="roleId"
-                value={user.roleId}
-                onChange={handleInputChange}
+                onChange={handleInputChangeAdd}
                 required
               >
-                <option value="" disabled>
+                <option value="" selected disabled>
                   Select Role <span className=" text-danger">*</span>
                 </option>
-                {role.role &&
-                  role.role.map((roleItem) => (
-                    <option key={roleItem.id} value={roleItem.id}>
-                      {roleItem.name}
-                    </option>
-                  ))}
+                {role.map((roleItem) => (
+                  <option key={roleItem.id} value={roleItem.id}>
+                    {roleItem.name}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -120,8 +106,8 @@ export const UserAdd = () => {
                 className="form-control"
                 id="email"
                 name="email"
-                value={user.email}
-                onChange={handleInputChange}
+                value={email}
+                onChange={handleInputChangeAdd}
                 required
               />
             </div>
@@ -135,8 +121,8 @@ export const UserAdd = () => {
                 className="form-control"
                 id="address"
                 name="address"
-                value={user.address}
-                onChange={handleInputChange}
+                value={address}
+                onChange={handleInputChangeAdd}
                 required
               />
             </div>
@@ -150,8 +136,8 @@ export const UserAdd = () => {
                 className="form-control"
                 id="password"
                 name="password"
-                value={user.password}
-                onChange={handleInputChange}
+                value={password}
+                onChange={handleInputChangeAdd}
                 required
               />
             </div>
@@ -165,8 +151,8 @@ export const UserAdd = () => {
                 className="form-control"
                 id="phone"
                 name="phone"
-                value={user.phone}
-                onChange={handleInputChange}
+                value={phone}
+                onChange={handleInputChangeAdd}
                 required
               />
             </div>
@@ -180,8 +166,8 @@ export const UserAdd = () => {
                 id="bio"
                 name="bio"
                 rows="3"
-                value={user.bio}
-                onChange={handleInputChange}
+                value={bio}
+                onChange={handleInputChangeAdd}
               ></textarea>
             </div>
 

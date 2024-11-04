@@ -19,3 +19,11 @@ export const reqCreateUser = (formData) => {
     },
   });
 };
+
+export const reqGetUserById = (id) => {
+  return axios.get(`/api/v1.0.0/user/${id}`);
+};
+
+export const reqGetRole = () => {
+  return axios.get("api/v1.0.0/role");
+};
