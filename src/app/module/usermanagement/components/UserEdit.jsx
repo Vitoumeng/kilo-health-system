@@ -6,7 +6,7 @@ export const UserEdit = () => {
   const {
     userDetails,
     fetchUserById,
-    role,
+    role: roles,
     fetchRole,
     handleInputChangeEdit,
     navigate,
@@ -23,7 +23,7 @@ export const UserEdit = () => {
     });
   }, [id]);
 
-  let { name, roleId, address, phone, bio } = userDetails;
+  let { name, role, address, phone, bio } = userDetails;
 
   const handleFileChange = (e) => {
     setAvatar(e.target.files[0]);
@@ -86,7 +86,7 @@ export const UserEdit = () => {
                 <option value="" selected disabled>
                   Select Role <span className=" text-danger">*</span>
                 </option>
-                {role.map((roleItem) => (
+                {roles.map((roleItem) => (
                   <option key={roleItem.id} value={roleItem.id}>
                     {roleItem.name}
                   </option>

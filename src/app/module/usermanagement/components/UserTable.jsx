@@ -1,6 +1,5 @@
 import { FaTrash } from "react-icons/fa";
 import { FaPen } from "react-icons/fa6";
-import { IoAddSharp, IoSearch } from "react-icons/io5";
 import { useNavigate } from "react-router";
 
 export const UserTable = ({ users, handleDelete }) => {
@@ -22,21 +21,7 @@ export const UserTable = ({ users, handleDelete }) => {
   };
 
   return (
-    <div className="container bg-body p-3 rounded-2">
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <div className="search-input">
-          <IoSearch className="search-icon" />
-          <input type="text" placeholder="Search..." />
-        </div>
-        <button
-          onClick={() => navigate("/user-management/add")}
-          className="add-btn"
-        >
-          <IoAddSharp style={{ fontSize: "20px" }} />
-          <span>Add</span>
-        </button>
-      </div>
-
+    <>
       <div className="table-responsive">
         <table className="table dashed-border-table">
           <thead>
@@ -80,6 +65,6 @@ export const UserTable = ({ users, handleDelete }) => {
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 };
