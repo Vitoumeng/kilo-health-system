@@ -5,6 +5,7 @@ import { useAuth } from "../module/auth/core/action";
 import { Usermanagement } from "../module/usermanagement/components/Usermanagement";
 import { UserAdd } from "../module/usermanagement/components/UserAdd";
 import { UserEdit } from "../module/usermanagement/components/UserEdit";
+import Role from "../module/role/component/Role";
 
 const PrivateRoute = () => {
   const { auth } = useAuth();
@@ -22,7 +23,11 @@ const PrivateRoute = () => {
             <Route path="add" element={<UserAdd />} />
             <Route path="edit/:id" element={<UserEdit />} />
           </Route>
-          <Route path="role" element={<h1>Role</h1>} />
+          <Route path="role">
+            <Route index element={<Role />} />
+            <Route path="add" element={<h1>Add Role</h1>} />
+            <Route path="edit/:id" element={<h1>Edit Role</h1>} />
+          </Route>
         </Route>
       ) : (
         <>
