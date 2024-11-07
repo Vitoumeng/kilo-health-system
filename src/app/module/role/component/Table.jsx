@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { FaPen } from "react-icons/fa";
+import useRole from "../core/action";
+import { BsPersonFillGear } from "react-icons/bs";
 
-const Table = ({ data = [] }) => {
+const Table = ({ handleDelete }) => {
+  const { fetchRoles, data, navigate } = useRole();
+
+  useEffect(() => {
+    fetchRoles();
+  }, []);
+
+  //   console.log(data);
+
   return (
     <div className="table-responsive">
       <table className="table dashed-border-table">
@@ -10,10 +21,7 @@ const Table = ({ data = [] }) => {
               Name
             </th>
             <th scope="col" className="text-start">
-              Created At
-            </th>
-            <th scope="col" className="text-start">
-              Updated At
+              Modules
             </th>
             <th scope="col" className="text-end">
               Actions
@@ -21,27 +29,34 @@ const Table = ({ data = [] }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => (
-            <tr key={item.id}>
-              <td className="text-start"></td>
-              <td className="text-start"></td>
-              <td className="text-start"></td>
-              <td className="d-flex justify-content-end gap-2">
-                <button
-                  className="action-btn"
-                  onClick={() => navigate(`/role/edit/${item.id}`)}
-                >
-                  <FaPen />
-                </button>
-                <button
-                  className="action-btn"
-                  //   onClick={() => handleDelete(item.id)}
-                >
-                  <FaTrash />
-                </button>
+          {data.length > 0 ? (
+            data.map(({ name, id, module }, index) => (
+              <tr key={index}>
+                <td className="text-start">{name || "N/A"}</td>
+                <td className="text-start">{module || "N/A"}</td>
+                <td className="d-flex justify-content-end gap-2">
+                  <button
+                    className="action-btn"
+                    onClick={() => navigate(`/role/edit/${id}`)}
+                  >
+                    <FaPen />
+                  </button>
+                  <button
+                    className="action-btn"
+                    onClick={() => navigate(`/role/${id}/permissions`)}
+                  >
+                    <BsPersonFillGear />
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3" className="text-center">
+                No data available
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>

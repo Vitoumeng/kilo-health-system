@@ -6,6 +6,7 @@ import { Usermanagement } from "../module/usermanagement/components/Usermanageme
 import { UserAdd } from "../module/usermanagement/components/UserAdd";
 import { UserEdit } from "../module/usermanagement/components/UserEdit";
 import Role from "../module/role/component/Role";
+import Permissions from "../module/role/component/Permissions";
 
 const PrivateRoute = () => {
   const { auth } = useAuth();
@@ -27,6 +28,7 @@ const PrivateRoute = () => {
             <Route index element={<Role />} />
             <Route path="add" element={<h1>Add Role</h1>} />
             <Route path="edit/:id" element={<h1>Edit Role</h1>} />
+            <Route path=":id/permissions" element={<Permissions />} />
           </Route>
         </Route>
       ) : (

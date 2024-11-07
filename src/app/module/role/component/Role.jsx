@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { IoAddSharp, IoSearch } from "react-icons/io5";
 import { useNavigate } from "react-router";
+import Table from "./Table";
 
 const Role = () => {
   const navigate = useNavigate();
@@ -22,6 +23,8 @@ const Role = () => {
             <span>Add</span>
           </button>
         </div>
+
+        <Table />
       </div>
     </div>
   );
