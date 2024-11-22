@@ -38,7 +38,7 @@ const Sidebar = () => {
                     to={item.path}
                     className="nav-link nav-custome text-light rounded-2 d-flex align-items-center gap-2"
                   >
-                    <span className="ms-0" style={{ fontSize: "1rem" }}>
+                    <span className="mx-2">
                       {item.icon}
                     </span>
                     <span className="mt-1" style={{ fontSize: ".8rem" }}>

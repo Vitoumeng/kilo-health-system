@@ -8,7 +8,7 @@ const sideBarItems = [
     items: [
       {
         name: "Dashboard",
-        icon: <MdSpeed />,
+        icon: <MdSpeed style={{ fontSize: "1.15rem" }} />,
         path: "/",
       },
     ],
@@ -18,17 +18,17 @@ const sideBarItems = [
     items: [
       {
         name: "Category",
-        icon: <FaListUl />,
+        icon: <FaListUl style={{ fontSize: "1.15rem" }} />,
         path: "/category",
       },
       {
         name: "Post",
-        icon: <BsPostcard />,
+        icon: <BsPostcard style={{ fontSize: "1.15rem" }} />,
         path: "/post",
       },
       {
         name: "Topic",
-        icon: <MdOutlineTopic />,
+        icon: <MdOutlineTopic style={{ fontSize: "1.15rem" }} />,
         path: "/topic",
       },
     ],
@@ -38,12 +38,12 @@ const sideBarItems = [
     items: [
       {
         name: "User",
-        icon: <LuUser />,
+        icon: <LuUser style={{ fontSize: "1.15rem" }} />,
         path: "/user",
       },
       {
         name: "Role",
-        icon: <LuUserCog />,
+        icon: <LuUserCog style={{ fontSize: "1.15rem" }} />,
         path: "/role",
       },
     ],
