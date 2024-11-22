@@ -16,7 +16,7 @@ const RootLayout = () => {
 
         <Header />
 
-        <main>
+        <main className="p-2 main">
           <Outlet />
         </main>
       </div>
