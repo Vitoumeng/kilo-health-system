@@ -5,9 +5,15 @@ import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import AppRoute from "./app/route/AppRoute";
+import { Provider } from "react-redux";
+import store from "./app/redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<AppRoute />);
+root.render(
+  <Provider store={store}>
+    <AppRoute />
+  </Provider>
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
