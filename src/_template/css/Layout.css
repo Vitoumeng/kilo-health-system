@@ -1,0 +1,18 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  z-index: 1000;
+  background: #212225;
+  min-height: 100vh;
+}
+
+.nav-custome {
+  padding: 0.5rem;
+}
+
+.nav-custome.active,
+.nav-custome:hover {
+  background: #2a3238;
+}

@@ -1,5 +1,8 @@
 import React from "react";
 import { Outlet } from "react-router";
+import "../../_template/css/Layout.css";
+import Sidebar from "./Sidebar";
+import Header from "./Header";
 
 const RootLayout = () => {
   return (
@@ -8,9 +11,11 @@ const RootLayout = () => {
         <title>Admin System</title>
       </head>
 
-      <div>
-        <div>SideBar</div>
-        <div>Header</div>
+      <div className="bg-dark text-light" style={{ minHeight: "100vh" }}>
+        <Sidebar />
+
+        <Header />
+
         <main>
           <Outlet />
         </main>
