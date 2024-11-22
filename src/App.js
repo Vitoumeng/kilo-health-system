@@ -1,22 +1,7 @@
-import './App.css';
-import {Outlet} from "react-router";
-import {useTheme} from "./app/module/color-theme/core/action";
-import {useEffect} from "react";
+import "./App.css";
 
 function App() {
-
-    const {setPreferredTheme, storedTheme} = useTheme();
-
-    useEffect(() => {
-        const tempTheme = storedTheme.storedTheme;
-        setPreferredTheme(tempTheme);
-    }, [])
-
-    return (
-        <div className="App">
-            <Outlet/>
-        </div>
-    );
+  return <div className="App">App</div>;
 }
 
 export default App;
