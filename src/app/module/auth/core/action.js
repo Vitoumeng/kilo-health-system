@@ -17,7 +17,7 @@ const useLogin = () => {
       const res = await reqLogin(auth.login);
       const response = res.data.data;
 
-      console.log(response);
+    //   console.log(response);
       dispatch(setAuth(response));
       localStorage.setItem("user", JSON.stringify(response.user));
       localStorage.setItem("accessToken", response.token);
