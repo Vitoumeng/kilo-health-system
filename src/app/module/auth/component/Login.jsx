@@ -2,19 +2,19 @@ import imgLogo from "../../../../logo.svg";
 import { useLogin } from "../core/action";
 
 const Login = () => {
-  const { login, auth, handleChangeLogin, onLogin } = useLogin();
+  const { login, handleChangeLogin, onLogin } = useLogin();
 
   let { email, password } = login;
 
-  console.log(login, auth);
+  //   console.log(login, auth);
 
-    const onSubmit = (e) => {
-        e.preventDefault();
+  const onSubmit = (e) => {
+    e.preventDefault();
 
-        if(email && password) {
-            onLogin();
-        }
-      };
+    if (email && password) {
+      onLogin();
+    }
+  };
 
   return (
     <div
@@ -37,7 +37,7 @@ const Login = () => {
         </div>
         <h5 className="mt-3 text-white">Sign In</h5>
         <form
-            onSubmit={onSubmit}
+          onSubmit={onSubmit}
           className="form-control d-flex flex-column border-0 bg-transparent"
         >
           <div

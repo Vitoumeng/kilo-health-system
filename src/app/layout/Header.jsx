@@ -2,7 +2,10 @@ import { Link } from "react-router-dom";
 import { useLogin } from "../module/auth/core/action";
 
 const Header = () => {
-  const { onLogout } = useLogin();
+  const { onLogout, auth } = useLogin();
+
+  let { username } = auth.user;
+  // console.log(auth);
 
   return (
     <header className="container-fluid position-fixed w-100 header d-flex justify-content-end align-items-center p-1 pe-5">
@@ -13,7 +16,7 @@ const Header = () => {
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          <span className="text-uppercase">Admin</span>
+          <span className="text-uppercase">{username}</span>
         </button>
 
         <ul className="dropdown-menu border-0 py-0 rounded-2 shadow overflow-hidden">
