@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useLogin } from "../module/auth/core/action";
 
 const Header = () => {
+  const { onLogout } = useLogin();
+
   return (
     <header className="container-fluid position-fixed w-100 header d-flex justify-content-end align-items-center p-1 pe-5">
       <div className="btn-group">
@@ -19,7 +22,7 @@ const Header = () => {
               Profile
             </Link>
           </li>
-          <li>
+          <li onClick={onLogout}>
             <span className="dropdown-item border-top dropdown-logout">
               Logout
             </span>

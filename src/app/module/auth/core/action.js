@@ -26,7 +26,14 @@ const useLogin = () => {
     }
   };
 
-  return { ...auth, handleChangeLogin, onLogin };
+  const onLogout = () => {
+    dispatch(setAuth(undefined));
+    localStorage.removeItem("user");
+    localStorage.removeItem("accessToken");
+    navigate("/login");
+  };
+
+  return { ...auth, handleChangeLogin, onLogin, onLogout };
 };
 
 export { useLogin };
