@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAuth } from "../../../helper/authHelper";
+import { getAuth } from "../../../../helper/authHelper";
 
 const initUser = {
   email: "vitou@gmail.com",

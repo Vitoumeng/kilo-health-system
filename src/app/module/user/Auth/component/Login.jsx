@@ -1,4 +1,4 @@
-import imgLogo from "../../../../logo.svg";
+import imgLogo from "../../../../../logo.svg";
 import { useLogin } from "../core/action";
 
 const Login = () => {

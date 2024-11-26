@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router";
 import RootLayout from "../layout/RootLayout";
-import Login from "../module/auth/component/Login";
-import { useLogin } from "../module/auth/core/action";
+import Login from "../module/user/Auth/component/Login";
+import { useLogin } from "../module/user/Auth/core/action";
 
 const PrivateRoute = () => {
   const { auth } = useLogin();
