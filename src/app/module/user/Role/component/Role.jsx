@@ -5,7 +5,7 @@ import useRole from "../core/action";
 import { useEffect } from "react";
 
 const Role = () => {
-  const { roles, paging, fetchRole } = useRole();
+  const { roles, paging, fetchRole, navigate } = useRole();
 
   console.log(roles, paging);
 
@@ -38,10 +38,7 @@ const Role = () => {
                 onChange={onChangeSearch}
               />
             </div>
-            <button
-              // onClick={() => navigate("/user-management/user/add")}
-              className="add-btn"
-            >
+            <button onClick={() => navigate("/role/add")} className="add-btn">
               <IoAddSharp style={{ fontSize: "20px" }} />
               <span>Add</span>
             </button>

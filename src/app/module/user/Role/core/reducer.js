@@ -1,8 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initRole = {
+  code: "",
+  name: "",
+  module: "",
+};
+
 const initialState = {
   roles: [],
   paging: {},
+  roleInfo: initRole,
 };
 
 const roleSlice = createSlice({
@@ -13,9 +20,16 @@ const roleSlice = createSlice({
       state.roles = action.payload.data;
       state.paging = action.payload.paging;
     },
+    setRoleInfo: (state, action) => {
+      const data = action.payload;
+      state.roleInfo[data.name] = data.value;
+    },
+    resetRoleInfo: (state) => {
+      state.roleInfo = initRole;
+    },
   },
 });
 
-export const { setRoles } = roleSlice.actions;
+export const { setRoles, setRoleInfo } = roleSlice.actions;
 
 export default roleSlice.reducer;

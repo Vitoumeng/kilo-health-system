@@ -5,4 +5,9 @@ const reqGetRole = (param) =>
     params: param,
   });
 
-export { reqGetRole };
+const reqCreateRole = (payload) =>
+  axios.post("/api/v1/roles", payload, {
+    headers: { "Content-Type": "application/json" },
+  });
+
+export { reqGetRole, reqCreateRole };
