@@ -22,7 +22,7 @@ const Login = () => {
       style={{ minHeight: "100vh", backgroundColor: "#1a1d1d" }}
     >
       <div
-        className="d-flex px-4 py-5 flex-column align-items-center justify-content-center shadow-lg"
+        className="d-flex px-4 py-5 flex-column align-items-center justify-content-center shadow-sm"
         style={{
           background: "#2c2f2f",
           borderRadius: "8px",

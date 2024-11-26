@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getAuth } from "../../../helper/authHelper";
 
 const initUser = {
-  email: "",
-  password: "",
+  email: "vitou@gmail.com",
+  password: "Vi@1682003",
 };
 
 const initialState = {
