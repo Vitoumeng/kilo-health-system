@@ -13,6 +13,8 @@ const Role = () => {
     fetchRole();
   }, []); // eslint-disable-line
 
+  const onChangeSearch = (e) => fetchRole(20, 1, e.target.value);
+
   return (
     <div className="d-flex gap-0 flex-column">
       <div className="d-flex gap-0 flex-column align-items-baseline">
@@ -33,7 +35,7 @@ const Role = () => {
               <input
                 type="text"
                 placeholder="Search..."
-                // onChange={onChangeSearch}
+                onChange={onChangeSearch}
               />
             </div>
             <button

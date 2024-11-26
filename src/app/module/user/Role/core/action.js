@@ -6,8 +6,8 @@ const useRole = () => {
   const role = useSelector((state) => state.role);
   const dispatch = useDispatch();
 
-  const fetchRole = (size = 20, page = 1) => {
-    reqGetRole({ size, page })
+  const fetchRole = (size = 20, page = 1, search = "") => {
+    reqGetRole({ size, page, query: search })
       .then((res) => {
         console.log(res.data);
         dispatch(setRoles(res.data));
