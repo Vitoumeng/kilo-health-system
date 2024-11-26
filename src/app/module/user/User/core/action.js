@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { reqGetUser } from "./request";
+import { reqDeleteUser, reqGetUser } from "./request";
 import { setUsers } from "./reducer";
+import Swal from "sweetalert2";
 
 const useUser = () => {
   const user = useSelector((state) => state.user);
@@ -17,7 +18,39 @@ const useUser = () => {
       });
   };
 
-  return { ...user, fetchUsers };
+  const onDeleteUser = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "lightcoral",
+      cancelButtonColor: "lightgrey",
+      confirmButtonText: "OK",
+      cancelButtonText: "Cancel",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        reqDeleteUser(id)
+          .then(() => {
+            Swal.fire({
+              icon: "success",
+              title: `Delete User ${id}`,
+              text: "Successfully deleted",
+            });
+            fetchUsers();
+          })
+          .catch((err) => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Error deleting user",
+            });
+            console.log(err);
+          });
+      }
+    });
+  };
+
+  return { ...user, fetchUsers, onDeleteUser };
 };
 
 export default useUser;

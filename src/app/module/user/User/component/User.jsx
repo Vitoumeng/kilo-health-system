@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import Pagination from "../../../../utils/Pagination";
 
 const User = () => {
-  const { users, fetchUsers, paging } = useUser();
+  const { users, fetchUsers, paging, onDeleteUser } = useUser();
 
   useEffect(() => {
     fetchUsers();
@@ -43,7 +43,7 @@ const User = () => {
             </button>
           </div>
 
-          <Table data={users} handleDelete={""} />
+          <Table data={users} handleDelete={onDeleteUser} />
 
           <Pagination paging={paging} setPaging={fetchUsers} />
         </div>
