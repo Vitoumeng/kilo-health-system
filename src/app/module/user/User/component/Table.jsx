@@ -76,7 +76,7 @@ const Table = ({ data, handleDelete }) => {
               <td className="d-flex justify-content-end gap-2">
                 <button
                   className="action-btn btn-1"
-                  onClick={() => navigate(`/user-management/user/edit/${id}`)}
+                  onClick={() => navigate(`/user/edit/${id}`)}
                 >
                   <FaRegPenToSquare />
                 </button>

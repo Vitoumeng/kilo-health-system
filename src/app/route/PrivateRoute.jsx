@@ -3,6 +3,7 @@ import RootLayout from "../layout/RootLayout";
 import Login from "../module/user/Auth/component/Login";
 import { useLogin } from "../module/user/Auth/core/action";
 import User from "../module/user/User/component/User";
+import UserEdit from "../module/user/User/component/Edit";
 
 const PrivateRoute = () => {
   const { auth } = useLogin();
@@ -15,9 +16,8 @@ const PrivateRoute = () => {
           <Route path="/category" element={<h1>Category</h1>}></Route>
           <Route path="/post" element={<h1>Post</h1>}></Route>
           <Route path="/topic" element={<h1>Topic</h1>}></Route>
-          <Route path="/user">
-            <Route index element={<User />} />
-          </Route>
+          <Route path="/user" element={<User />} />
+          <Route path="/user/edit/:id" element={<UserEdit />} />
           <Route path="/role" element={<h1>Role</h1>}></Route>
         </Route>
       ) : (

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { reqDeleteUser, reqGetUser } from "./request";
+import { reqDeleteUser, reqGetUser, reqGetUserById } from "./request";
 import { setUsers } from "./reducer";
 import Swal from "sweetalert2";
 
@@ -50,7 +50,13 @@ const useUser = () => {
     });
   };
 
-  return { ...user, fetchUsers, onDeleteUser };
+  const fetchUsersById = (id) => {
+    reqGetUserById(id).then((res) => {
+      console.log(res.data);
+    });
+  };
+
+  return { ...user, fetchUsers, onDeleteUser, fetchUsersById };
 };
 
 export default useUser;
