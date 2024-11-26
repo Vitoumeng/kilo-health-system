@@ -2,9 +2,10 @@ import { IoAddSharp, IoSearch } from "react-icons/io5";
 import Table from "./Table";
 import useUser from "../core/action";
 import { useEffect } from "react";
+import Pagination from "../../../../utils/Pagination";
 
 const User = () => {
-  const { users, fetchUsers } = useUser();
+  const { users, fetchUsers, paging } = useUser();
 
   useEffect(() => {
     fetchUsers();
@@ -44,6 +45,7 @@ const User = () => {
 
           <Table data={users} handleDelete={""} />
 
+          <Pagination paging={paging} setPaging={fetchUsers} />
         </div>
       </div>
     </div>
