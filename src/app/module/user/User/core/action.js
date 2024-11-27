@@ -10,7 +10,7 @@ const useUser = () => {
   const fetchUsers = (size = 20, page = 1) => {
     reqGetUser({ size, page })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         dispatch(setUsers(res.data));
       })
       .catch((err) => {

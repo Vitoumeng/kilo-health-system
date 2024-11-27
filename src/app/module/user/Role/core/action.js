@@ -13,7 +13,7 @@ const useRole = () => {
   const fetchRole = (size = 20, page = 1, search = "") => {
     reqGetRole({ size, page, query: search })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         dispatch(setRoles(res.data));
       })
       .catch((err) => {
@@ -30,7 +30,7 @@ const useRole = () => {
     e.preventDefault();
 
     reqCreateRole(roleInfo)
-      .then((res) => {
+      .then(() => {
         Swal.fire({
           icon: "success",
           title: "Create Role Successful",
