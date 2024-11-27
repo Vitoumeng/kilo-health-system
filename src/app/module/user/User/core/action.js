@@ -22,6 +22,8 @@ const useUser = () => {
     Swal.fire({
       title: "Are you sure?",
       icon: "warning",
+      background: "#222525",
+      color: "#fff",
       showCancelButton: true,
       confirmButtonColor: "lightcoral",
       cancelButtonColor: "lightgrey",
@@ -32,6 +34,8 @@ const useUser = () => {
         reqDeleteUser(id)
           .then(() => {
             Swal.fire({
+              background: "#222525",
+              color: "#fff",
               icon: "success",
               title: `Delete User ${id}`,
               text: "Successfully deleted",
@@ -42,6 +46,8 @@ const useUser = () => {
             Swal.fire({
               icon: "error",
               title: "Oops...",
+              background: "#222525",
+              color: "#fff",
               text: "Error deleting user",
             });
             console.log(err);

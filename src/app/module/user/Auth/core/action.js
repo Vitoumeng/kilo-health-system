@@ -23,6 +23,8 @@ const useLogin = () => {
       localStorage.setItem("accessToken", response.token);
       Swal.fire({
         icon: "success",
+        background: "#222525",
+        color: "#fff",
         title: "Login Successful",
         text: "Welcome back!",
         confirmButtonText: "OK",
@@ -38,6 +40,8 @@ const useLogin = () => {
     Swal.fire({
       title: "Are you sure?",
       icon: "warning",
+      background: "#222525",
+      color: "#fff",
       showCancelButton: true,
       confirmButtonColor: "lightcoral",
       confirmButtonText: "OK",
