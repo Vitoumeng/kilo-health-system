@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { reqCreateRole, reqGetRole } from "./request";
+import { reqCreateRole, reqDeleteRole, reqGetRole } from "./request";
 import { setRoleInfo, setRoles, resetRoleInfo } from "./reducer";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
@@ -34,6 +34,8 @@ const useRole = () => {
         Swal.fire({
           icon: "success",
           title: "Create Role Successful",
+          background: "#222525",
+          color: "#fff",
           confirmButtonText: "OK",
         });
         navigate("/role");
@@ -43,13 +45,60 @@ const useRole = () => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
+          background: "#222525",
+          color: "#fff",
           text: "Error Creating Role",
         });
         console.log(err);
       });
   };
 
-  return { ...role, fetchRole, onCreateRole, onChangeAdd, navigate };
+  const onDeleteRole = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      background: "#222525",
+      color: "#fff",
+      showCancelButton: true,
+      confirmButtonColor: "lightcoral",
+      confirmButtonText: "OK",
+      cancelButtonColor: "lightgrey",
+      cancelButtonText: "Cancel",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        reqDeleteRole(id)
+          .then(() => {
+            Swal.fire({
+              icon: "success",
+              background: "#222525",
+              color: "#fff",
+              title: "Delete Role Successful",
+              confirmButtonText: "OK",
+            });
+            fetchRole();
+          })
+          .catch((err) => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              background: "#222525",
+              color: "#fff",
+              text: "Error deleting role",
+            });
+            console.log(err);
+          });
+      }
+    });
+  };
+
+  return {
+    ...role,
+    fetchRole,
+    onCreateRole,
+    onChangeAdd,
+    navigate,
+    onDeleteRole,
+  };
 };
 
 export default useRole;

@@ -5,7 +5,7 @@ import useRole from "../core/action";
 import { useEffect } from "react";
 
 const Role = () => {
-  const { roles, paging, fetchRole, navigate } = useRole();
+  const { roles, paging, fetchRole, navigate, onDeleteRole } = useRole();
 
   console.log(roles, paging);
 
@@ -44,7 +44,7 @@ const Role = () => {
             </button>
           </div>
 
-          <Table data={roles} handleDelete={""} />
+          <Table data={roles} handleDelete={onDeleteRole} />
 
           <Pagination paging={paging} setPaging={fetchRole} />
         </div>

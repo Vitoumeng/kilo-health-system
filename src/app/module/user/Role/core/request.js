@@ -10,4 +10,6 @@ const reqCreateRole = (payload) =>
     headers: { "Content-Type": "application/json" },
   });
 
-export { reqGetRole, reqCreateRole };
+const reqDeleteRole = (id) => axios.delete(`/api/v1/roles/${id}/soft-delete`);
+
+export { reqGetRole, reqCreateRole, reqDeleteRole };
