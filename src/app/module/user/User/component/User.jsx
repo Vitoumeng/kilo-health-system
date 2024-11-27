@@ -9,7 +9,7 @@ const User = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, []); // eslint-disable-line  
+  }, []); // eslint-disable-line
 
   const onChangeSearch = (e) => fetchUsers(20, 1, e.target.value);
 
@@ -19,7 +19,7 @@ const User = () => {
         <div className="container p-3 d-flex align-items-start flex-column">
           <h4 className="mb-0">User List</h4>
           <p className="fw-medium text-secondary">
-            User Management <span className="ms-2 text-dark">User List</span>
+            User Management <span className="ms-2 text-light">User List</span>
           </p>
         </div>
 
