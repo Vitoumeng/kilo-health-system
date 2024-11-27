@@ -185,7 +185,7 @@ const Edit = () => {
         <div className="mt-3 d-flex align-items-center justify-content-center gap-2">
           <button
             type="button"
-            // onClick={() => fetchUserById(id)}
+            onClick={() => fetchUserById(id)}
             className="btn btn-outline-light me-2"
           >
             Discard
