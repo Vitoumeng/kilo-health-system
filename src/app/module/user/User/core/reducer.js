@@ -30,9 +30,12 @@ const userSlice = createSlice({
       const data = action.payload;
       state.userInfo[data.name] = data.value;
     },
+    resetUserInfo: (state) => {
+      state.userInfo = { ...initUser };
+    },
   },
 });
 
-export const { setUsers, setUserInfo } = userSlice.actions;
+export const { setUsers, setUserInfo, resetUserInfo } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -5,7 +5,7 @@ import {
   reqGetUser,
   reqGetUserById,
 } from "./request";
-import { setUserInfo, setUsers } from "./reducer";
+import { resetUserInfo, setUserInfo, setUsers } from "./reducer";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 
@@ -84,8 +84,8 @@ const useUser = () => {
         title: "User Created",
         text: "User has been successfully created!",
       });
-
       navigate("/user");
+      dispatch(resetUserInfo());
     } catch (err) {
       const errorMessages = err.response?.data?.data || [
         "Duplicate Phone Number!",
