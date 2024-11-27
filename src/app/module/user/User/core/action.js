@@ -4,6 +4,7 @@ import {
   reqDeleteUser,
   reqGetUser,
   reqGetUserById,
+  reqUpdateUser,
 } from "./request";
 import {
   resetUserInfo,
@@ -13,9 +14,11 @@ import {
 } from "./reducer";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
+import useRole from "../../Role/core/action";
 
 const useUser = () => {
   const user = useSelector((state) => state.user);
+  const { roles } = useRole();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -119,6 +122,53 @@ const useUser = () => {
     });
   };
 
+  const onChangeEdit = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "roleId") {
+      const selectedRole = roles.find((role) => role.id === value);
+
+      dispatch(
+        setUserDetails({
+          ...user.userDetails,
+          role: selectedRole,
+          roleId: value,
+        })
+      );
+    } else {
+      dispatch(
+        setUserDetails({
+          ...user.userDetails,
+          [name]: value,
+        })
+      );
+    }
+  };
+
+  const onUpdateUser = (e) => {
+    e.preventDefault();
+
+    let userDetails = { ...user.userDetails };
+    delete userDetails.role;
+
+    return reqUpdateUser(userDetails.id, userDetails)
+      .then(() => {
+        Swal.fire({
+          icon: "success",
+          title: "Edit User",
+          text: "Successfully edited",
+        });
+        fetchUserById(userDetails.id);
+      })
+      .catch(() => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Error Editing user",
+        });
+      });
+  };
+
   return {
     ...user,
     fetchUsers,
@@ -127,6 +177,8 @@ const useUser = () => {
     navigate,
     onChangeAdd,
     onCreateUser,
+    onChangeEdit,
+    onUpdateUser
   };
 };
 

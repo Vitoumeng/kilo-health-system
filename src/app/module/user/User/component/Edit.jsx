@@ -5,7 +5,7 @@ import useRole from "../../Role/core/action";
 
 const Edit = () => {
   const { roles, fetchRole } = useRole();
-  const { fetchUserById, userDetails } = useUser();
+  const { fetchUserById, userDetails, onChangeEdit, onUpdateUser } = useUser();
   const { id } = useParams();
 
   useEffect(() => {
@@ -17,14 +17,14 @@ const Edit = () => {
     userDetails;
 
   console.log(userDetails);
-  
+
   return (
     <div
       className="container text-light p-3 rounded-2"
       style={{ background: "#212225" }}
     >
       <form
-        //   onSubmit={(e) => onUpdateUser(e)}
+        onSubmit={(e) => onUpdateUser(e)}
         className="form-control border-0 bg-transparent text-light"
       >
         <div className="mb-3">
@@ -40,7 +40,7 @@ const Edit = () => {
             id="firstname"
             name="firstname"
             value={firstname}
-            //   onChange={handleChangeEdit}
+            onChange={onChangeEdit}
             required
           />
         </div>
@@ -58,7 +58,7 @@ const Edit = () => {
             id="lastname"
             name="lastname"
             value={lastname}
-            //   onChange={handleChangeEdit}
+            onChange={onChangeEdit}
             required
           />
         </div>
@@ -76,7 +76,7 @@ const Edit = () => {
                 id="Male"
                 value="Male"
                 checked={gender === "Male"}
-                //   onChange={handleChangeEdit}
+                onChange={onChangeEdit}
               />
               <label className="form-check-label text-light" htmlFor="Male">
                 Male
@@ -90,7 +90,7 @@ const Edit = () => {
                 id="Female"
                 value="Female"
                 checked={gender === "Female"}
-                //   onChange={handleChangeEdit}
+                onChange={onChangeEdit}
               />
               <label className="form-check-label text-light" htmlFor="Female">
                 Female
@@ -109,7 +109,7 @@ const Edit = () => {
             id="dob"
             name="dob"
             value={dob}
-            //   onChange={handleChangeEdit}
+            onChange={onChangeEdit}
             required
           />
         </div>
@@ -124,7 +124,7 @@ const Edit = () => {
             id="address"
             name="address"
             value={address}
-            //   onChange={handleChangeEdit}
+            onChange={onChangeEdit}
             required
           />
         </div>
@@ -139,7 +139,7 @@ const Edit = () => {
             id="email"
             name="email"
             value={email}
-            //   onChange={handleChangeEdit}
+            onChange={onChangeEdit}
             required
           />
         </div>
@@ -154,7 +154,7 @@ const Edit = () => {
             id="phone"
             name="phone"
             value={phone}
-            //   onChange={handleChangeEdit}
+            onChange={onChangeEdit}
             required
           />
         </div>
@@ -169,7 +169,7 @@ const Edit = () => {
             name="roleId"
             required
             value={role?.id}
-            //   onChange={handleChangeEdit}
+            onChange={onChangeEdit}
           >
             <option value="" selected disabled>
               Select Role <span className="text-danger">*</span>
@@ -185,7 +185,7 @@ const Edit = () => {
         <div className="mt-3 d-flex align-items-center justify-content-center gap-2">
           <button
             type="button"
-            //   onClick={() => fetchUserById(id)}
+            // onClick={() => fetchUserById(id)}
             className="btn btn-outline-light me-2"
           >
             Discard
