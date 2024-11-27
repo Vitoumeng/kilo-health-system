@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { reqCreateRole, reqGetRole } from "./request";
-import { setRoleInfo, setRoles } from "./reducer";
+import { setRoleInfo, setRoles, resetRoleInfo } from "./reducer";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 
@@ -24,6 +24,8 @@ const useRole = () => {
   const onChangeAdd = (e) =>
     dispatch(setRoleInfo({ name: e.target.name, value: e.target.value }));
 
+  const onResetAdd = () => dispatch(resetRoleInfo());
+
   const onCreateRole = (e) => {
     e.preventDefault();
 
@@ -35,6 +37,7 @@ const useRole = () => {
           confirmButtonText: "OK",
         });
         navigate("/role");
+        onResetAdd();
       })
       .catch((err) => {
         Swal.fire({

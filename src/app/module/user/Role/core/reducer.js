@@ -30,6 +30,6 @@ const roleSlice = createSlice({
   },
 });
 
-export const { setRoles, setRoleInfo } = roleSlice.actions;
+export const { setRoles, setRoleInfo, resetRoleInfo } = roleSlice.actions;
 
 export default roleSlice.reducer;
