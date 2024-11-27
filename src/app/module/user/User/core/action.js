@@ -1,11 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
-import { reqDeleteUser, reqGetUser, reqGetUserById } from "./request";
-import { setUsers } from "./reducer";
+import {
+  reqCreateUser,
+  reqDeleteUser,
+  reqGetUser,
+  reqGetUserById,
+} from "./request";
+import { setUserInfo, setUsers } from "./reducer";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const useUser = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fetchUsers = (size = 20, page = 1) => {
     reqGetUser({ size, page })
@@ -62,7 +69,53 @@ const useUser = () => {
     });
   };
 
-  return { ...user, fetchUsers, onDeleteUser, fetchUsersById };
+  const onChangeAdd = (e) =>
+    dispatch(setUserInfo({ name: e.target.name, value: e.target.value }));
+
+  const onCreateUser = async (e) => {
+    e.preventDefault();
+
+    try {
+      await reqCreateUser(user.userInfo);
+      Swal.fire({
+        background: "#222525",
+        color: "#fff",
+        icon: "success",
+        title: "User Created",
+        text: "User has been successfully created!",
+      });
+
+      navigate("/user");
+    } catch (err) {
+      const errorMessages = err.response?.data?.data || [
+        "Duplicate Phone Number!",
+      ];
+
+      const formattedErrors = errorMessages
+        .map((message) => `<li>${message}</li>`)
+        .join("");
+
+      Swal.fire({
+        icon: "error",
+        background: "#222525",
+        color: "#fff",
+        title: "Oops...",
+        html: `<ul style="list-style: none">${formattedErrors}</ul>`,
+      });
+
+      console.error("Error details:", err.response?.data);
+    }
+  };
+
+  return {
+    ...user,
+    fetchUsers,
+    onDeleteUser,
+    fetchUsersById,
+    navigate,
+    onChangeAdd,
+    onCreateUser,
+  };
 };
 
 export default useUser;

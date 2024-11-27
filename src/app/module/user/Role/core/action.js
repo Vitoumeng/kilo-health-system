@@ -10,7 +10,7 @@ const useRole = () => {
   const navigate = useNavigate();
   let { roleInfo } = role;
 
-  const fetchRole = (size = 20, page = 1, search = "") => {
+  const fetchRole = (size = 1000, page = 1, search = "") => {
     reqGetRole({ size, page, query: search })
       .then((res) => {
         // console.log(res.data);

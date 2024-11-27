@@ -6,4 +6,9 @@ const reqDeleteUser = (id) => axios.delete(`/api/v1/users/${id}/soft-delete`);
 
 const reqGetUserById = (id) => axios.get(`/api/v1/users/${id}`);
 
-export { reqGetUser, reqDeleteUser, reqGetUserById };
+const reqCreateUser = (payload) =>
+  axios.post("/api/v1/users", payload, {
+    headers: { "Content-Type": "application/json" },
+  });
+
+export { reqGetUser, reqDeleteUser, reqGetUserById, reqCreateUser };

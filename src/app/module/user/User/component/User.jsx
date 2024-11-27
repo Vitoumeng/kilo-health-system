@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import Pagination from "../../../../utils/Pagination";
 
 const User = () => {
-  const { users, fetchUsers, paging, onDeleteUser } = useUser();
+  const { users, fetchUsers, paging, onDeleteUser, navigate } = useUser();
 
   useEffect(() => {
     fetchUsers();
@@ -35,7 +35,7 @@ const User = () => {
               />
             </div>
             <button
-              // onClick={() => navigate("/user-management/user/add")}
+              onClick={() => navigate("/user/add")}
               className="add-btn"
             >
               <IoAddSharp style={{ fontSize: "20px" }} />
