@@ -1,17 +1,28 @@
 import { useParams } from "react-router";
 import useUser from "../core/action";
 import { useEffect } from "react";
+import useRole from "../../Role/core/action";
 
 const Edit = () => {
-  const { fetchUsersById } = useUser();
+  const { roles, fetchRole } = useRole();
+  const { fetchUserById, userDetails } = useUser();
   const { id } = useParams();
 
   useEffect(() => {
-    fetchUsersById(id);
+    fetchRole();
+    fetchUserById(id);
   }, [id]);
 
+  let { firstname, lastname, gender, dob, role, address, email, phone } =
+    userDetails;
+
+  console.log(userDetails);
+  
   return (
-    <div className="container text-light p-3 rounded-2" style={{background: "#212225"}}>
+    <div
+      className="container text-light p-3 rounded-2"
+      style={{ background: "#212225" }}
+    >
       <form
         //   onSubmit={(e) => onUpdateUser(e)}
         className="form-control border-0 bg-transparent text-light"
@@ -28,7 +39,7 @@ const Edit = () => {
             className="form-control bg-dark text-light border-0"
             id="firstname"
             name="firstname"
-            //   value={firstname}
+            value={firstname}
             //   onChange={handleChangeEdit}
             required
           />
@@ -46,7 +57,7 @@ const Edit = () => {
             className="form-control bg-dark text-light border-0"
             id="lastname"
             name="lastname"
-            //   value={lastname}
+            value={lastname}
             //   onChange={handleChangeEdit}
             required
           />
@@ -64,7 +75,7 @@ const Edit = () => {
                 name="gender"
                 id="Male"
                 value="Male"
-                //   checked={gender === "Male"}
+                checked={gender === "Male"}
                 //   onChange={handleChangeEdit}
               />
               <label className="form-check-label text-light" htmlFor="Male">
@@ -78,7 +89,7 @@ const Edit = () => {
                 name="gender"
                 id="Female"
                 value="Female"
-                //   checked={gender === "Female"}
+                checked={gender === "Female"}
                 //   onChange={handleChangeEdit}
               />
               <label className="form-check-label text-light" htmlFor="Female">
@@ -97,7 +108,7 @@ const Edit = () => {
             className="form-control bg-dark text-light border-0"
             id="dob"
             name="dob"
-            //   value={dob}
+            value={dob}
             //   onChange={handleChangeEdit}
             required
           />
@@ -112,7 +123,7 @@ const Edit = () => {
             className="form-control bg-dark text-light border-0"
             id="address"
             name="address"
-            //   value={address}
+            value={address}
             //   onChange={handleChangeEdit}
             required
           />
@@ -127,7 +138,7 @@ const Edit = () => {
             className="form-control bg-dark text-light border-0"
             id="email"
             name="email"
-            //   value={email}
+            value={email}
             //   onChange={handleChangeEdit}
             required
           />
@@ -142,7 +153,7 @@ const Edit = () => {
             className="form-control bg-dark text-light border-0"
             id="phone"
             name="phone"
-            //   value={phone}
+            value={phone}
             //   onChange={handleChangeEdit}
             required
           />
@@ -157,17 +168,17 @@ const Edit = () => {
             id="roleId"
             name="roleId"
             required
-            //   value={role?.id}
+            value={role?.id}
             //   onChange={handleChangeEdit}
           >
             <option value="" selected disabled>
               Select Role <span className="text-danger">*</span>
             </option>
-            {/* {roles?.map((roleItem) => (
-          <option key={roleItem.id} value={roleItem.id}>
-            {roleItem.name}
-          </option>
-        ))} */}
+            {roles?.map((roleItem) => (
+              <option key={roleItem.id} value={roleItem.id}>
+                {roleItem.name}
+              </option>
+            ))}
           </select>
         </div>
 

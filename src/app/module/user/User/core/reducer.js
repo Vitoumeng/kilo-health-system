@@ -16,6 +16,7 @@ const initialState = {
   users: [],
   paging: {},
   userInfo: initUser,
+  userDetails: [],
 };
 
 const userSlice = createSlice({
@@ -33,9 +34,13 @@ const userSlice = createSlice({
     resetUserInfo: (state) => {
       state.userInfo = { ...initUser };
     },
+    setUserDetails: (state, action) => {
+      state.userDetails = action.payload;
+    },
   },
 });
 
-export const { setUsers, setUserInfo, resetUserInfo } = userSlice.actions;
+export const { setUsers, setUserInfo, resetUserInfo, setUserDetails } =
+  userSlice.actions;
 
 export default userSlice.reducer;

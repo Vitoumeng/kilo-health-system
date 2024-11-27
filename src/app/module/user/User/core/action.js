@@ -5,7 +5,12 @@ import {
   reqGetUser,
   reqGetUserById,
 } from "./request";
-import { resetUserInfo, setUserInfo, setUsers } from "./reducer";
+import {
+  resetUserInfo,
+  setUserDetails,
+  setUserInfo,
+  setUsers,
+} from "./reducer";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 
@@ -63,12 +68,6 @@ const useUser = () => {
     });
   };
 
-  const fetchUsersById = (id) => {
-    reqGetUserById(id).then((res) => {
-      console.log(res.data);
-    });
-  };
-
   const onChangeAdd = (e) =>
     dispatch(setUserInfo({ name: e.target.name, value: e.target.value }));
 
@@ -107,11 +106,24 @@ const useUser = () => {
     }
   };
 
+  const fetchUserById = async (userId) => {
+    return reqGetUserById(userId).then((res) => {
+      const userData = res.data.data;
+
+      const updatedUserData = {
+        ...userData,
+        roleId: userData.role?.id || null,
+      };
+
+      dispatch(setUserDetails(updatedUserData));
+    });
+  };
+
   return {
     ...user,
     fetchUsers,
     onDeleteUser,
-    fetchUsersById,
+    fetchUserById,
     navigate,
     onChangeAdd,
     onCreateUser,
