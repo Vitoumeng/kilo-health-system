@@ -9,7 +9,9 @@ const User = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, []); // eslint-disable-line
+  }, []); // eslint-disable-line  
+
+  const onChangeSearch = (e) => fetchUsers(20, 1, e.target.value);
 
   return (
     <div className="d-flex gap-0 flex-column">
@@ -31,13 +33,10 @@ const User = () => {
               <input
                 type="text"
                 placeholder="Search..."
-                // onChange={onChangeSearch}
+                onChange={onChangeSearch}
               />
             </div>
-            <button
-              onClick={() => navigate("/user/add")}
-              className="add-btn"
-            >
+            <button onClick={() => navigate("/user/add")} className="add-btn">
               <IoAddSharp style={{ fontSize: "20px" }} />
               <span>Add</span>
             </button>

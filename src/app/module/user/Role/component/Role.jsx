@@ -7,13 +7,13 @@ import { useEffect } from "react";
 const Role = () => {
   const { roles, paging, fetchRole, navigate, onDeleteRole } = useRole();
 
-  console.log(roles, paging);
+  // console.log(roles, paging);
 
   useEffect(() => {
     fetchRole();
   }, []); // eslint-disable-line
 
-  const onChangeSearch = (e) => fetchRole(20, 1, e.target.value);
+  const onChangeSearch = (e) => fetchRole(1000, 1, e.target.value);
 
   return (
     <div className="d-flex gap-0 flex-column">

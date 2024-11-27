@@ -14,8 +14,8 @@ const useUser = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const fetchUsers = (size = 20, page = 1) => {
-    reqGetUser({ size, page })
+  const fetchUsers = (size = 20, page = 1, search = "") => {
+    reqGetUser({ size, page, query: search })
       .then((res) => {
         // console.log(res.data);
         dispatch(setUsers(res.data));
