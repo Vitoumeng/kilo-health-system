@@ -1,9 +1,6 @@
 import { FaRegTrashCan, FaRegPenToSquare } from "react-icons/fa6";
-import { useNavigate } from "react-router";
 
-const Table = ({ data, handleDelete }) => {
-  const navigate = useNavigate();
-
+const Table = ({ data, navigate, handleDelete }) => {
   return (
     <div className="table-responsive rounded-2">
       <table className="table table-dark dashed-border-table overflow-x-scroll">

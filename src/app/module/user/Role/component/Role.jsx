@@ -44,7 +44,7 @@ const Role = () => {
             </button>
           </div>
 
-          <Table data={roles} handleDelete={onDeleteRole} />
+          <Table data={roles} navigate={navigate} handleDelete={onDeleteRole} />
 
           <Pagination paging={paging} setPaging={fetchRole} />
         </div>

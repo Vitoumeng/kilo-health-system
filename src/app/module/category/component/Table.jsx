@@ -25,14 +25,7 @@ const Table = ({ data, navigate, handleDelete }) => {
               className="text-start fw-semibold text-light"
               style={{ fontSize: "14px" }}
             >
-              Gender
-            </th>
-            <th
-              scope="col"
-              className="text-start fw-semibold text-light"
-              style={{ fontSize: "14px" }}
-            >
-              Date of Birth
+              User Id
             </th>
             <th
               scope="col"
@@ -44,7 +37,7 @@ const Table = ({ data, navigate, handleDelete }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map(({ id, firstname, lastname, gender, dob }, index) => (
+          {data.map(({ id, name, userId }, index) => (
             <tr key={index}>
               <td
                 className="text-start fw-medium text-light"
@@ -56,19 +49,13 @@ const Table = ({ data, navigate, handleDelete }) => {
                 className="text-start fw-medium text-light"
                 style={{ fontSize: "14px" }}
               >
-                {firstname + " " + lastname}
+                {name}
               </td>
               <td
                 className="text-start fw-medium text-light"
                 style={{ fontSize: "14px" }}
               >
-                {gender}
-              </td>
-              <td
-                className="text-start fw-medium text-light"
-                style={{ fontSize: "14px" }}
-              >
-                {dob}
+                {userId}
               </td>
               <td className="d-flex justify-content-end gap-2">
                 <button
