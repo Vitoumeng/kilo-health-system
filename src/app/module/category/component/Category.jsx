@@ -5,7 +5,7 @@ import Table from "./Table";
 import Pagination from "../../../utils/Pagination";
 
 const Category = () => {
-  const { category, navigate, fetchCategory, paging } = useCategory();
+  const { category, navigate, fetchCategory, paging, onDeleteCategory } = useCategory();
 
   useEffect(() => {
     fetchCategory();
@@ -45,7 +45,7 @@ const Category = () => {
             </button>
           </div>
 
-          <Table data={category} navigate={navigate} handleDelete={""} />
+          <Table data={category} navigate={navigate} handleDelete={onDeleteCategory} />
 
           <Pagination paging={paging} setPaging={fetchCategory} />
         </div>
