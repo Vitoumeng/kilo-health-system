@@ -18,7 +18,7 @@ const Table = ({ data, navigate, handleDelete }) => {
               className="text-start fw-semibold text-light"
               style={{ fontSize: "14px" }}
             >
-              SubTitle
+              Title
             </th>
             <th
               scope="col"
@@ -44,7 +44,7 @@ const Table = ({ data, navigate, handleDelete }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map(({ id, subTitle, status, publicAt }, index) => (
+          {data.map(({ id, title, status, publicAt }, index) => (
             <tr key={index}>
               <td
                 className="text-start fw-medium text-light"
@@ -56,7 +56,7 @@ const Table = ({ data, navigate, handleDelete }) => {
                 className="text-start fw-medium text-light"
                 style={{ fontSize: "14px" }}
               >
-                {subTitle}
+                {title}
               </td>
               <td
                 className="text-start fw-medium text-light"

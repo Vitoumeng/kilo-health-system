@@ -2,6 +2,7 @@ import { IoAddSharp, IoSearch } from "react-icons/io5";
 import usePost from "../core/action";
 import { useEffect } from "react";
 import Table from "./Table";
+import Pagination from "../../../utils/Pagination";
 
 const Post = () => {
   const { post, fetchPost, paging, navigate } = usePost();
@@ -9,6 +10,8 @@ const Post = () => {
   useEffect(() => {
     fetchPost();
   }, []); // eslint-disable-line
+
+  const onChangeSearch = (e) => fetchPost(20, 1, e.target.value);
 
   return (
     <div className="d-flex gap-0 flex-column">
@@ -27,18 +30,21 @@ const Post = () => {
           <div className="d-flex justify-content-between align-items-center mb-3">
             <div className="search-input bg-dark">
               <IoSearch className="search-icon" />
-              <input type="text" placeholder="Search..." />
+              <input
+                type="text"
+                placeholder="Search..."
+                onChange={onChangeSearch}
+              />
             </div>
-            <button
-              className="add-btn"
-              //   onClick={() => navigate("/post/add")}
-            >
+            <button className="add-btn" onClick={() => navigate("/post/add")}>
               <IoAddSharp style={{ fontSize: "20px" }} />
               <span>Add</span>
             </button>
           </div>
 
           <Table data={post} navigate={navigate} handleDelete={""} />
+
+          <Pagination paging={paging} setPaging={fetchPost} />
         </div>
       </div>
     </div>
