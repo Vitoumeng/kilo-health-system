@@ -2,19 +2,32 @@ import { useParams } from "react-router";
 import useUser from "../core/action";
 import { useEffect } from "react";
 import useRole from "../../Role/core/action";
+import useFile from "../../../file-upload/core/action";
 
 const Edit = () => {
   const { roles, fetchRole } = useRole();
   const { fetchUserById, userDetails, onChangeEdit, onUpdateUser } = useUser();
   const { id } = useParams();
+  const { file, fetchFiles } = useFile();
 
   useEffect(() => {
+    fetchFiles(20000, 1);
     fetchRole();
     fetchUserById(id);
   }, [id]);
 
-  let { firstname, lastname, gender, dob, role, address, email, phone } =
-    userDetails;
+  let {
+    firstname,
+    lastname,
+    gender,
+    dob,
+    role,
+    address,
+    email,
+    phone,
+    fileMedia,
+    fileMediaId,
+  } = userDetails;
 
   console.log(userDetails);
 
@@ -177,6 +190,32 @@ const Edit = () => {
             {roles?.map((roleItem) => (
               <option key={roleItem.id} value={roleItem.id}>
                 {roleItem.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="mb-3">
+          <label
+            htmlFor="fileMediaId"
+            className="form-label text-light text-start"
+          >
+            File Media <span className="text-danger">*</span>
+          </label>
+          <select
+            className="form-select bg-dark text-light border-0"
+            id="fileMediaId"
+            name="fileMediaId"
+            required
+            value={fileMediaId}
+            onChange={onChangeEdit}
+          >
+            <option value="" selected disabled>
+              Select Media Id <span className="text-danger">*</span>
+            </option>
+            {file?.map((fi) => (
+              <option key={fi?.id} value={fi?.id}>
+                {fi?.fileName}
               </option>
             ))}
           </select>
