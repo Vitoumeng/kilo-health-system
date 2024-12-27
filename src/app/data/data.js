@@ -1,7 +1,7 @@
 import { BsPostcard } from "react-icons/bs";
 import { FaListUl } from "react-icons/fa";
 import { LuUser, LuUserCog } from "react-icons/lu";
-import { MdOutlineTopic, MdSpeed } from "react-icons/md";
+import { MdAttachFile, MdOutlineTopic, MdSpeed } from "react-icons/md";
 
 const sideBarItems = [
   {
@@ -16,6 +16,11 @@ const sideBarItems = [
   {
     heading: "Content Management",
     items: [
+      {
+        name: "File",
+        icon: <MdAttachFile style={{ fontSize: "1.15rem" }} />,
+        path: "/file",
+      },
       {
         name: "Category",
         icon: <FaListUl style={{ fontSize: "1.15rem" }} />,

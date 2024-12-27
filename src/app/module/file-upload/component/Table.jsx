@@ -1,6 +1,6 @@
-import { FaRegTrashCan, FaRegPenToSquare } from "react-icons/fa6";
+import { FaPen, FaTrash } from "react-icons/fa";
 
-const Table = ({ data, navigate, handleDelete }) => {
+const Table = ({ data, handleDelete, navigate }) => {
   return (
     <div className="table-responsive rounded-2">
       <table className="table table-dark dashed-border-table overflow-x-scroll">
@@ -11,21 +11,21 @@ const Table = ({ data, navigate, handleDelete }) => {
               className="text-start fw-semibold text-light"
               style={{ fontSize: "14px" }}
             >
-              No.
+              File Name
             </th>
             <th
               scope="col"
               className="text-start fw-semibold text-light"
               style={{ fontSize: "14px" }}
             >
-              Name
+              File Type
             </th>
             <th
               scope="col"
               className="text-start fw-semibold text-light"
               style={{ fontSize: "14px" }}
             >
-              User Id
+              File Size
             </th>
             <th
               scope="col"
@@ -37,38 +37,38 @@ const Table = ({ data, navigate, handleDelete }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map(({ id, name, userId }, index) => (
-            <tr key={index}>
+          {data.map((item) => (
+            <tr key={item.id}>
               <td
                 className="text-start fw-medium text-light"
                 style={{ fontSize: "14px" }}
               >
-                {index + 1}
+                {item.fileName}
               </td>
               <td
                 className="text-start fw-medium text-light"
                 style={{ fontSize: "14px" }}
               >
-                {name}
+                {item.fileSize}
               </td>
               <td
                 className="text-start fw-medium text-light"
                 style={{ fontSize: "14px" }}
               >
-                {userId}
+                {item.fileType}
               </td>
               <td className="d-flex justify-content-end gap-2">
                 <button
                   className="action-btn btn-1"
-                  onClick={() => navigate(`/user/edit/${id}`)}
+                  onClick={() => navigate(`/file-upload/edit/${item.id}`)}
                 >
-                  <FaRegPenToSquare />
+                  <FaPen />
                 </button>
                 <button
                   className="action-btn btn-2"
-                  onClick={() => handleDelete(id)}
+                  onClick={() => handleDelete(item.id)}
                 >
-                  <FaRegTrashCan />
+                  <FaTrash />
                 </button>
               </td>
             </tr>

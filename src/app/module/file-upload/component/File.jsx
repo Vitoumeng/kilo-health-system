@@ -1,24 +1,22 @@
 import { IoAddSharp, IoSearch } from "react-icons/io5";
 import Table from "./Table";
 import { useEffect } from "react";
-import { useNavigate } from "react-router";
-import useCategory from "../core/action";
+import useFile from "../core/action";
 
-const Category = () => {
-  const { category, navigate, fetchCategory } = useCategory();
+const File = () => {
+  const { file, fetchFiles, navigate } = useFile();
+
   useEffect(() => {
-    fetchCategory();
+    fetchFiles();
   }, []); // eslint-disable-line
-
-  console.log(category);
 
   return (
     <div className="d-flex gap-0 flex-column">
       <div className="d-flex gap-0 flex-column align-items-baseline">
         <div className="container p-3 d-flex align-items-start flex-column">
-          <h4 className="mb-0">Category List</h4>
+          <h4 className="mb-0">File List</h4>
           <p className="fw-medium text-secondary">
-            Category <span className="ms-2 text-light">Category List</span>
+            File Upload <span className="ms-2 text-light">File List</span>
           </p>
         </div>
 
@@ -31,22 +29,17 @@ const Category = () => {
               <IoSearch className="search-icon" />
               <input type="text" placeholder="Search..." />
             </div>
-            <button
-              onClick={() => navigate("/category/add")}
-              className="add-btn"
-            >
+            <button className="add-btn">
               <IoAddSharp style={{ fontSize: "20px" }} />
               <span>Add</span>
             </button>
           </div>
 
-          <Table data={category} navigate={navigate} handleDelete={[]} />
-
-          {/* <Pagination paging={[]} setPaging={[]} /> */}
+          <Table data={file} navigate={navigate} handleDelete={""} />
         </div>
       </div>
     </div>
   );
 };
 
-export default Category;
+export default File;
