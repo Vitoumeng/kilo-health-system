@@ -11,6 +11,8 @@ const Category = () => {
     fetchCategory();
   }, []); // eslint-disable-line
 
+  const onChangeSearch = (e) => fetchCategory(20, 1, e.target.value);
+
   return (
     <div className="d-flex gap-0 flex-column">
       <div className="d-flex gap-0 flex-column align-items-baseline">
@@ -28,7 +30,11 @@ const Category = () => {
           <div className="d-flex justify-content-between align-items-center mb-3">
             <div className="search-input bg-dark">
               <IoSearch className="search-icon" />
-              <input type="text" placeholder="Search..." />
+              <input
+                type="text"
+                placeholder="Search..."
+                onChange={onChangeSearch}
+              />
             </div>
             <button
               className="add-btn"
