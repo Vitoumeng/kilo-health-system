@@ -2,4 +2,6 @@ import axios from "axios";
 
 const reqGetFile = (param) => axios.get("/api/v1/files", { params: param });
 
-export { reqGetFile };
+const reqDeleteFile = (id) => axios.delete(`/api/v1/files/${id}`);
+
+export { reqGetFile, reqDeleteFile };

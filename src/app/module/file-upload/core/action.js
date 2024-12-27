@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { reqGetFile } from "./request";
+import { reqDeleteFile, reqGetFile } from "./request";
 import { setFile } from "./reducer";
+import Swal from "sweetalert2";
 
 const useFile = () => {
   const file = useSelector((state) => state.file);
@@ -19,10 +20,49 @@ const useFile = () => {
       });
   };
 
+  const onDeleteFile = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      background: "#222525",
+      color: "#fff",
+      showCancelButton: true,
+      confirmButtonColor: "lightcoral",
+      cancelButtonColor: "lightgrey",
+      confirmButtonText: "OK",
+      cancelButtonText: "Cancel",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        reqDeleteFile(id)
+          .then(() => {
+            Swal.fire({
+              background: "#222525",
+              color: "#fff",
+              icon: "success",
+              title: `Delete FIle ${id}`,
+              text: "Successfully deleted",
+            });
+            fetchFiles();
+          })
+          .catch((err) => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              background: "#222525",
+              color: "#fff",
+              text: "Error deleting File",
+            });
+            console.log(err);
+          });
+      }
+    });
+  };
+
   return {
     ...file,
     navigate,
     fetchFiles,
+    onDeleteFile,
   };
 };
 

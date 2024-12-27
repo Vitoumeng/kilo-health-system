@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import useFile from "../core/action";
 
 const File = () => {
-  const { file, fetchFiles, navigate } = useFile();
+  const { file, fetchFiles, navigate, onDeleteFile } = useFile();
 
   useEffect(() => {
     fetchFiles();
@@ -35,7 +35,7 @@ const File = () => {
             </button>
           </div>
 
-          <Table data={file} navigate={navigate} handleDelete={""} />
+          <Table data={file} navigate={navigate} handleDelete={onDeleteFile} />
         </div>
       </div>
     </div>
