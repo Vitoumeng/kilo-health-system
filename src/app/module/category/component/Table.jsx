@@ -1,4 +1,5 @@
-import { FaPen, FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
+import { FaRegPenToSquare } from "react-icons/fa6";
 
 const Table = ({ data, handleDelete, navigate }) => {
   return (
@@ -11,21 +12,21 @@ const Table = ({ data, handleDelete, navigate }) => {
               className="text-start fw-semibold text-light"
               style={{ fontSize: "14px" }}
             >
-              File Name
+              Id
             </th>
             <th
               scope="col"
               className="text-start fw-semibold text-light"
               style={{ fontSize: "14px" }}
             >
-              File Type
+              Name
             </th>
             <th
               scope="col"
               className="text-start fw-semibold text-light"
               style={{ fontSize: "14px" }}
             >
-              File Size
+              Image
             </th>
             <th
               scope="col"
@@ -38,29 +39,40 @@ const Table = ({ data, handleDelete, navigate }) => {
         </thead>
         <tbody>
           {data.map((item) => (
-            <tr key={item?.id}>
+            <tr key={item.id}>
               <td
                 className="text-start fw-medium text-light"
                 style={{ fontSize: "14px" }}
               >
-                {item?.fileName}
+                {item?.id}
               </td>
               <td
                 className="text-start fw-medium text-light"
                 style={{ fontSize: "14px" }}
               >
-                {item?.fileSize}
+                {item?.name}
               </td>
-              <td
-                className="text-start fw-medium text-light"
-                style={{ fontSize: "14px" }}
-              >
-                {item?.fileType}
+              <td className="text-start fw-medium text-secondary">
+                <img
+                  src={item?.url}
+                  alt=""
+                  style={{
+                    width: "35px",
+                    height: "35px",
+                  }}
+                  className=" object-fit-cover rounded-2 overflow-hidden"
+                />
               </td>
               <td className="d-flex justify-content-end gap-2">
                 <button
+                  className="action-btn btn-1"
+                  onClick={() => navigate(`/category/edit/${id}`)}
+                >
+                  <FaRegPenToSquare />
+                </button>
+                <button
                   className="action-btn btn-2"
-                  onClick={() => handleDelete(item?.id)}
+                  onClick={() => handleDelete(item.id)}
                 >
                   <FaTrash />
                 </button>
