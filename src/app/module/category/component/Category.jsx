@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import useCategory from "../core/action";
 import { IoAddSharp, IoSearch } from "react-icons/io5";
 import Table from "./Table";
+import Pagination from "../../../utils/Pagination";
 
 const Category = () => {
-  const { category, navigate, fetchCategory } = useCategory();
+  const { category, navigate, fetchCategory, paging } = useCategory();
 
   useEffect(() => {
     fetchCategory();
@@ -38,7 +39,9 @@ const Category = () => {
             </button>
           </div>
 
-          <Table data={category} navigate={navigate} handleDelete={''} />
+          <Table data={category} navigate={navigate} handleDelete={""} />
+
+          <Pagination paging={paging} setPaging={fetchCategory} />
         </div>
       </div>
     </div>
