@@ -10,6 +10,7 @@ const initUser = {
   lastname: "",
   dob: "",
   gender: "Male",
+  fileMediaId: null,
 };
 
 const initialState = {

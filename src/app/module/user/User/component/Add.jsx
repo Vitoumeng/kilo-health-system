@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import useRole from "../../Role/core/action";
 import useUser from "../core/action";
+import useFile from "../../../file-upload/core/action";
 
 const Add = () => {
   const { fetchRole, roles } = useRole();
   const { userInfo, onChangeAdd, onCreateUser } = useUser();
+  const { fetchFiles, file } = useFile();
 
   let {
     firstname,
@@ -16,9 +18,11 @@ const Add = () => {
     address,
     gender,
     dob,
+    fileMediaId,
   } = userInfo;
 
   useEffect(() => {
+    fetchFiles(20000, 1);
     fetchRole();
   }, []);
 
@@ -214,6 +218,32 @@ const Add = () => {
             {roles?.map((roleItem) => (
               <option key={roleItem.id} value={roleItem.id}>
                 {roleItem.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="mb-3">
+          <label
+            htmlFor="fileMediaId"
+            className="form-label text-light text-start"
+          >
+            File Media <span className="text-danger">*</span>
+          </label>
+          <select
+            className="form-select bg-dark text-light border-0"
+            id="fileMediaId"
+            name="fileMediaId"
+            required
+            value={fileMediaId || ""}
+            onChange={onChangeAdd}
+          >
+            <option value="" selected disabled>
+              Select Media Id <span className="text-danger">*</span>
+            </option>
+            {file?.map((fi) => (
+              <option key={fi?.id} value={fi?.id}>
+                {fi?.fileName}
               </option>
             ))}
           </select>

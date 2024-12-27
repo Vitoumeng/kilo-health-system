@@ -89,11 +89,7 @@ const useUser = () => {
       navigate("/user");
       dispatch(resetUserInfo());
     } catch (err) {
-      const errorMessages = err.response?.data?.data || [
-        "Duplicate Phone Number!",
-      ];
-
-      const formattedErrors = errorMessages
+      const formattedErrors = err.response?.data?.data
         .map((message) => `<li>${message}</li>`)
         .join("");
 
@@ -102,7 +98,9 @@ const useUser = () => {
         background: "#222525",
         color: "#fff",
         title: "Oops...",
-        html: `<ul style="list-style: none">${formattedErrors}</ul>`,
+        html: `<ul style="list-style: none; text-align: start; row-gap: 1rem">
+          <li>${formattedErrors}</li>
+        </ul>`,
       });
 
       console.error("Error details:", err.response?.data);
@@ -178,7 +176,7 @@ const useUser = () => {
     onChangeAdd,
     onCreateUser,
     onChangeEdit,
-    onUpdateUser
+    onUpdateUser,
   };
 };
 
