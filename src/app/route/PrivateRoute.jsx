@@ -10,6 +10,7 @@ import RoleAdd from "../module/user/Role/component/Add";
 import File from "../module/file-upload/component/File";
 import FileAdd from "../module/file-upload/component/Add";
 import Category from "../module/category/component/Category";
+import Post from "../module/post/component/Post";
 
 const PrivateRoute = () => {
   const { auth } = useLogin();
@@ -19,7 +20,6 @@ const PrivateRoute = () => {
       {auth ? (
         <Route path="/" element={<RootLayout />}>
           <Route index element={<h1>Dashboard</h1>}></Route>
-          <Route path="/post" element={<h1>Post</h1>}></Route>
           <Route path="/topic" element={<h1>Topic</h1>}></Route>
           <Route path="/user" element={<User />} />
           <Route path="/user/add" element={<UserAdd />} />
@@ -29,6 +29,7 @@ const PrivateRoute = () => {
           <Route path="/file" element={<File />} />
           <Route path="/file/add" element={<FileAdd />} />
           <Route path="/category" element={<Category />} />
+          <Route path="/post" element={<Post />} />
         </Route>
       ) : (
         <>
