@@ -2,9 +2,10 @@ import { IoAddSharp, IoSearch } from "react-icons/io5";
 import Table from "./Table";
 import { useEffect } from "react";
 import useFile from "../core/action";
+import Pagination from "../../../utils/Pagination";
 
 const File = () => {
-  const { file, fetchFiles, navigate, onDeleteFile } = useFile();
+  const { file, fetchFiles, paging, navigate, onDeleteFile } = useFile();
 
   useEffect(() => {
     fetchFiles();
@@ -36,6 +37,8 @@ const File = () => {
           </div>
 
           <Table data={file} navigate={navigate} handleDelete={onDeleteFile} />
+
+          <Pagination paging={paging} setPaging={fetchFiles} />
         </div>
       </div>
     </div>
