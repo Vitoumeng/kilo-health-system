@@ -36,7 +36,7 @@ const File = () => {
                 onChange={onChangeSearch}
               />
             </div>
-            <button className="add-btn">
+            <button className="add-btn" onClick={() => navigate("/file/add")}>
               <IoAddSharp style={{ fontSize: "20px" }} />
               <span>Add</span>
             </button>

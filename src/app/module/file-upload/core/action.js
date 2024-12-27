@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { reqDeleteFile, reqGetFile } from "./request";
+import { reqCreateFile, reqDeleteFile, reqGetFile } from "./request";
 import { setFile } from "./reducer";
 import Swal from "sweetalert2";
 
@@ -58,11 +58,35 @@ const useFile = () => {
     });
   };
 
+  const onCreateFile = async (e, payload) => {
+    e.preventDefault();
+
+    try {
+      const res = await reqCreateFile(payload);
+
+      Swal.fire({
+        icon: "success",
+        title: "Upload File",
+        text: "Successfully uploaded file",
+      });
+      console.log(res.data);
+
+      navigate("/file");
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Error Creating file",
+      });
+    }
+  };
+
   return {
     ...file,
     navigate,
     fetchFiles,
     onDeleteFile,
+    onCreateFile,
   };
 };
 

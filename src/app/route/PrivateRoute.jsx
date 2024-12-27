@@ -8,6 +8,7 @@ import UserEdit from "../module/user/User/component/Edit";
 import Role from "../module/user/Role/component/Role";
 import RoleAdd from "../module/user/Role/component/Add";
 import File from "../module/file-upload/component/File";
+import FileAdd from "../module/file-upload/component/Add";
 
 const PrivateRoute = () => {
   const { auth } = useLogin();
@@ -25,6 +26,7 @@ const PrivateRoute = () => {
           <Route path="/role" element={<Role />} />
           <Route path="/role/add" element={<RoleAdd />} />
           <Route path="/file" element={<File />} />
+          <Route path="/file/add" element={<FileAdd />} />
           <Route path="/category" element={<h1>Category</h1>} />
         </Route>
       ) : (

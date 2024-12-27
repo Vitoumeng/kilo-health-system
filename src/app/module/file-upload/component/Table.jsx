@@ -59,12 +59,6 @@ const Table = ({ data, handleDelete, navigate }) => {
               </td>
               <td className="d-flex justify-content-end gap-2">
                 <button
-                  className="action-btn btn-1"
-                  onClick={() => navigate(`/file-upload/edit/${item.id}`)}
-                >
-                  <FaPen />
-                </button>
-                <button
                   className="action-btn btn-2"
                   onClick={() => handleDelete(item.id)}
                 >
