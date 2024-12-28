@@ -1,8 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { reqCreateTopic, reqDeleteTopic, reqGetTopic } from "./request";
-import { resetTopicInfo, setTopic, setTopicInfo } from "./reducer";
+import {
+  reqCreateTopic,
+  reqDeleteTopic,
+  reqGetTopic,
+  reqGetTopicById,
+  reqUpdateTopic,
+} from "./request";
+import {
+  resetTopicInfo,
+  setTopic,
+  setTopicDetails,
+  setTopicInfo,
+} from "./reducer";
 import Swal from "sweetalert2";
+import { reqUpdateUser } from "../../user/User/core/request";
 
 const useTopic = () => {
   const topic = useSelector((state) => state.topic);
@@ -90,6 +102,58 @@ const useTopic = () => {
     });
   };
 
+  const fetchTopicById = (id) => {
+    return reqGetTopicById(id)
+      .then((res) => {
+        // console.log(res.data.data);
+        const topicData = res.data.data;
+        const updatedTopicDetails = {
+          ...topicData,
+          fileMediaId: topicData.fileMedia?.id || null,
+          categoryId: topicData.category?.id || null,
+        };
+        dispatch(setTopicDetails(updatedTopicDetails));
+      })
+      .catch((er) => {
+        console.log(er);
+      });
+  };
+
+  const onUpdateTopic = (e) => {
+    e.preventDefault();
+
+    let topi = topic.topicDetails;
+
+    return reqUpdateTopic(topi.id, topi)
+      .then(() => {
+        Swal.fire({
+          icon: "success",
+          title: "Edit Topic",
+          background: "#222525",
+          color: "#fff",
+          text: "Successfully edited",
+        });
+        fetchTopicById(topi.id);
+      })
+      .catch(() => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          background: "#222525",
+          color: "#fff",
+          text: "Error Editing Topic",
+        });
+      });
+  };
+
+  const onChangeEdit = (e) =>
+    dispatch(
+      setTopicDetails({
+        ...topic.topicDetails,
+        [e.target.name]: e.target.value,
+      })
+    );
+
   return {
     ...topic,
     navigate,
@@ -97,6 +161,9 @@ const useTopic = () => {
     onChangeAdd,
     onCreateTopic,
     onDeleteTopic,
+    fetchTopicById,
+    onChangeEdit,
+    onUpdateTopic,
   };
 };
 

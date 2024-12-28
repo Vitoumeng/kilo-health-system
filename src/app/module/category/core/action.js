@@ -108,7 +108,7 @@ const useCategory = () => {
         ...categoryData,
         fileMediaId: categoryData.fileMedia?.id || null,
       };
-      console.log(updatedCategoryDetails);
+      // console.log(updatedCategoryDetails);
       dispatch(setCategoryDetails(updatedCategoryDetails));
     });
   };

@@ -10,6 +10,7 @@ const initalState = {
   topic: [],
   paging: {},
   topicInfo: initTopic,
+  topicDetails: [],
 };
 
 const topicSlice = createSlice({
@@ -27,9 +28,13 @@ const topicSlice = createSlice({
     resetTopicInfo: (state) => {
       state.topicInfo = initTopic;
     },
+    setTopicDetails: (state, action) => {
+      state.topicDetails = action.payload;
+    },
   },
 });
 
-export const { setTopic, setTopicInfo, resetTopicInfo } = topicSlice.actions;
+export const { setTopic, setTopicInfo, resetTopicInfo, setTopicDetails } =
+  topicSlice.actions;
 
 export default topicSlice.reducer;
