@@ -131,6 +131,8 @@ const useCategory = () => {
         Swal.fire({
           icon: "success",
           title: "Edit Category",
+          background: "#222525",
+          color: "#fff",
           text: "Successfully edited",
         });
         fetchCategoryById(cate.id);
@@ -139,6 +141,8 @@ const useCategory = () => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
+          background: "#222525",
+          color: "#fff",
           text: "Error Editing Category",
         });
       });
