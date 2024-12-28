@@ -2,9 +2,10 @@ import { IoAddSharp, IoSearch } from "react-icons/io5";
 import { useEffect } from "react";
 import useTopic from "../core/action";
 import Table from "./Table";
+import Pagination from "../../../utils/Pagination";
 
 const Topic = () => {
-  const { topic, navigate, fetchTopic } = useTopic();
+  const { topic, paging, navigate, fetchTopic } = useTopic();
 
   useEffect(() => {
     fetchTopic();
@@ -36,6 +37,8 @@ const Topic = () => {
           </div>
 
           <Table data={topic} navigate={navigate} handleDelete={""} />
+
+          <Pagination paging={paging} setPaging={fetchTopic} />
         </div>
       </div>
     </div>
