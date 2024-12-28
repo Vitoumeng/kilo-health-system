@@ -5,6 +5,7 @@ import roleSlice from "../module/user/Role/core/reducer";
 import fileSlice from "../module/file-upload/core/reducer";
 import categorySlice from "../module/category/core/reducer";
 import postSlice from "../module/post/core/reducer";
+import topicSlice from "../module/topic/core/reducer";
 
 const rootReducer = combineReducers({
   auth: authSlice,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   file: fileSlice,
   category: categorySlice,
   post: postSlice,
+  topic: topicSlice,
 });
 
 export default rootReducer;
