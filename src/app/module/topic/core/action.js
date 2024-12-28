@@ -38,7 +38,7 @@ const useTopic = () => {
         text: "Topic has been successfully created!",
       });
       navigate("/topic");
-      onResetAdd;
+      onResetAdd();
     } catch (err) {
       Swal.fire({
         icon: "error",

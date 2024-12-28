@@ -25,7 +25,7 @@ const topicSlice = createSlice({
       state.topicInfo[data.name] = data.value;
     },
     resetTopicInfo: (state) => {
-      state.topicInfo = { ...initTopic };
+      state.topicInfo = initTopic;
     },
   },
 });
