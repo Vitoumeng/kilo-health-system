@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { reqCreatePost, reqDeletePost, reqGetPost } from "./request";
-import { setPost, setPostInfo } from "./reducer";
+import { resetPostInfo, setPost, setPostInfo } from "./reducer";
 import Swal from "sweetalert2";
 import moment from "moment";
 
@@ -62,6 +62,8 @@ const usePost = () => {
   const onChangeAdd = (e) =>
     dispatch(setPostInfo({ name: e.target.name, value: e.target.value }));
 
+  const onResetPost = () => dispatch(resetPostInfo());
+
   const onCreatePost = async (e) => {
     e.preventDefault();
 
@@ -72,7 +74,7 @@ const usePost = () => {
     const updatedPostInfo = { ...post.postInfo, publicAt: formattedPublicAt };
 
     try {
-      await reqCreatePost(updatedPostInfo); 
+      await reqCreatePost(updatedPostInfo);
       Swal.fire({
         background: "#222525",
         color: "#fff",
@@ -81,7 +83,7 @@ const usePost = () => {
         text: "Post has been successfully created!",
       });
       navigate("/post");
-      // dispatch(resetUserInfo());
+      onResetPost();
     } catch (err) {
       Swal.fire({
         icon: "error",
