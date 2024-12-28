@@ -5,7 +5,7 @@ import Table from "./Table";
 import Pagination from "../../../utils/Pagination";
 
 const Post = () => {
-  const { post, fetchPost, paging, navigate } = usePost();
+  const { post, fetchPost, paging, navigate, onDeletePost } = usePost();
 
   useEffect(() => {
     fetchPost();
@@ -42,7 +42,7 @@ const Post = () => {
             </button>
           </div>
 
-          <Table data={post} navigate={navigate} handleDelete={""} />
+          <Table data={post} navigate={navigate} handleDelete={onDeletePost} />
 
           <Pagination paging={paging} setPaging={fetchPost} />
         </div>
