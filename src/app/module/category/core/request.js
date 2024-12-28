@@ -5,4 +5,6 @@ const reqGetCategory = (param) =>
 
 const reqDeleteCategory = (id) => axios.delete(`/api/v1/category/${id}`);
 
-export { reqGetCategory, reqDeleteCategory };
+const reqCreateCategory = (payload) => axios.post("/api/v1/category", payload);
+
+export { reqGetCategory, reqDeleteCategory, reqCreateCategory };

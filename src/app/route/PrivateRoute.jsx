@@ -10,6 +10,7 @@ import RoleAdd from "../module/user/Role/component/Add";
 import File from "../module/file-upload/component/File";
 import FileAdd from "../module/file-upload/component/Add";
 import Category from "../module/category/component/Category";
+import CategoryAdd from "../module/category/component/Add";
 import Post from "../module/post/component/Post";
 import Topic from "../module/topic/component/Topic";
 
@@ -29,6 +30,7 @@ const PrivateRoute = () => {
           <Route path="/file" element={<File />} />
           <Route path="/file/add" element={<FileAdd />} />
           <Route path="/category" element={<Category />} />
+          <Route path="/category/add" element={<CategoryAdd />} />
           <Route path="/post" element={<Post />} />
           <Route path="/topic" element={<Topic />} />
         </Route>

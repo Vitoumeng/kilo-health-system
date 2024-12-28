@@ -1,7 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { reqDeleteCategory, reqGetCategory } from "./request";
-import { setCategory } from "./reducer";
+import {
+  reqCreateCategory,
+  reqDeleteCategory,
+  reqGetCategory,
+} from "./request";
+import { resetCategoryInfo, setCategory, setCategoryInfo } from "./reducer";
 import Swal from "sweetalert2";
 
 const useCategory = () => {
@@ -58,11 +62,43 @@ const useCategory = () => {
     });
   };
 
+  const onChangeAdd = (e) =>
+    dispatch(setCategoryInfo({ name: e.target.name, value: e.target.value }));
+
+  const onCreateCategory = async (e) => {
+    e.preventDefault();
+
+    try {
+      await reqCreateCategory(category.categoryInfo);
+      Swal.fire({
+        background: "#222525",
+        color: "#fff",
+        icon: "success",
+        title: "Category Created",
+        text: "Category has been successfully created!",
+      });
+      navigate("/category");
+      dispatch(resetCategoryInfo());
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        background: "#222525",
+        color: "#fff",
+        title: "Oops...",
+        text: err?.message,
+      });
+
+      console.error("Error details:", err.response?.data);
+    }
+  };
+
   return {
     ...category,
     navigate,
     fetchCategory,
-    onDeleteCategory
+    onDeleteCategory,
+    onChangeAdd,
+    onCreateCategory,
   };
 };
 
