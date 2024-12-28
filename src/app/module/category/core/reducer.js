@@ -9,6 +9,7 @@ const initailState = {
   category: [],
   paging: {},
   categoryInfo: initCategory,
+  categoryDetails: [],
 };
 
 const categorySlice = createSlice({
@@ -26,10 +27,17 @@ const categorySlice = createSlice({
     resetCategoryInfo: (state) => {
       state.categoryInfo = { ...initCategory };
     },
+    setCategoryDetails: (state, action) => {
+      state.categoryDetails = action.payload;
+    },
   },
 });
 
-export const { setCategory, setCategoryInfo, resetCategoryInfo } =
-  categorySlice.actions;
+export const {
+  setCategory,
+  setCategoryInfo,
+  resetCategoryInfo,
+  setCategoryDetails,
+} = categorySlice.actions;
 
 export default categorySlice.reducer;

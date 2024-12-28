@@ -7,4 +7,15 @@ const reqDeleteCategory = (id) => axios.delete(`/api/v1/category/${id}`);
 
 const reqCreateCategory = (payload) => axios.post("/api/v1/category", payload);
 
-export { reqGetCategory, reqDeleteCategory, reqCreateCategory };
+const reqGetCategoryById = (id) => axios.get(`/api/v1/category/${id}`);
+
+const reqUpdateCategory = (id, payload) =>
+  axios.put(`/api/v1/category/${id}`, payload);
+
+export {
+  reqGetCategory,
+  reqDeleteCategory,
+  reqCreateCategory,
+  reqGetCategoryById,
+  reqUpdateCategory,
+};

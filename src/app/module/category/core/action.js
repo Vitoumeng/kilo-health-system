@@ -4,8 +4,15 @@ import {
   reqCreateCategory,
   reqDeleteCategory,
   reqGetCategory,
+  reqGetCategoryById,
+  reqUpdateCategory,
 } from "./request";
-import { resetCategoryInfo, setCategory, setCategoryInfo } from "./reducer";
+import {
+  resetCategoryInfo,
+  setCategory,
+  setCategoryDetails,
+  setCategoryInfo,
+} from "./reducer";
 import Swal from "sweetalert2";
 
 const useCategory = () => {
@@ -94,6 +101,49 @@ const useCategory = () => {
     }
   };
 
+  const fetchCategoryById = (id) => {
+    return reqGetCategoryById(id).then((res) => {
+      const categoryData = res.data.data;
+      const updatedCategoryDetails = {
+        ...categoryData,
+        fileMediaId: categoryData.fileMedia?.id || null,
+      };
+      console.log(updatedCategoryDetails);
+      dispatch(setCategoryDetails(updatedCategoryDetails));
+    });
+  };
+
+  const onChangeEdit = (e) =>
+    dispatch(
+      setCategoryDetails({
+        ...category.categoryDetails,
+        [e.target.name]: e.target.value,
+      })
+    );
+
+  const onUpdateCategory = (e) => {
+    e.preventDefault();
+
+    let cate = category.categoryDetails;
+
+    return reqUpdateCategory(cate.id, cate)
+      .then(() => {
+        Swal.fire({
+          icon: "success",
+          title: "Edit Category",
+          text: "Successfully edited",
+        });
+        fetchCategoryById(cate.id);
+      })
+      .catch(() => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Error Editing Category",
+        });
+      });
+  };
+
   return {
     ...category,
     navigate,
@@ -101,6 +151,9 @@ const useCategory = () => {
     onDeleteCategory,
     onChangeAdd,
     onCreateCategory,
+    fetchCategoryById,
+    onChangeEdit,
+    onUpdateCategory,
   };
 };
 
