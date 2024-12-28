@@ -154,6 +154,8 @@ const useUser = () => {
         Swal.fire({
           icon: "success",
           title: "Edit User",
+          background: "#222525",
+          color: "#fff",
           text: "Successfully edited",
         });
         fetchUserById(userDetails.id);
@@ -162,6 +164,8 @@ const useUser = () => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
+          background: "#222525",
+          color: "#fff",
           text: "Error Editing user",
         });
       });
