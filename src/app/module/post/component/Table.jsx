@@ -1,7 +1,7 @@
 import { FaRegTrashCan, FaRegPenToSquare } from "react-icons/fa6";
 
 const Table = ({ data, navigate, handleDelete }) => {
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className="table-responsive rounded-2">
