@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { reqCreateTopic, reqGetTopic } from "./request";
+import { reqCreateTopic, reqDeleteTopic, reqGetTopic } from "./request";
 import { resetTopicInfo, setTopic, setTopicInfo } from "./reducer";
 import Swal from "sweetalert2";
 
@@ -52,12 +52,51 @@ const useTopic = () => {
     }
   };
 
+  const onDeleteTopic = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      background: "#222525",
+      color: "#fff",
+      showCancelButton: true,
+      confirmButtonColor: "lightcoral",
+      cancelButtonColor: "lightgrey",
+      confirmButtonText: "OK",
+      cancelButtonText: "Cancel",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        reqDeleteTopic(id)
+          .then(() => {
+            Swal.fire({
+              background: "#222525",
+              color: "#fff",
+              icon: "success",
+              title: `Delete Topic ${id}`,
+              text: "Successfully deleted",
+            });
+            fetchTopic();
+          })
+          .catch((err) => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              background: "#222525",
+              color: "#fff",
+              text: "Error deleting Topic",
+            });
+            console.log(err);
+          });
+      }
+    });
+  };
+
   return {
     ...topic,
     navigate,
     fetchTopic,
     onChangeAdd,
     onCreateTopic,
+    onDeleteTopic,
   };
 };
 

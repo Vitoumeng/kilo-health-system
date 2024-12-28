@@ -5,7 +5,7 @@ import Table from "./Table";
 import Pagination from "../../../utils/Pagination";
 
 const Topic = () => {
-  const { topic, paging, navigate, fetchTopic } = useTopic();
+  const { topic, paging, navigate, fetchTopic, onDeleteTopic } = useTopic();
 
   useEffect(() => {
     fetchTopic();
@@ -36,7 +36,11 @@ const Topic = () => {
             </button>
           </div>
 
-          <Table data={topic} navigate={navigate} handleDelete={""} />
+          <Table
+            data={topic}
+            navigate={navigate}
+            handleDelete={onDeleteTopic}
+          />
 
           <Pagination paging={paging} setPaging={fetchTopic} />
         </div>
