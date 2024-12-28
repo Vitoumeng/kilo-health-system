@@ -5,7 +5,7 @@ const Add = () => {
 
   let { name, code, module } = roleInfo;
 
-  console.log(roleInfo);
+  // console.log(roleInfo);
 
   return (
     <div className="d-flex gap-0 flex-column align-items-baseline">

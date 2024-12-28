@@ -65,6 +65,8 @@ const useCategory = () => {
   const onChangeAdd = (e) =>
     dispatch(setCategoryInfo({ name: e.target.name, value: e.target.value }));
 
+  const onResetAdd = () => dispatch(resetCategoryInfo());
+
   const onCreateCategory = async (e) => {
     e.preventDefault();
 
@@ -78,7 +80,7 @@ const useCategory = () => {
         text: "Category has been successfully created!",
       });
       navigate("/category");
-      dispatch(resetCategoryInfo());
+      onResetAdd();
     } catch (err) {
       Swal.fire({
         icon: "error",
