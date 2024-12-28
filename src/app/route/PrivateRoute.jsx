@@ -14,6 +14,7 @@ import CategoryAdd from "../module/category/component/Add";
 import CategoryEdit from "../module/category/component/Edit";
 import Post from "../module/post/component/Post";
 import Topic from "../module/topic/component/Topic";
+import TopicAdd from "../module/topic/component/Add";
 
 const PrivateRoute = () => {
   const { auth } = useLogin();
@@ -35,6 +36,7 @@ const PrivateRoute = () => {
           <Route path="/category/edit/:id" element={<CategoryEdit />} />
           <Route path="/post" element={<Post />} />
           <Route path="/topic" element={<Topic />} />
+          <Route path="/topic/add" element={<TopicAdd />} />
         </Route>
       ) : (
         <>

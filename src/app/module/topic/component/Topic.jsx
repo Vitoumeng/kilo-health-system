@@ -30,7 +30,7 @@ const Topic = () => {
               <IoSearch className="search-icon" />
               <input type="text" placeholder="Search..." />
             </div>
-            <button className="add-btn" onClick={() => navigate("/post/add")}>
+            <button className="add-btn" onClick={() => navigate("/topic/add")}>
               <IoAddSharp style={{ fontSize: "20px" }} />
               <span>Add</span>
             </button>

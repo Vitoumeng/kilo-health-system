@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { reqGetTopic } from "./request";
-import { setTopic } from "./reducer";
+import { reqCreateTopic, reqGetTopic } from "./request";
+import { resetTopicInfo, setTopic, setTopicInfo } from "./reducer";
+import Swal from "sweetalert2";
 
 const useTopic = () => {
   const topic = useSelector((state) => state.topic);
@@ -19,10 +20,44 @@ const useTopic = () => {
       });
   };
 
+  const onChangeAdd = (e) =>
+    dispatch(setTopicInfo({ name: e.target.name, value: e.target.value }));
+
+  const onResetAdd = () => dispatch(resetTopicInfo());
+
+  const onCreateTopic = async (e) => {
+    e.preventDefault();
+
+    try {
+      await reqCreateTopic(topic.topicInfo);
+      Swal.fire({
+        background: "#222525",
+        color: "#fff",
+        icon: "success",
+        title: "Topic Created",
+        text: "Topic has been successfully created!",
+      });
+      navigate("/topic");
+      onResetAdd;
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        background: "#222525",
+        color: "#fff",
+        title: "Oops...",
+        text: err?.message,
+      });
+
+      console.error("Error details:", err.response?.data);
+    }
+  };
+
   return {
     ...topic,
     navigate,
     fetchTopic,
+    onChangeAdd,
+    onCreateTopic,
   };
 };
 
