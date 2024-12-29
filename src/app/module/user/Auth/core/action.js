@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { setAuth, setLogin } from "./reducer";
+import { setAuth, setLogin, setProfile } from "./reducer";
 import { reqLogin } from "./request";
 import Swal from "sweetalert2";
 
@@ -17,10 +17,11 @@ const useLogin = () => {
       const res = await reqLogin(auth.login);
       const response = res.data.data;
 
-    //   console.log(response);
-      dispatch(setAuth(response));
+      //   console.log(response);
       localStorage.setItem("user", JSON.stringify(response.user));
       localStorage.setItem("accessToken", response.token);
+      dispatch(setAuth(response.token));
+      dispatch(setProfile(response.user));
       Swal.fire({
         icon: "success",
         background: "#222525",

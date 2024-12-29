@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAuth } from "../../../../helper/authHelper";
 
 const initUser = {
   email: "vitou@gmail.com",
@@ -8,7 +7,8 @@ const initUser = {
 
 const initialState = {
   login: initUser,
-  auth: getAuth(),
+  profile: JSON.parse(localStorage.getItem("user") ?? "{}"),
+  accessToken: localStorage.getItem("accessToken"),
 };
 
 const authSlice = createSlice({
@@ -16,13 +16,10 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setAuth: (state, action) => {
-      if (!action.payload) {
-        state.auth = state.undefine;
-        localStorage.removeItem("auth");
-        return;
-      }
-      state.auth = action.payload;
-      localStorage.setItem("auth", JSON.stringify(action.payload));
+      state.accessToken = action.payload;
+    },
+    setProfile: (state, action) => {
+      state.profile = action.payload;
     },
     setLogin: (state, action) => {
       const data = action.payload;
@@ -31,6 +28,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setAuth, setLogin } = authSlice.actions;
+export const { setAuth, setLogin, setProfile } = authSlice.actions;
 
 export default authSlice.reducer;

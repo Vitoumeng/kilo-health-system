@@ -20,11 +20,11 @@ import TopicAdd from "../module/topic/component/Add";
 import TopicEdit from "../module/topic/component/Edit";
 
 const PrivateRoute = () => {
-  const { auth } = useLogin();
+  const { accessToken } = useLogin();
 
   return (
     <Routes>
-      {auth ? (
+      {accessToken ? (
         <Route path="/" element={<RootLayout />}>
           <Route index element={<h1>Dashboard</h1>}></Route>
           <Route path="/user" element={<User />} />

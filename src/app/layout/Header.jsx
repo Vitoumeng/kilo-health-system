@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { useLogin } from "../module/user/Auth/core/action";
 
 const Header = () => {
-  const { onLogout, auth } = useLogin();
+  const { onLogout, profile } = useLogin();
 
-  let { username } = auth.user;
+  let { username } = profile;
   // console.log(auth);
 
   return (
