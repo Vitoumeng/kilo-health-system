@@ -1,7 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { reqCreatePost, reqDeletePost, reqGetPost } from "./request";
-import { resetPostInfo, setPost, setPostInfo } from "./reducer";
+import {
+  reqCreatePost,
+  reqDeletePost,
+  reqGetPost,
+  reqGetPostById,
+  reqUpdatePost,
+} from "./request";
+import { resetPostInfo, setPost, setPostDetails, setPostInfo } from "./reducer";
 import Swal from "sweetalert2";
 import moment from "moment";
 
@@ -97,6 +103,54 @@ const usePost = () => {
     }
   };
 
+  const fetchPostById = (id) => {
+    return reqGetPostById(id)
+      .then((res) => {
+        // console.log(res.data.data);
+        const postData = res.data.data;
+        const updatePostDetails = {
+          ...postData,
+          mediaId: postData.fileMedia?.id || null,
+        };
+        dispatch(setPostDetails(updatePostDetails));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const onChangeEdit = (e) =>
+    dispatch(
+      setPostDetails({ ...post.postDetails, [e.target.name]: e.target.value })
+    );
+
+  const onUpdatePost = (e) => {
+    e.preventDefault();
+
+    let pos = post.postDetails;
+
+    return reqUpdatePost(pos.id, pos)
+      .then(() => {
+        Swal.fire({
+          icon: "success",
+          title: "Edit Post",
+          background: "#222525",
+          color: "#fff",
+          text: "Successfully edited",
+        });
+        fetchPostById(pos.id);
+      })
+      .catch(() => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          background: "#222525",
+          color: "#fff",
+          text: "Error Editing Post",
+        });
+      });
+  };
+
   return {
     ...post,
     fetchPost,
@@ -104,6 +158,9 @@ const usePost = () => {
     onDeletePost,
     onChangeAdd,
     onCreatePost,
+    fetchPostById,
+    onChangeEdit,
+    onUpdatePost
   };
 };
 

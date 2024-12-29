@@ -6,4 +6,15 @@ const reqDeletePost = (id) => axios.delete(`/api/v1/posts/${id}/deletedPost`);
 
 const reqCreatePost = (payload) => axios.post("/api/v1/posts", payload);
 
-export { reqGetPost, reqDeletePost, reqCreatePost };
+const reqGetPostById = (id) => axios.get(`/api/v1/posts/${id}/detail`);
+
+const reqUpdatePost = (id, payload) =>
+  axios.put(`/api/v1/posts/${id}/update`, payload);
+
+export {
+  reqGetPost,
+  reqDeletePost,
+  reqCreatePost,
+  reqGetPostById,
+  reqUpdatePost,
+};

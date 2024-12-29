@@ -14,6 +14,7 @@ import CategoryAdd from "../module/category/component/Add";
 import CategoryEdit from "../module/category/component/Edit";
 import Post from "../module/post/component/Post";
 import PostAdd from "../module/post/component/Add";
+import PostEdit from "../module/post/component/Edit";
 import Topic from "../module/topic/component/Topic";
 import TopicAdd from "../module/topic/component/Add";
 import TopicEdit from "../module/topic/component/Edit";
@@ -38,6 +39,7 @@ const PrivateRoute = () => {
           <Route path="/category/edit/:id" element={<CategoryEdit />} />
           <Route path="/post" element={<Post />} />
           <Route path="/post/add" element={<PostAdd />} />
+          <Route path="/post/edit/:id" element={<PostEdit />} />
           <Route path="/topic" element={<Topic />} />
           <Route path="/topic/add" element={<TopicAdd />} />
           <Route path="/topic/edit/:id" element={<TopicEdit />} />

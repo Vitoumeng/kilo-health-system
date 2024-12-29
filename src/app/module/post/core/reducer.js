@@ -13,6 +13,7 @@ const initialState = {
   post: [],
   paging: {},
   postInfo: initPost,
+  postDetails: [],
 };
 
 const postSlice = createSlice({
@@ -30,9 +31,13 @@ const postSlice = createSlice({
     resetPostInfo: (state) => {
       state.postInfo = { ...initPost };
     },
+    setPostDetails: (state, action) => {
+      state.postDetails = action.payload;
+    },
   },
 });
 
-export const { setPost, setPostInfo, resetPostInfo } = postSlice.actions;
+export const { setPost, setPostInfo, resetPostInfo, setPostDetails } =
+  postSlice.actions;
 
 export default postSlice.reducer;
