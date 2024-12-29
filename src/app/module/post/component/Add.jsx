@@ -103,8 +103,8 @@ const Add = () => {
                   type="radio"
                   name="status"
                   id="true"
-                  value="1"
-                  checked={String(status) === "1"}
+                  value={true}
+                  checked={status === true || status === "true"}
                   onChange={onChangeAdd}
                 />
                 <label className="form-check-label text-light" htmlFor="true">
@@ -117,8 +117,8 @@ const Add = () => {
                   type="radio"
                   name="status"
                   id="false"
-                  value="0"
-                  checked={String(status) === "0"}
+                  value="false"
+                  checked={status === false || status === "false"}
                   onChange={onChangeAdd}
                 />
                 <label className="form-check-label text-light" htmlFor="false">

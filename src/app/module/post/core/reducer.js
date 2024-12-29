@@ -4,7 +4,7 @@ const initPost = {
   title: "",
   subTitle: "",
   description: "",
-  status: 0,
+  status: false,
   mediaId: null,
   topic_id: null,
 };
