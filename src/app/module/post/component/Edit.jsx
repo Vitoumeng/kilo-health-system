@@ -18,7 +18,7 @@ const Edit = () => {
 
   let { title, description, status, mediaId } = postDetails;
 
-  console.log(postDetails);
+  // console.log(postDetails);
 
   return (
     <div className="d-flex gap-0 flex-column align-items-baseline">
