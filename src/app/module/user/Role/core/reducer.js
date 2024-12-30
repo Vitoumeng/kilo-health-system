@@ -39,6 +39,12 @@ const roleSlice = createSlice({
       const per = state.permissions.find((per) => per.id == action.payload);
       per.status = !per.status;
     },
+    toggleAllPermissions: (state, action) => {
+      state.permissions = state.permissions.map((per) => ({
+        ...per,
+        status: action.payload,
+      }));
+    },
   },
 });
 
@@ -49,6 +55,7 @@ export const {
   setRole,
   setPermissions,
   updatePermissions,
+  toggleAllPermissions,
 } = roleSlice.actions;
 
 export default roleSlice.reducer;

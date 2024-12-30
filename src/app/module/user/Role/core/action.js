@@ -13,6 +13,7 @@ import {
   setRole,
   setPermissions,
   updatePermissions,
+  toggleAllPermissions,
 } from "./reducer";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
@@ -128,6 +129,9 @@ const useRole = () => {
 
   const onToggleCheckPermission = (id) => dispatch(updatePermissions(id));
 
+  const onToggleCheckAllPermissions = (status) =>
+    dispatch(toggleAllPermissions(status));
+
   return {
     ...role,
     fetchRole,
@@ -137,7 +141,8 @@ const useRole = () => {
     onDeleteRole,
     fetchRoleById,
     fetchPermission,
-    onToggleCheckPermission
+    onToggleCheckPermission,
+    onToggleCheckAllPermissions
   };
 };
 

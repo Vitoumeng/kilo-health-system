@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useRole from "../core/action";
 import { useParams } from "react-router";
 
@@ -9,8 +9,26 @@ const Permission = () => {
     fetchPermission,
     permissions,
     onToggleCheckPermission,
+    onToggleCheckAllPermissions,
   } = useRole();
+
   const { id } = useParams();
+
+  const [isSelectAllChecked, setIsSelectAllChecked] = useState(false);
+
+  const handleSelectAllChange = (checked) => {
+    setIsSelectAllChecked(checked);
+    onToggleCheckAllPermissions(checked);
+  };
+
+  const checkIfAllSelected = () => {
+    if (permissions.length === 0) return false;
+    return permissions.every((permission) => permission.status);
+  };
+
+  useEffect(() => {
+    setIsSelectAllChecked(checkIfAllSelected());
+  }, [permissions]); // eslint-disable-line
 
   useEffect(() => {
     fetchRoleById(id);
@@ -51,13 +69,13 @@ const Permission = () => {
                 >
                   <span>Select All</span>
                   <input
-                    // onChange={(event) =>
-                    //   handleSelectAllChange(event.target.checked)
-                    // }
+                    onChange={(event) =>
+                      handleSelectAllChange(event.target.checked)
+                    }
                     className="form-check-input ms-3"
                     type="checkbox"
                     value=""
-                    // checked={isSelectAllChecked}
+                    checked={isSelectAllChecked}
                     id="flexCheckDefault"
                   />
                 </th>
@@ -75,7 +93,7 @@ const Permission = () => {
                         onChange={() => onToggleCheckPermission(id)}
                         className="form-check-input"
                         type="checkbox"
-                        defaultChecked={status}
+                        checked={status}
                       />
                     </td>
                   </tr>
