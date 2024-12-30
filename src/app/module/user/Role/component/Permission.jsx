@@ -8,6 +8,7 @@ const Permission = () => {
     role: roles,
     fetchPermission,
     permissions,
+    onToggleCheckPermission,
   } = useRole();
   const { id } = useParams();
 
@@ -19,6 +20,8 @@ const Permission = () => {
   //   console.log(roles);
 
   let { name } = roles ?? {};
+
+  console.log(permissions);
 
   return (
     <div className="d-flex gap-0 flex-column">
@@ -69,7 +72,7 @@ const Permission = () => {
                     </td>
                     <td className="text-end">
                       <input
-                        // onChange={() => onToggleCheckPermissions(id)}
+                        onChange={() => onToggleCheckPermission(id)}
                         className="form-check-input"
                         type="checkbox"
                         defaultChecked={status}

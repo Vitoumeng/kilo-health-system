@@ -11,7 +11,7 @@ const initialState = {
   paging: {},
   roleInfo: initRole,
   role: null,
-  permissions: []
+  permissions: [],
 };
 
 const roleSlice = createSlice({
@@ -33,12 +33,22 @@ const roleSlice = createSlice({
       state.role = action.payload;
     },
     setPermissions: (state, action) => {
-      state.permissions = action.payload
-    }
+      state.permissions = action.payload;
+    },
+    updatePermissions: (state, action) => {
+      const per = state.permissions.find((per) => per.id == action.payload);
+      per.status = !per.status;
+    },
   },
 });
 
-export const { setRoles, setRoleInfo, resetRoleInfo, setRole, setPermissions } =
-  roleSlice.actions;
+export const {
+  setRoles,
+  setRoleInfo,
+  resetRoleInfo,
+  setRole,
+  setPermissions,
+  updatePermissions,
+} = roleSlice.actions;
 
 export default roleSlice.reducer;
