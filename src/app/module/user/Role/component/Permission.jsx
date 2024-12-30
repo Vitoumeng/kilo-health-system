@@ -112,7 +112,7 @@ const Permission = () => {
           <div className="mt-3">
             <button
               type="button"
-              //   onClick={() => fetchPermissions({ roleId: id })}
+              onClick={() => fetchPermission({ roleId: id })}
               className="btn btn-secondary me-2"
             >
               Discard
