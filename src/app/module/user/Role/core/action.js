@@ -1,6 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { reqCreateRole, reqDeleteRole, reqGetRole } from "./request";
-import { setRoleInfo, setRoles, resetRoleInfo } from "./reducer";
+import {
+  reqCreateRole,
+  reqDeleteRole,
+  reqGetRole,
+  reqGetRoleById,
+} from "./request";
+import { setRoleInfo, setRoles, resetRoleInfo, setRole } from "./reducer";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 
@@ -91,6 +96,17 @@ const useRole = () => {
     });
   };
 
+  const fetchRoleById = (id) => {
+    return reqGetRoleById(id)
+      .then((res) => {
+        // console.log(res.data.data);
+        dispatch(setRole(res.data.data));
+      })
+      .catch((er) => {
+        console.log(er);
+      });
+  };
+
   return {
     ...role,
     fetchRole,
@@ -98,6 +114,7 @@ const useRole = () => {
     onChangeAdd,
     navigate,
     onDeleteRole,
+    fetchRoleById,
   };
 };
 

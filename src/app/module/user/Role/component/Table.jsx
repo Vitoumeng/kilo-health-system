@@ -1,4 +1,4 @@
-import { FaRegTrashCan, FaRegPenToSquare } from "react-icons/fa6";
+import { FaRegTrashCan, FaUserShield } from "react-icons/fa6";
 
 const Table = ({ data, navigate, handleDelete }) => {
   return (
@@ -59,10 +59,10 @@ const Table = ({ data, navigate, handleDelete }) => {
               </td>
               <td className="d-flex justify-content-end gap-2">
                 <button
-                  className="action-btn btn-1"
-                  onClick={() => navigate(`/user/edit/${id}`)}
+                  className="action-btn btn-3"
+                  onClick={() => navigate(`/role/${id}/permssions`)}
                 >
-                  <FaRegPenToSquare />
+                  <FaUserShield />
                 </button>
                 <button
                   className="action-btn btn-2"
