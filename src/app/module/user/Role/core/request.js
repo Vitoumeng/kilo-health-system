@@ -12,6 +12,15 @@ const reqCreateRole = (payload) =>
 
 const reqDeleteRole = (id) => axios.delete(`/api/v1/roles/${id}/soft-delete`);
 
-const reqGetRoleById = (id) => axios.get(`/api/v1/roles/${id}`)
+const reqGetRoleById = (id) => axios.get(`/api/v1/roles/${id}`);
 
-export { reqGetRole, reqCreateRole, reqDeleteRole, reqGetRoleById };
+const reqGetPermissions = (param) =>
+  axios.get(`/api/v1/roles/listPermissions`, { params: {size: 100 ,...param} });
+
+export {
+  reqGetRole,
+  reqCreateRole,
+  reqDeleteRole,
+  reqGetRoleById,
+  reqGetPermissions,
+};

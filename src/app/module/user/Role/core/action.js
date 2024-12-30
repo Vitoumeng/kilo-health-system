@@ -2,10 +2,17 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   reqCreateRole,
   reqDeleteRole,
+  reqGetPermissions,
   reqGetRole,
   reqGetRoleById,
 } from "./request";
-import { setRoleInfo, setRoles, resetRoleInfo, setRole } from "./reducer";
+import {
+  setRoleInfo,
+  setRoles,
+  resetRoleInfo,
+  setRole,
+  setPermissions,
+} from "./reducer";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 
@@ -107,6 +114,17 @@ const useRole = () => {
       });
   };
 
+  const fetchPermission = (roleId) => {
+    return reqGetPermissions(roleId)
+      .then((res) => {
+        console.log(res.data.data);
+        dispatch(setPermissions(res.data.data));
+      })
+      .catch((er) => {
+        console.log(er);
+      });
+  };
+
   return {
     ...role,
     fetchRole,
@@ -115,6 +133,7 @@ const useRole = () => {
     navigate,
     onDeleteRole,
     fetchRoleById,
+    fetchPermission,
   };
 };
 

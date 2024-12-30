@@ -3,16 +3,22 @@ import useRole from "../core/action";
 import { useParams } from "react-router";
 
 const Permission = () => {
-  const { fetchRoleById, role: roles } = useRole();
+  const {
+    fetchRoleById,
+    role: roles,
+    fetchPermission,
+    permissions,
+  } = useRole();
   const { id } = useParams();
 
   useEffect(() => {
     fetchRoleById(id);
+    fetchPermission({ roleId: id });
   }, [id]);
 
-//   console.log(roles);
+  //   console.log(roles);
 
-  let { name, permissions } = roles;
+  let { name } = roles ?? {};
 
   return (
     <div className="d-flex gap-0 flex-column">
@@ -66,7 +72,7 @@ const Permission = () => {
                         // onChange={() => onToggleCheckPermissions(id)}
                         className="form-check-input"
                         type="checkbox"
-                        checked={status}
+                        defaultChecked={status}
                       />
                     </td>
                   </tr>
