@@ -10,6 +10,7 @@ const Permission = () => {
     permissions,
     onToggleCheckPermission,
     onToggleCheckAllPermissions,
+    onSubmitPermissions,
   } = useRole();
 
   const { id } = useParams();
@@ -117,7 +118,7 @@ const Permission = () => {
               Discard
             </button>
             <button
-              //   onClick={onSubmitPermissions}
+              onClick={onSubmitPermissions}
               type="button"
               className="btn btn-primary"
             >

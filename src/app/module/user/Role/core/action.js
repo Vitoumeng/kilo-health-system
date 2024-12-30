@@ -5,6 +5,7 @@ import {
   reqGetPermissions,
   reqGetRole,
   reqGetRoleById,
+  reqSetPermissions,
 } from "./request";
 import {
   setRoleInfo,
@@ -132,6 +133,34 @@ const useRole = () => {
   const onToggleCheckAllPermissions = (status) =>
     dispatch(toggleAllPermissions(status));
 
+  const onSubmitPermissions = () => {
+    const { permissions, role: roles } = role;
+    const payload = {
+      roleId: roles.id,
+      items: permissions.map((per) => ({
+        id: per.id,
+        status: per.status,
+      })),
+    };
+    reqSetPermissions(payload)
+      .then(() => {
+        Swal.fire({
+          icon: "success",
+          title: "Upadte Permissions Successful",
+          confirmButtonText: "OK",
+        });
+        fetchPermission({ roleId: roles.id });
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Error Update Permissions",
+        });
+        console.log(err);
+      });
+  };
+
   return {
     ...role,
     fetchRole,
@@ -142,7 +171,8 @@ const useRole = () => {
     fetchRoleById,
     fetchPermission,
     onToggleCheckPermission,
-    onToggleCheckAllPermissions
+    onToggleCheckAllPermissions,
+    onSubmitPermissions,
   };
 };
 
