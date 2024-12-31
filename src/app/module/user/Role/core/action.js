@@ -146,6 +146,8 @@ const useRole = () => {
       .then(() => {
         Swal.fire({
           icon: "success",
+          background: "#222525",
+          color: "#fff",
           title: "Upadte Permissions Successful",
           confirmButtonText: "OK",
         });
@@ -155,6 +157,8 @@ const useRole = () => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
+          background: "#222525",
+          color: "#fff",
           text: "Error Update Permissions",
         });
         console.log(err);
