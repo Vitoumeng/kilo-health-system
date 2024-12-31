@@ -19,6 +19,7 @@ import PostEdit from "../module/post/component/Edit";
 import Topic from "../module/topic/component/Topic";
 import TopicAdd from "../module/topic/component/Add";
 import TopicEdit from "../module/topic/component/Edit";
+import { HasPermissionRoute } from "../helper/permissionHelper";
 
 const PrivateRoute = () => {
   const { accessToken } = useLogin();
@@ -27,24 +28,165 @@ const PrivateRoute = () => {
     <Routes>
       {accessToken ? (
         <Route path="/" element={<RootLayout />}>
-          <Route index element={<h1>Dashboard</h1>}></Route>
-          <Route path="/user" element={<User />} />
-          <Route path="/user/add" element={<UserAdd />} />
-          <Route path="/user/edit/:id" element={<UserEdit />} />
-          <Route path="/role" element={<Role />} />
-          <Route path="/role/add" element={<RoleAdd />} />
-          <Route path="/role/:id/permssions" element={<RolePermission />} />
-          <Route path="/file" element={<File />} />
-          <Route path="/file/add" element={<FileAdd />} />
-          <Route path="/category" element={<Category />} />
-          <Route path="/category/add" element={<CategoryAdd />} />
-          <Route path="/category/edit/:id" element={<CategoryEdit />} />
-          <Route path="/post" element={<Post />} />
-          <Route path="/post/add" element={<PostAdd />} />
-          <Route path="/post/edit/:id" element={<PostEdit />} />
-          <Route path="/topic" element={<Topic />} />
-          <Route path="/topic/add" element={<TopicAdd />} />
-          <Route path="/topic/edit/:id" element={<TopicEdit />} />
+          <Route
+            index
+            element={
+              <HasPermissionRoute permission="View-Dashboard">
+                <h1>Dashboard</h1>
+              </HasPermissionRoute>
+            }
+          />
+
+          <Route
+            path="/user"
+            element={
+              <HasPermissionRoute permission="View-User">
+                <User />
+              </HasPermissionRoute>
+            }
+          />
+
+          <Route
+            path="/user/add"
+            element={
+              <HasPermissionRoute permission="Create-User">
+                <UserAdd />
+              </HasPermissionRoute>
+            }
+          />
+
+          <Route
+            path="/user/edit/:id"
+            element={
+              <HasPermissionRoute permission="Edit-User">
+                <UserEdit />
+              </HasPermissionRoute>
+            }
+          />
+
+          <Route
+            path="/role"
+            element={
+              <HasPermissionRoute permission="View-Role">
+                <Role />
+              </HasPermissionRoute>
+            }
+          />
+
+          <Route
+            path="/role/add"
+            element={
+              <HasPermissionRoute permission="Add-Role">
+                <RoleAdd />
+              </HasPermissionRoute>
+            }
+          />
+
+          <Route
+            path="/role/:id/permssions"
+            element={
+              <HasPermissionRoute permission="View-Permission">
+                <RolePermission />
+              </HasPermissionRoute>
+            }
+          />
+
+          <Route
+            path="/file"
+            element={
+              <HasPermissionRoute permission="View-File">
+                <File />
+              </HasPermissionRoute>
+            }
+          />
+
+          <Route
+            path="/file/add"
+            element={
+              <HasPermissionRoute permission="Upload-File">
+                <FileAdd />
+              </HasPermissionRoute>
+            }
+          />
+
+          <Route
+            path="/category"
+            element={
+              <HasPermissionRoute permission="View-Category">
+                <Category />
+              </HasPermissionRoute>
+            }
+          />
+          <Route
+            path="/category/add"
+            element={
+              <HasPermissionRoute permission="Create-Category">
+                <CategoryAdd />
+              </HasPermissionRoute>
+            }
+          />
+          <Route
+            path="/category/edit/:id"
+            element={
+              <HasPermissionRoute permission="Edit-Category">
+                <CategoryEdit />
+              </HasPermissionRoute>
+            }
+          />
+
+          <Route
+            path="/post"
+            element={
+              <HasPermissionRoute permission="View-Post">
+                <Post />
+              </HasPermissionRoute>
+            }
+          />
+
+          <Route
+            path="/post/add"
+            element={
+              <HasPermissionRoute permission="Create-Post">
+                <PostAdd />
+              </HasPermissionRoute>
+            }
+          />
+          <Route
+            path="/post/edit/:id"
+            element={
+              <HasPermissionRoute permission="Edit-Post">
+                <PostEdit />
+              </HasPermissionRoute>
+            }
+          />
+
+          <Route
+            path="/topic"
+            element={
+              <HasPermissionRoute permission="View-Topic">
+                <Topic />
+              </HasPermissionRoute>
+            }
+          />
+          <Route
+            path="/topic/add"
+            element={
+              <HasPermissionRoute permission="Create-Topic">
+                <TopicAdd />
+              </HasPermissionRoute>
+            }
+          />
+
+          <Route
+            path="/topic/edit/:id"
+            element={
+              <HasPermissionRoute permission="Edit-Topic">
+                <TopicEdit />
+              </HasPermissionRoute>
+            }
+          />
+
+          <Route path="*" element={<h1>4$3 Forbidden</h1>} />
         </Route>
       ) : (
         <>

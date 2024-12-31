@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { Navigate } from "react-router";
 
 const getPermissions = () => {
   const permissions = JSON.parse(localStorage.getItem("permissions"));
@@ -28,4 +29,12 @@ const HasPermissionAction = ({ children, permission }) => {
   return null;
 };
 
-export { HasPermissionAction };
+const HasPermissionRoute = ({ children, permission }) => {
+  if (hasPermission(permission)) {
+    return children;
+  }
+
+  return <Navigate to="/notfound" />;
+};
+
+export { HasPermissionAction, HasPermissionRoute };
