@@ -8,7 +8,7 @@ const Header = () => {
   // console.log(auth);
 
   return (
-    <header className="container-fluid position-fixed w-100 header d-flex justify-content-end align-items-center p-1 pe-5">
+    <header className="container-fluid position-fixed w-100 header d-flex justify-content-end align-items-center p-1 pe-5 z-3">
       <div className="btn-group">
         <button
           className="dropdown-toggle border-0 text-light fw-bolder"
