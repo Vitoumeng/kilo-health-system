@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useRole from "../core/action";
 import { useParams } from "react-router";
-import HasPermissionAction from "../../../../helper/permissionHelper";
+import { HasPermissionAction } from "../../../../helper/permissionHelper";
 
 const Permission = () => {
   const {

@@ -3,7 +3,7 @@ import Table from "./Table";
 import Pagination from "../../../../utils/Pagination";
 import useRole from "../core/action";
 import { useEffect } from "react";
-import HasPermissionAction from "../../../../helper/permissionHelper";
+import { HasPermissionAction } from "../../../../helper/permissionHelper";
 
 const Role = () => {
   const { roles, paging, fetchRole, navigate, onDeleteRole } = useRole();

@@ -1,5 +1,5 @@
 import { FaTrash } from "react-icons/fa";
-import HasPermissionAction from "../../../helper/permissionHelper";
+import { HasPermissionAction } from "../../../helper/permissionHelper";
 
 const Table = ({ data, handleDelete, navigate }) => {
   return (

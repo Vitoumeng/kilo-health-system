@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import useTopic from "../core/action";
 import Table from "./Table";
 import Pagination from "../../../utils/Pagination";
-import HasPermissionAction from "../../../helper/permissionHelper";
+import { HasPermissionAction } from "../../../helper/permissionHelper";
 
 const Topic = () => {
   const { topic, paging, navigate, fetchTopic, onDeleteTopic } = useTopic();

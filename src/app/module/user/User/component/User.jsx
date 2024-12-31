@@ -3,7 +3,7 @@ import Table from "./Table";
 import useUser from "../core/action";
 import { useEffect } from "react";
 import Pagination from "../../../../utils/Pagination";
-import HasPermissionAction from "../../../../helper/permissionHelper";
+import { HasPermissionAction } from "../../../../helper/permissionHelper";
 
 const User = () => {
   const { users, fetchUsers, paging, onDeleteUser, navigate } = useUser();

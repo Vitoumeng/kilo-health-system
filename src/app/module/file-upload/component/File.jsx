@@ -3,7 +3,7 @@ import Table from "./Table";
 import { useEffect } from "react";
 import useFile from "../core/action";
 import Pagination from "../../../utils/Pagination";
-import HasPermissionAction from "../../../helper/permissionHelper";
+import { HasPermissionAction } from "../../../helper/permissionHelper";
 
 const File = () => {
   const { file, fetchFiles, paging, navigate, onDeleteFile } = useFile();

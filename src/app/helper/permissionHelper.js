@@ -28,4 +28,4 @@ const HasPermissionAction = ({ children, permission }) => {
   return null;
 };
 
-export default HasPermissionAction;
+export { HasPermissionAction };

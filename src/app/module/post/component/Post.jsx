@@ -3,7 +3,7 @@ import usePost from "../core/action";
 import { useEffect } from "react";
 import Table from "./Table";
 import Pagination from "../../../utils/Pagination";
-import HasPermissionAction from "../../../helper/permissionHelper";
+import { HasPermissionAction } from "../../../helper/permissionHelper";
 
 const Post = () => {
   const { post, fetchPost, paging, navigate, onDeletePost } = usePost();

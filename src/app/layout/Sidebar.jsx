@@ -3,7 +3,7 @@ import Logo from "../../logo.svg";
 import { Image } from "react-bootstrap";
 import { sideBarItems } from "../data/data";
 import { NavLink } from "react-router-dom";
-import HasPermissionAction from "../helper/permissionHelper";
+import { HasPermissionAction } from "../helper/permissionHelper";
 
 const Sidebar = () => {
   return (

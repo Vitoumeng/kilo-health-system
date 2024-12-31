@@ -3,7 +3,7 @@ import useCategory from "../core/action";
 import { IoAddSharp, IoSearch } from "react-icons/io5";
 import Table from "./Table";
 import Pagination from "../../../utils/Pagination";
-import HasPermissionAction from "../../../helper/permissionHelper";
+import { HasPermissionAction } from "../../../helper/permissionHelper";
 
 const Category = () => {
   const { category, navigate, fetchCategory, paging, onDeleteCategory } =

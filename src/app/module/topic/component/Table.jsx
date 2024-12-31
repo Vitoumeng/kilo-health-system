@@ -1,5 +1,5 @@
 import { FaRegTrashCan, FaRegPenToSquare } from "react-icons/fa6";
-import HasPermissionAction from "../../../helper/permissionHelper";
+import { HasPermissionAction } from "../../../helper/permissionHelper";
 
 const Table = ({ data, navigate, handleDelete }) => {
   // console.log(data);
