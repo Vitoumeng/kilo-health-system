@@ -2,6 +2,7 @@ import { BsPostcard } from "react-icons/bs";
 import { FaListUl } from "react-icons/fa";
 import { LuUser, LuUserCog } from "react-icons/lu";
 import { MdAttachFile, MdOutlineTopic, MdSpeed } from "react-icons/md";
+import Dashboard from "../module/dashboard/Dashboard";
 import User from "../module/user/User/component/User";
 import UserAdd from "../module/user/User/component/Add";
 import UserEdit from "../module/user/User/component/Edit";
@@ -84,7 +85,7 @@ const routeItems = [
     path: "/",
     index: true,
     permisson: "View-Dashboard",
-    element: <h1>Dashboard</h1>,
+    element: <Dashboard />,
   },
   {
     path: "/user",
