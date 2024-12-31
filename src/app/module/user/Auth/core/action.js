@@ -3,11 +3,13 @@ import { useNavigate } from "react-router";
 import { setAuth, setLogin, setProfile } from "./reducer";
 import { reqLogin } from "./request";
 import Swal from "sweetalert2";
+import useRole from "../../Role/core/action";
 
 const useLogin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
+  const { fetchSelfPermissions } = useRole();
 
   const handleChangeLogin = (e) =>
     dispatch(setLogin({ name: e.target.name, value: e.target.value }));
@@ -22,6 +24,8 @@ const useLogin = () => {
       localStorage.setItem("accessToken", response.token);
       dispatch(setAuth(response.token));
       dispatch(setProfile(response.user));
+      console.log(response?.user?.roleId);
+      fetchSelfPermissions({ roleId: response.user.roleId });
       Swal.fire({
         icon: "success",
         background: "#222525",

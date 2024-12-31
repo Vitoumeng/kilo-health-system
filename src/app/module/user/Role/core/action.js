@@ -161,6 +161,13 @@ const useRole = () => {
       });
   };
 
+  const fetchSelfPermissions = (id) => {
+    return reqGetPermissions(id).then((res) => {
+      // console.log(res.data.data);
+      localStorage.setItem("permissions", JSON.stringify(res.data.data));
+    });
+  };
+
   return {
     ...role,
     fetchRole,
@@ -173,6 +180,7 @@ const useRole = () => {
     onToggleCheckPermission,
     onToggleCheckAllPermissions,
     onSubmitPermissions,
+    fetchSelfPermissions,
   };
 };
 
