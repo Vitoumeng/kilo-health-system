@@ -2,24 +2,8 @@ import { Navigate, Route, Routes } from "react-router";
 import RootLayout from "../layout/RootLayout";
 import Login from "../module/user/Auth/component/Login";
 import { useLogin } from "../module/user/Auth/core/action";
-import User from "../module/user/User/component/User";
-import UserAdd from "../module/user/User/component/Add";
-import UserEdit from "../module/user/User/component/Edit";
-import Role from "../module/user/Role/component/Role";
-import RoleAdd from "../module/user/Role/component/Add";
-import RolePermission from "../module/user/Role/component/Permission";
-import File from "../module/file-upload/component/File";
-import FileAdd from "../module/file-upload/component/Add";
-import Category from "../module/category/component/Category";
-import CategoryAdd from "../module/category/component/Add";
-import CategoryEdit from "../module/category/component/Edit";
-import Post from "../module/post/component/Post";
-import PostAdd from "../module/post/component/Add";
-import PostEdit from "../module/post/component/Edit";
-import Topic from "../module/topic/component/Topic";
-import TopicAdd from "../module/topic/component/Add";
-import TopicEdit from "../module/topic/component/Edit";
 import { HasPermissionRoute } from "../helper/permissionHelper";
+import { routeItems } from "../data/data";
 
 const PrivateRoute = () => {
   const { accessToken } = useLogin();
@@ -28,7 +12,31 @@ const PrivateRoute = () => {
     <Routes>
       {accessToken ? (
         <Route path="/" element={<RootLayout />}>
-          <Route
+          {routeItems.map((route, index) =>
+            route.index ? (
+              <Route
+                key={index}
+                index
+                element={
+                  <HasPermissionRoute permission={route.permisson}>
+                    {route.element}
+                  </HasPermissionRoute>
+                }
+              />
+            ) : (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <HasPermissionRoute permission={route.permisson}>
+                    {route.element}
+                  </HasPermissionRoute>
+                }
+              />
+            )
+          )}
+
+          {/* <Route
             index
             element={
               <HasPermissionRoute permission="View-Dashboard">
@@ -184,7 +192,7 @@ const PrivateRoute = () => {
                 <TopicEdit />
               </HasPermissionRoute>
             }
-          />
+          /> */}
 
           <Route path="*" element={<h1>4$3 Forbidden</h1>} />
         </Route>
