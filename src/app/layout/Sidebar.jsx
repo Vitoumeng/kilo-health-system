@@ -2,7 +2,7 @@ import React from "react";
 import Logo from "../../logo.svg";
 import { Image } from "react-bootstrap";
 import { sideBarItems } from "../data/data";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { HasPermissionAction } from "../helper/permissionHelper";
 
 const Sidebar = () => {
@@ -10,16 +10,17 @@ const Sidebar = () => {
     <div className="sidebar d-flex flex-column">
       <header
         style={{ borderBottom: "1px dashed #333", height: "70px" }}
-        className="d-flex align-items-center"
       >
-        <div className="p-2 ps-4">
-          <Image
-            src={Logo}
-            alt="Logo"
-            style={{ width: "50px", height: "50px" }}
-          />
-        </div>
-        <span className="text-light fw-semibold">KiloIT</span>
+        <Link to="/" className="d-inline-flex align-items-center text-decoration-none">
+          <div className="p-2 ps-4">
+            <Image
+              src={Logo}
+              alt="Logo"
+              style={{ width: "50px", height: "50px" }}
+            />
+          </div>
+          <span className="text-light fw-semibold">KiloIT</span>
+        </Link>
       </header>
       <div className="p-3">
         <ul className="nav flex-column mt-3">
