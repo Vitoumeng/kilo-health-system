@@ -11,7 +11,7 @@ const Role = () => {
   // console.log(roles, paging);
 
   useEffect(() => {
-    fetchRole();
+    fetchRole(20, 1);
   }, []); // eslint-disable-line
 
   const onChangeSearch = (e) => fetchRole(1000, 1, e.target.value);
