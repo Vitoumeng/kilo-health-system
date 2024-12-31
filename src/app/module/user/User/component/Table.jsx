@@ -91,7 +91,7 @@ const Table = ({ data, navigate, handleDelete }) => {
                   />
                 </td>
                 <td className="d-flex justify-content-end gap-2">
-                  <HasPermissionAction>
+                  <HasPermissionAction permission="Edit-User">
                     <button
                       className="action-btn btn-1"
                       onClick={() => navigate(`/user/edit/${id}`)}
