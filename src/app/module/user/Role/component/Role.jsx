@@ -3,6 +3,7 @@ import Table from "./Table";
 import Pagination from "../../../../utils/Pagination";
 import useRole from "../core/action";
 import { useEffect } from "react";
+import HasPermissionAction from "../../../../helper/permissionHelper";
 
 const Role = () => {
   const { roles, paging, fetchRole, navigate, onDeleteRole } = useRole();
@@ -38,10 +39,13 @@ const Role = () => {
                 onChange={onChangeSearch}
               />
             </div>
-            <button onClick={() => navigate("/role/add")} className="add-btn">
-              <IoAddSharp style={{ fontSize: "20px" }} />
-              <span>Add</span>
-            </button>
+
+            <HasPermissionAction permission="Create-Role">
+              <button onClick={() => navigate("/role/add")} className="add-btn">
+                <IoAddSharp style={{ fontSize: "20px" }} />
+                <span>Add</span>
+              </button>
+            </HasPermissionAction>
           </div>
 
           <Table data={roles} navigate={navigate} handleDelete={onDeleteRole} />

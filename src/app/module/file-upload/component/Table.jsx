@@ -1,4 +1,5 @@
-import { FaPen, FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
+import HasPermissionAction from "../../../helper/permissionHelper";
 
 const Table = ({ data, handleDelete, navigate }) => {
   return (
@@ -58,12 +59,14 @@ const Table = ({ data, handleDelete, navigate }) => {
                 {item?.fileType}
               </td>
               <td className="d-flex justify-content-end gap-2">
-                <button
-                  className="action-btn btn-2"
-                  onClick={() => handleDelete(item?.id)}
-                >
-                  <FaTrash />
-                </button>
+                <HasPermissionAction permission="Delete-File">
+                  <button
+                    className="action-btn btn-2"
+                    onClick={() => handleDelete(item?.id)}
+                  >
+                    <FaTrash />
+                  </button>
+                </HasPermissionAction>
               </td>
             </tr>
           ))}

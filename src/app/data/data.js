@@ -10,6 +10,7 @@ const sideBarItems = [
         name: "Dashboard",
         icon: <MdSpeed style={{ fontSize: "1.15rem" }} />,
         path: "/",
+        permisson: "View-Dashboard"
       },
     ],
   },
@@ -20,21 +21,25 @@ const sideBarItems = [
         name: "File",
         icon: <MdAttachFile style={{ fontSize: "1.15rem" }} />,
         path: "/file",
+        permisson: "View-File"
       },
       {
         name: "Category",
         icon: <FaListUl style={{ fontSize: "1.15rem" }} />,
         path: "/category",
+        permisson: "View-Category"
       },
       {
         name: "Post",
         icon: <BsPostcard style={{ fontSize: "1.15rem" }} />,
         path: "/post",
+        permisson: "View-Post"
       },
       {
         name: "Topic",
         icon: <MdOutlineTopic style={{ fontSize: "1.15rem" }} />,
         path: "/topic",
+        permisson: "View-Topic"
       },
     ],
   },
@@ -45,11 +50,13 @@ const sideBarItems = [
         name: "User",
         icon: <LuUser style={{ fontSize: "1.15rem" }} />,
         path: "/user",
+        permisson: "View-User"
       },
       {
         name: "Role",
         icon: <LuUserCog style={{ fontSize: "1.15rem" }} />,
         path: "/role",
+        permisson: "View-Role"
       },
     ],
   },

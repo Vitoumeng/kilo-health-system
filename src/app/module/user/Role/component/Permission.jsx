@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useRole from "../core/action";
 import { useParams } from "react-router";
+import HasPermissionAction from "../../../../helper/permissionHelper";
 
 const Permission = () => {
   const {
@@ -117,13 +118,16 @@ const Permission = () => {
             >
               Discard
             </button>
-            <button
-              onClick={onSubmitPermissions}
-              type="button"
-              className="btn btn-primary"
-            >
-              Submit
-            </button>
+
+            <HasPermissionAction permission="Set-Permission">
+              <button
+                onClick={onSubmitPermissions}
+                type="button"
+                className="btn btn-primary"
+              >
+                Submit
+              </button>
+            </HasPermissionAction>
           </div>
         </div>
       </div>

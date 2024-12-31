@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import useTopic from "../core/action";
 import Table from "./Table";
 import Pagination from "../../../utils/Pagination";
+import HasPermissionAction from "../../../helper/permissionHelper";
 
 const Topic = () => {
   const { topic, paging, navigate, fetchTopic, onDeleteTopic } = useTopic();
@@ -30,10 +31,16 @@ const Topic = () => {
               <IoSearch className="search-icon" />
               <input type="text" placeholder="Search..." />
             </div>
-            <button className="add-btn" onClick={() => navigate("/topic/add")}>
-              <IoAddSharp style={{ fontSize: "20px" }} />
-              <span>Add</span>
-            </button>
+
+            <HasPermissionAction permission="Create-Topic">
+              <button
+                className="add-btn"
+                onClick={() => navigate("/topic/add")}
+              >
+                <IoAddSharp style={{ fontSize: "20px" }} />
+                <span>Add</span>
+              </button>
+            </HasPermissionAction>
           </div>
 
           <Table

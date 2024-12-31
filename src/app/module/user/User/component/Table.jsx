@@ -1,4 +1,5 @@
 import { FaRegTrashCan, FaRegPenToSquare } from "react-icons/fa6";
+import HasPermissionAction from "../../../../helper/permissionHelper";
 
 const Table = ({ data, navigate, handleDelete }) => {
   return (
@@ -51,59 +52,66 @@ const Table = ({ data, navigate, handleDelete }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map(({ id, firstname, lastname, gender, dob, photo }, index) => (
-            <tr key={index}>
-              <td
-                className="text-start fw-medium text-light"
-                style={{ fontSize: "14px" }}
-              >
-                {index + 1}
-              </td>
-              <td
-                className="text-start fw-medium text-light"
-                style={{ fontSize: "14px" }}
-              >
-                {firstname + " " + lastname}
-              </td>
-              <td
-                className="text-start fw-medium text-light"
-                style={{ fontSize: "14px" }}
-              >
-                {gender}
-              </td>
-              <td
-                className="text-start fw-medium text-light"
-                style={{ fontSize: "14px" }}
-              >
-                {dob}
-              </td>
-              <td className="text-start fw-medium text-secondary">
-                <img
-                  src={photo}
-                  alt=""
-                  style={{
-                    width: "35px",
-                    height: "35px",
-                  }}
-                  className=" object-fit-cover rounded-2 overflow-hidden"
-                />
-              </td>
-              <td className="d-flex justify-content-end gap-2">
-                <button
-                  className="action-btn btn-1"
-                  onClick={() => navigate(`/user/edit/${id}`)}
+          {data.map(
+            ({ id, firstname, lastname, gender, dob, photo }, index) => (
+              <tr key={index}>
+                <td
+                  className="text-start fw-medium text-light"
+                  style={{ fontSize: "14px" }}
                 >
-                  <FaRegPenToSquare />
-                </button>
-                <button
-                  className="action-btn btn-2"
-                  onClick={() => handleDelete(id)}
+                  {index + 1}
+                </td>
+                <td
+                  className="text-start fw-medium text-light"
+                  style={{ fontSize: "14px" }}
                 >
-                  <FaRegTrashCan />
-                </button>
-              </td>
-            </tr>
-          ))}
+                  {firstname + " " + lastname}
+                </td>
+                <td
+                  className="text-start fw-medium text-light"
+                  style={{ fontSize: "14px" }}
+                >
+                  {gender}
+                </td>
+                <td
+                  className="text-start fw-medium text-light"
+                  style={{ fontSize: "14px" }}
+                >
+                  {dob}
+                </td>
+                <td className="text-start fw-medium text-secondary">
+                  <img
+                    src={photo}
+                    alt=""
+                    style={{
+                      width: "35px",
+                      height: "35px",
+                    }}
+                    className=" object-fit-cover rounded-2 overflow-hidden"
+                  />
+                </td>
+                <td className="d-flex justify-content-end gap-2">
+                  <HasPermissionAction>
+                    <button
+                      className="action-btn btn-1"
+                      onClick={() => navigate(`/user/edit/${id}`)}
+                    >
+                      <FaRegPenToSquare />
+                    </button>
+                  </HasPermissionAction>
+
+                  <HasPermissionAction permission="Delete-User">
+                    <button
+                      className="action-btn btn-2"
+                      onClick={() => handleDelete(id)}
+                    >
+                      <FaRegTrashCan />
+                    </button>
+                  </HasPermissionAction>
+                </td>
+              </tr>
+            )
+          )}
         </tbody>
       </table>
     </div>

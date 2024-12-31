@@ -3,6 +3,7 @@ import Logo from "../../logo.svg";
 import { Image } from "react-bootstrap";
 import { sideBarItems } from "../data/data";
 import { NavLink } from "react-router-dom";
+import HasPermissionAction from "../helper/permissionHelper";
 
 const Sidebar = () => {
   return (
@@ -34,17 +35,17 @@ const Sidebar = () => {
               )}
               {sideBar.items.map((item, index) => (
                 <li className="nav-item my-1" key={index}>
-                  <NavLink
-                    to={item.path}
-                    className="nav-link nav-custome text-light rounded-2 d-flex align-items-center gap-2"
-                  >
-                    <span className="mx-2">
-                      {item.icon}
-                    </span>
-                    <span className="mt-1" style={{ fontSize: ".8rem" }}>
-                      {item.name}
-                    </span>
-                  </NavLink>
+                  <HasPermissionAction permission={item.permisson}>
+                    <NavLink
+                      to={item.path}
+                      className="nav-link nav-custome text-light rounded-2 d-flex align-items-center gap-2"
+                    >
+                      <span className="mx-2">{item.icon}</span>
+                      <span className="mt-1" style={{ fontSize: ".8rem" }}>
+                        {item.name}
+                      </span>
+                    </NavLink>
+                  </HasPermissionAction>
                 </li>
               ))}
             </React.Fragment>

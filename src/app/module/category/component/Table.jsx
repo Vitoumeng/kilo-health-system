@@ -1,5 +1,6 @@
 import { FaTrash } from "react-icons/fa";
 import { FaRegPenToSquare } from "react-icons/fa6";
+import HasPermissionAction from "../../../helper/permissionHelper";
 
 const Table = ({ data, handleDelete, navigate }) => {
   return (
@@ -64,18 +65,23 @@ const Table = ({ data, handleDelete, navigate }) => {
                 />
               </td>
               <td className="d-flex justify-content-end gap-2">
-                <button
-                  className="action-btn btn-1"
-                  onClick={() => navigate(`/category/edit/${item.id}`)}
-                >
-                  <FaRegPenToSquare />
-                </button>
-                <button
-                  className="action-btn btn-2"
-                  onClick={() => handleDelete(item.id)}
-                >
-                  <FaTrash />
-                </button>
+                <HasPermissionAction permission="Edit-Category">
+                  <button
+                    className="action-btn btn-1"
+                    onClick={() => navigate(`/category/edit/${item.id}`)}
+                  >
+                    <FaRegPenToSquare />
+                  </button>
+                </HasPermissionAction>
+
+                <HasPermissionAction permission="Delete-Category">
+                  <button
+                    className="action-btn btn-2"
+                    onClick={() => handleDelete(item.id)}
+                  >
+                    <FaTrash />
+                  </button>
+                </HasPermissionAction>
               </td>
             </tr>
           ))}

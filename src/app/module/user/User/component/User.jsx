@@ -3,6 +3,7 @@ import Table from "./Table";
 import useUser from "../core/action";
 import { useEffect } from "react";
 import Pagination from "../../../../utils/Pagination";
+import HasPermissionAction from "../../../../helper/permissionHelper";
 
 const User = () => {
   const { users, fetchUsers, paging, onDeleteUser, navigate } = useUser();
@@ -36,10 +37,13 @@ const User = () => {
                 onChange={onChangeSearch}
               />
             </div>
-            <button onClick={() => navigate("/user/add")} className="add-btn">
-              <IoAddSharp style={{ fontSize: "20px" }} />
-              <span>Add</span>
-            </button>
+
+            <HasPermissionAction permission="">
+              <button onClick={() => navigate("/user/add")} className="add-btn">
+                <IoAddSharp style={{ fontSize: "20px" }} />
+                <span>Add</span>
+              </button>
+            </HasPermissionAction>
           </div>
 
           <Table data={users} navigate={navigate} handleDelete={onDeleteUser} />

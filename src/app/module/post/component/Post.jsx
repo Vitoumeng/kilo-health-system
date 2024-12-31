@@ -3,6 +3,7 @@ import usePost from "../core/action";
 import { useEffect } from "react";
 import Table from "./Table";
 import Pagination from "../../../utils/Pagination";
+import HasPermissionAction from "../../../helper/permissionHelper";
 
 const Post = () => {
   const { post, fetchPost, paging, navigate, onDeletePost } = usePost();
@@ -36,10 +37,13 @@ const Post = () => {
                 onChange={onChangeSearch}
               />
             </div>
-            <button className="add-btn" onClick={() => navigate("/post/add")}>
-              <IoAddSharp style={{ fontSize: "20px" }} />
-              <span>Add</span>
-            </button>
+
+            <HasPermissionAction permission="Create-Post">
+              <button className="add-btn" onClick={() => navigate("/post/add")}>
+                <IoAddSharp style={{ fontSize: "20px" }} />
+                <span>Add</span>
+              </button>
+            </HasPermissionAction>
           </div>
 
           <Table data={post} navigate={navigate} handleDelete={onDeletePost} />

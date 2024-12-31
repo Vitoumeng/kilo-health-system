@@ -1,4 +1,5 @@
 import { FaRegTrashCan, FaUserShield } from "react-icons/fa6";
+import HasPermissionAction from "../../../../helper/permissionHelper";
 
 const Table = ({ data, navigate, handleDelete }) => {
   return (
@@ -58,18 +59,23 @@ const Table = ({ data, navigate, handleDelete }) => {
                 {module}
               </td>
               <td className="d-flex justify-content-end gap-2">
-                <button
-                  className="action-btn btn-3"
-                  onClick={() => navigate(`/role/${id}/permssions`)}
-                >
-                  <FaUserShield />
-                </button>
-                <button
-                  className="action-btn btn-2"
-                  onClick={() => handleDelete(id)}
-                >
-                  <FaRegTrashCan />
-                </button>
+                <HasPermissionAction permission="View-Permission">
+                  <button
+                    className="action-btn btn-3"
+                    onClick={() => navigate(`/role/${id}/permssions`)}
+                  >
+                    <FaUserShield />
+                  </button>
+                </HasPermissionAction>
+
+                <HasPermissionAction permission="Delete-Role">
+                  <button
+                    className="action-btn btn-2"
+                    onClick={() => handleDelete(id)}
+                  >
+                    <FaRegTrashCan />
+                  </button>
+                </HasPermissionAction>
               </td>
             </tr>
           ))}

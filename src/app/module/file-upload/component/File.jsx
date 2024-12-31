@@ -3,6 +3,7 @@ import Table from "./Table";
 import { useEffect } from "react";
 import useFile from "../core/action";
 import Pagination from "../../../utils/Pagination";
+import HasPermissionAction from "../../../helper/permissionHelper";
 
 const File = () => {
   const { file, fetchFiles, paging, navigate, onDeleteFile } = useFile();
@@ -36,10 +37,13 @@ const File = () => {
                 onChange={onChangeSearch}
               />
             </div>
-            <button className="add-btn" onClick={() => navigate("/file/add")}>
-              <IoAddSharp style={{ fontSize: "20px" }} />
-              <span>Add</span>
-            </button>
+
+            <HasPermissionAction permission="Upload-File">
+              <button className="add-btn" onClick={() => navigate("/file/add")}>
+                <IoAddSharp style={{ fontSize: "20px" }} />
+                <span>Add</span>
+              </button>
+            </HasPermissionAction>
           </div>
 
           <Table data={file} navigate={navigate} handleDelete={onDeleteFile} />

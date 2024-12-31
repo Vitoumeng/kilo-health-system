@@ -3,9 +3,11 @@ import useCategory from "../core/action";
 import { IoAddSharp, IoSearch } from "react-icons/io5";
 import Table from "./Table";
 import Pagination from "../../../utils/Pagination";
+import HasPermissionAction from "../../../helper/permissionHelper";
 
 const Category = () => {
-  const { category, navigate, fetchCategory, paging, onDeleteCategory } = useCategory();
+  const { category, navigate, fetchCategory, paging, onDeleteCategory } =
+    useCategory();
 
   useEffect(() => {
     fetchCategory();
@@ -36,16 +38,23 @@ const Category = () => {
                 onChange={onChangeSearch}
               />
             </div>
-            <button
-              className="add-btn"
-              onClick={() => navigate("/category/add")}
-            >
-              <IoAddSharp style={{ fontSize: "20px" }} />
-              <span>Add</span>
-            </button>
+
+            <HasPermissionAction permission="Create-Category">
+              <button
+                className="add-btn"
+                onClick={() => navigate("/category/add")}
+              >
+                <IoAddSharp style={{ fontSize: "20px" }} />
+                <span>Add</span>
+              </button>
+            </HasPermissionAction>
           </div>
 
-          <Table data={category} navigate={navigate} handleDelete={onDeleteCategory} />
+          <Table
+            data={category}
+            navigate={navigate}
+            handleDelete={onDeleteCategory}
+          />
 
           <Pagination paging={paging} setPaging={fetchCategory} />
         </div>
