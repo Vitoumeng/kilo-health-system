@@ -120,7 +120,7 @@ const useRole = () => {
   const fetchPermission = (roleId) => {
     return reqGetPermissions(roleId)
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         dispatch(setPermissions(res.data.data));
       })
       .catch((er) => {

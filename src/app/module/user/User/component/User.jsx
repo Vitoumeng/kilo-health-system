@@ -38,7 +38,7 @@ const User = () => {
               />
             </div>
 
-            <HasPermissionAction permission="">
+            <HasPermissionAction permission="Create-User">
               <button onClick={() => navigate("/user/add")} className="add-btn">
                 <IoAddSharp style={{ fontSize: "20px" }} />
                 <span>Add</span>
