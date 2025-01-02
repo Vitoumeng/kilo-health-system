@@ -1,12 +1,18 @@
-import { Navigate, Route, Routes } from "react-router";
+import { Navigate, Route, Routes, useLocation } from "react-router";
 import RootLayout from "../layout/RootLayout";
 import Login from "../module/user/Auth/component/Login";
 import { useLogin } from "../module/user/Auth/core/action";
 import { HasPermissionRoute } from "../helper/permissionHelper";
 import { routeItems } from "../data/data";
+import { useEffect } from "react";
 
 const PrivateRoute = () => {
   const { accessToken } = useLogin();
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location.pathname]);
 
   return (
     <Routes>
