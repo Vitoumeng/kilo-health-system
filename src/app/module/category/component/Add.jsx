@@ -60,7 +60,7 @@ const Add = () => {
           </div>
 
           <div className="mb-3">
-            <label htmlFor="name" className="form-label text-light text-start">
+            <label htmlFor="name" className={`form-label text-light text-start${error && "text-danger text-decoration-line-through fst-italic"}`}>
               File Upload <span className="text-danger">*</span>{" "}
               {error && (
                 <span className="text-danger" style={{ fontSize: "12px" }}>
