@@ -11,7 +11,10 @@ const PrivateRoute = () => {
   const location = useLocation();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ 
+      top: 0, 
+      behavior: "smooth" 
+    });
   }, [location.pathname]);
 
   return (
