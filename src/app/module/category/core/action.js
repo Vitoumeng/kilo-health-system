@@ -14,6 +14,7 @@ import {
   setCategoryInfo,
 } from "./reducer";
 import Swal from "sweetalert2";
+import { reqCreateFile } from "../../file-upload/core/request";
 
 const useCategory = () => {
   const category = useSelector((state) => state.category);
@@ -69,16 +70,42 @@ const useCategory = () => {
     });
   };
 
-  const onChangeAdd = (e) =>
-    dispatch(setCategoryInfo({ name: e.target.name, value: e.target.value }));
-
-  const onResetAdd = () => dispatch(resetCategoryInfo());
-
-  const onCreateCategory = async (e) => {
+  const onCreateCategory = async (e, payload) => {
     e.preventDefault();
+    const formData = new FormData();
+
+    if (!payload.file) {
+      Swal.fire({
+        icon: "error", 
+        background: "#222525",
+        color: "#fff",
+        title: "Oops...",
+        text: "Please upload a file.",
+      });
+      return;
+    }
 
     try {
-      await reqCreateCategory(category.categoryInfo);
+      formData.append("files", payload.file);
+
+      const fileResponse = await reqCreateFile(formData);
+      const mediaId = fileResponse.data?.data?.[0]?.id;
+
+      if (!mediaId) {
+        Swal.fire({
+          icon: "error",
+          background: "#222525",
+          color: "#fff",
+          title: "Oops...",
+          text: "mediaId is null. Please upload again.", 
+        });
+      }
+
+      await reqCreateCategory({
+        name: payload.name,
+        mediaId: mediaId,
+      });
+
       Swal.fire({
         background: "#222525",
         color: "#fff",
@@ -86,18 +113,18 @@ const useCategory = () => {
         title: "Category Created",
         text: "Category has been successfully created!",
       });
+
       navigate("/category");
-      onResetAdd();
     } catch (err) {
       Swal.fire({
         icon: "error",
         background: "#222525",
         color: "#fff",
         title: "Oops...",
-        text: err?.message,
+        text: err?.message || "Something went wrong. Please try again.", 
       });
 
-      console.error("Error details:", err.response?.data);
+      console.error("Error details:", err.response?.data || err);
     }
   };
 
@@ -153,7 +180,6 @@ const useCategory = () => {
     navigate,
     fetchCategory,
     onDeleteCategory,
-    onChangeAdd,
     onCreateCategory,
     fetchCategoryById,
     onChangeEdit,

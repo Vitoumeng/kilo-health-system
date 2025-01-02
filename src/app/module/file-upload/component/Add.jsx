@@ -116,7 +116,7 @@ const Add = () => {
             </label>
             <input
               type="file"
-              accept="image/jpeg"
+              accept="image/*"
               className="form-control bg-dark text-light"
               id="file"
               name="file"

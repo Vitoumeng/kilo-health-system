@@ -1,18 +1,31 @@
-import React, { useEffect } from "react";
-import useFile from "../../file-upload/core/action";
+import React, { useRef, useState } from "react";
 import useCategory from "../core/action";
 
 const Add = () => {
-  const { file, fetchFiles } = useFile();
-  const { categoryInfo, onChangeAdd, onCreateCategory } = useCategory();
+  const { onCreateCategory } = useCategory();
+  const [payload, setPayload] = useState({ name: "", file: "" });
+  const [error, setError] = useState("");
+  const fileInputRef = useRef();
 
-  useEffect(() => {
-    fetchFiles(20000, 1);
-  }, []);
+  const { name } = payload;
 
-  let { name, mediaId } = categoryInfo;
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const fileSizeInMB = selectedFile.size / (1024 * 1024);
+      if (fileSizeInMB > 1) {
+        setError(
+          `File size is ${fileSizeInMB.toFixed(2)}MB; must be under 1MB.`
+        );
+        fileInputRef.current.value = "";
+        return;
+      }
+      setError(null);
+      setPayload({ ...payload, file: selectedFile });
+    }
+  };
 
-  // console.log(categoryInfo);
+  // console.log(payload);
 
   return (
     <div className="d-flex gap-0 flex-column align-items-baseline">
@@ -28,7 +41,7 @@ const Add = () => {
         style={{ background: "#212225" }}
       >
         <form
-          onSubmit={(e) => onCreateCategory(e)}
+          onSubmit={(e) => onCreateCategory(e, payload)}
           className="form-control border-0 bg-transparent text-light"
         >
           <div className="mb-3">
@@ -41,35 +54,30 @@ const Add = () => {
               id="name"
               name="name"
               value={name}
-              onChange={onChangeAdd}
+              onChange={(e) => setPayload({ ...payload, name: e.target.value })}
               required
             />
           </div>
 
           <div className="mb-3">
-            <label
-              htmlFor="mediaId"
-              className="form-label text-light text-start"
-            >
-              File Media <span className="text-danger">*</span>
+            <label htmlFor="name" className="form-label text-light text-start">
+              File Upload <span className="text-danger">*</span>{" "}
+              {error && (
+                <span className="text-danger" style={{ fontSize: "12px" }}>
+                  {error}
+                </span>
+              )}
             </label>
-            <select
-              className="form-select bg-dark text-light border-0"
-              id="mediaId"
-              name="mediaId"
+            <input
+              type="file"
+              className="form-control bg-dark text-light border-0"
+              id="file"
+              name="file"
+              ref={fileInputRef}
+              accept="image/*"
+              onChange={handleFileChange}
               required
-              value={mediaId || ""}
-              onChange={onChangeAdd}
-            >
-              <option value="" selected disabled>
-                Select Media Id <span className="text-danger">*</span>
-              </option>
-              {file?.map((fi) => (
-                <option key={fi?.id} value={fi?.id}>
-                  {fi?.fileName}
-                </option>
-              ))}
-            </select>
+            />
           </div>
 
           <div className="mt-3 d-flex align-items-center justify-content-center gap-2">
