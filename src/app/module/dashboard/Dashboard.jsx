@@ -62,18 +62,13 @@ const Dashboard = () => {
         {cards.map((card, index) => (
           <div
             key={index}
-            className="card text-light border-0"
+            className="card text-light rounded-3 border-0 d-flex flex-column align-items-start justify-content-center"
             style={{
               width: "280px",
               height: "140px",
-              borderRadius: "8px",
               backgroundColor: card.color,
               padding: "20px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
-              justifyContent: "center",
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
             }}
           >
             <div style={{ fontSize: "2rem", color: "#fff" }}>{card.icon}</div>
