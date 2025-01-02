@@ -1,29 +1,47 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useFile from "../../file-upload/core/action";
 import useTopic from "../../topic/core/action";
 import usePost from "../core/action";
 
 const Add = () => {
-  const { file, fetchFiles } = useFile();
   const { fetchTopic, topic } = useTopic();
-  const { onChangeAdd, postInfo, onCreatePost } = usePost();
+  const { onCreatePost } = usePost();
+  const [payload, setPayload] = useState({
+    title: "",
+    subTitle: "",
+    description: "",
+    status: false,
+    topic_id: null,
+  });
+  const fileInputRef = useRef();
+  const [error, setError] = useState("");
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const fileSizeInMB = selectedFile.size / (1024 * 1024);
+      if (fileSizeInMB > 1) {
+        setError(
+          `File size is ${fileSizeInMB.toFixed(2)}MB; must be under 1MB.`
+        );
+        fileInputRef.current.value = "";
+        return;
+      }
+      setError(null);
+      setPayload({ ...payload, file: selectedFile });
+    }
+  };
 
   useEffect(() => {
-    fetchFiles(20000, 1);
     fetchTopic(20000, 1);
   }, []);
 
-  let {
-    title,
-    subTitle,
-    description,
-    publicAt,
-    status,
-    topic_id,
-    mediaId,
-  } = postInfo;
+  let { title, subTitle, description, publicAt, status, topic_id } = payload;
 
-  // console.log(postInfo);
+  const onChangeAdd = (e) =>
+    setPayload({ ...payload, [e.target.name]: e.target.value });
+
+  // console.log(payload);
 
   return (
     <div className="d-flex gap-0 flex-column align-items-baseline">
@@ -38,7 +56,7 @@ const Add = () => {
         style={{ background: "#212225" }}
       >
         <form
-          onSubmit={(e) => onCreatePost(e)}
+          onSubmit={(e) => onCreatePost(e, payload)}
           className="form-control border-0 bg-transparent text-light"
         >
           <div className="mb-3">
@@ -139,7 +157,7 @@ const Add = () => {
               className="form-control bg-dark text-light border-0"
               id="description"
               name="description"
-              value={description}
+              value={description || ""}
               onChange={onChangeAdd}
               required
             ></textarea>
@@ -173,28 +191,28 @@ const Add = () => {
 
           <div className="mb-3">
             <label
-              htmlFor="mediaId"
-              className="form-label text-light text-start"
+              htmlFor="file"
+              className={`form-label text-light text-start${
+                error && "text-danger fst-italic"
+              }`}
             >
-              File Media <span className="text-danger">*</span>
+              File Upload <span className="text-danger">*</span>{" "}
+              {error && (
+                <span className="text-danger" style={{ fontSize: "12px" }}>
+                  {error}
+                </span>
+              )}
             </label>
-            <select
-              className="form-select bg-dark text-light border-0"
-              id="mediaId"
-              name="mediaId"
+            <input
+              type="file"
+              className="form-control bg-dark text-light border-0"
+              id="file"
+              name="file"
+              ref={fileInputRef}
+              accept="image/*"
+              onChange={handleFileChange}
               required
-              value={mediaId || ""}
-              onChange={onChangeAdd}
-            >
-              <option value="" selected disabled>
-                Select Media Id <span className="text-danger">*</span>
-              </option>
-              {file?.map((fi) => (
-                <option key={fi?.id} value={fi?.id}>
-                  {fi?.fileName}
-                </option>
-              ))}
-            </select>
+            />
           </div>
 
           <div className="mt-3 d-flex align-items-center justify-content-center gap-2">

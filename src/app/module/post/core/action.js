@@ -10,6 +10,7 @@ import {
 import { resetPostInfo, setPost, setPostDetails, setPostInfo } from "./reducer";
 import Swal from "sweetalert2";
 import moment from "moment";
+import { reqCreateFile } from "../../file-upload/core/request";
 
 const usePost = () => {
   const post = useSelector((state) => state.post);
@@ -65,22 +66,45 @@ const usePost = () => {
     });
   };
 
-  const onChangeAdd = (e) =>
-    dispatch(setPostInfo({ name: e.target.name, value: e.target.value }));
-
-  const onResetPost = () => dispatch(resetPostInfo());
-
-  const onCreatePost = async (e) => {
+  const onCreatePost = async (e, payload) => {
     e.preventDefault();
 
-    const formattedPublicAt = moment(post.postInfo.publicAt).format(
+    const formattedPublicAt = moment(payload.publicAt).format(
       "YYYY-MM-DD HH:mm:ss"
     );
 
-    const updatedPostInfo = { ...post.postInfo, publicAt: formattedPublicAt };
+    const updatedPayload = { ...payload, publicAt: formattedPublicAt };
+
+    const formData = new FormData();
+
+    if (!payload) {
+      Swal.fire({
+        icon: "error",
+        background: "#222525",
+        color: "#fff",
+        title: "Oops...",
+        text: "Please upload a file.",
+      });
+      return;
+    }
 
     try {
-      await reqCreatePost(updatedPostInfo);
+      formData.append("files", updatedPayload.file);
+
+      const fileResponse = await reqCreateFile(formData);
+      const mediaId = fileResponse.data?.data?.[0]?.id;
+
+      if (!mediaId) {
+        Swal.fire({
+          icon: "error",
+          background: "#222525",
+          color: "#fff",
+          title: "Oops...",
+          text: "mediaId is null. Please upload again.",
+        });
+      }
+
+      await reqCreatePost({...updatedPayload, mediaId: mediaId});
       Swal.fire({
         background: "#222525",
         color: "#fff",
@@ -89,7 +113,6 @@ const usePost = () => {
         text: "Post has been successfully created!",
       });
       navigate("/post");
-      onResetPost();
     } catch (err) {
       Swal.fire({
         icon: "error",
@@ -156,11 +179,10 @@ const usePost = () => {
     fetchPost,
     navigate,
     onDeletePost,
-    onChangeAdd,
     onCreatePost,
     fetchPostById,
     onChangeEdit,
-    onUpdatePost
+    onUpdatePost,
   };
 };
 
