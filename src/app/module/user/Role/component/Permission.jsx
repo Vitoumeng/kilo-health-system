@@ -41,7 +41,7 @@ const Permission = () => {
 
   let { name } = roles ?? {};
 
-  console.log(permissions);
+  // console.log(permissions);
 
   return (
     <div className="d-flex gap-0 flex-column">
