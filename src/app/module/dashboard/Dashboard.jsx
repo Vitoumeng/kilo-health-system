@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BsPostcard } from "react-icons/bs";
 import { FaListUl } from "react-icons/fa";
 import { LuUser } from "react-icons/lu";
@@ -22,11 +22,39 @@ const Dashboard = () => {
   }, []);
 
   const cards = [
-    { color: "#9b59b6", icon: <LuUser />, count: users.length, label: "User" },
-    { color: "#e74c3c", icon: <FaListUl />, count: category.length, label: "Category" },
-    { color: "#3498db", icon: <BsPostcard />, count: post.length, label: "Post" },
-    { color: "#27ae60", icon: <MdOutlineTopic />, count: topic.length, label: "Topic" },
+    { color: "#9b59b6", icon: <LuUser />, label: "User" },
+    { color: "#e74c3c", icon: <FaListUl />, label: "Category" },
+    { color: "#3498db", icon: <BsPostcard />, label: "Post" },
+    { color: "#27ae60", icon: <MdOutlineTopic />, label: "Topic" },
   ];
+
+  const numberCount = [
+    users.length,
+    category.length,
+    post.length,
+    topic.length,
+  ];
+  const [count, setCount] = useState(Array(numberCount.length).fill(0));
+
+  useEffect(() => {
+    const duration = 2000; 
+    const intervalTime = 50; 
+    const steps = duration / intervalTime;
+
+    const increments = numberCount.map((num) => Math.ceil(num / steps));
+
+    const interval = setInterval(() => {
+      setCount((prevCounts) =>
+        prevCounts.map((prev, i) =>
+          prev < numberCount[i]
+            ? Math.min(prev + increments[i], numberCount[i])
+            : prev
+        )
+      );
+    }, intervalTime);
+
+    return () => clearInterval(interval);
+  }, [numberCount]);
 
   return (
     <div className="container py-4">
@@ -53,7 +81,7 @@ const Dashboard = () => {
               className="fw-semibold"
               style={{ fontSize: "24px", margin: "10px 0 0", color: "#f0f0f0" }}
             >
-              {card.count}
+              {count[index]}
             </p>
             <p
               className="mb-0 fw-medium"
