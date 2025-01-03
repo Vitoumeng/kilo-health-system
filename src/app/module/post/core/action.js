@@ -7,10 +7,11 @@ import {
   reqGetPostById,
   reqUpdatePost,
 } from "./request";
-import { resetPostInfo, setPost, setPostDetails, setPostInfo } from "./reducer";
+import { setPost, setPostDetails } from "./reducer";
 import Swal from "sweetalert2";
 import moment from "moment";
 import { reqCreateFile } from "../../file-upload/core/request";
+import React, { useState, useRef } from 'react';
 
 const usePost = () => {
   const post = useSelector((state) => state.post);
@@ -64,6 +65,28 @@ const usePost = () => {
           });
       }
     });
+  };
+
+  const handleFileChangeAdd = (e, setError, setPayload, payload, fileInputRef, setPreview) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const fileSizeInMB = selectedFile.size / (1024 * 1024);
+      if (fileSizeInMB > 1) {
+        setError(
+          `File size is ${fileSizeInMB.toFixed(2)}MB; must be under 1MB.`
+        );
+        fileInputRef.current.value = "";
+        setPreview(null);
+        return;
+      }
+      setError(null);
+      setPayload({ ...payload, file: selectedFile });
+      setPreview(URL.createObjectURL(selectedFile));
+    }
+  };
+
+  const handleChangeAdd = (e, payload, setPayload) => {
+    setPayload({ ...payload, [e.target.name]: e.target.value });
   };
 
   const onCreatePost = async (e, payload) => {
@@ -180,6 +203,8 @@ const usePost = () => {
     navigate,
     onDeletePost,
     onCreatePost,
+    handleChangeAdd,
+    handleFileChangeAdd,
     fetchPostById,
     onChangeEdit,
     onUpdatePost,
