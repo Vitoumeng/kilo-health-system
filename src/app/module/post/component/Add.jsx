@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import useTopic from "../../topic/core/action";
 import usePost from "../core/action";
-import { IoCloseSharp, IoTrashBin } from "react-icons/io5";
 import { FaTrashAlt } from "react-icons/fa";
 
 const Add = () => {
@@ -229,7 +228,7 @@ const Add = () => {
                     position: "absolute",
                     right: "-.5rem",
                     top: "-.5rem",
-                    background: "red",
+                    background: "lightcoral",
                     width: "20px",
                     height: "20px",
                     color: "white",
