@@ -10,11 +10,13 @@ import {
 import { setTopic, setTopicDetails } from "./reducer";
 import Swal from "sweetalert2";
 import { reqCreateFile } from "../../file-upload/core/request";
+import useCategory from "../../category/core/action";
 
 const useTopic = () => {
   const topic = useSelector((state) => state.topic);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { category } = useCategory();
 
   const fetchTopic = (size = 20, page = 1, search = "") => {
     return reqGetTopic({ page, size, search })
@@ -130,7 +132,7 @@ const useTopic = () => {
               color: "#fff",
               icon: "success",
               title: `Delete Topic ${id}`,
-              text: "Successfully deleted",
+              text: "Topic has been successfully deleted!",
             });
             fetchTopic();
           })
@@ -165,40 +167,32 @@ const useTopic = () => {
       });
   };
 
-  const onUpdateTopic = (e) => {
+  const handleChangeEdit = (e, payload, setPayload) =>
+    setPayload({ ...payload, [e.target.name]: e.target.value });
+
+  const onUpdateTopic = async (e, payload) => {
     e.preventDefault();
 
-    let topi = topic.topicDetails;
-
-    return reqUpdateTopic(topi.id, topi)
+    return reqUpdateTopic(payload.id, payload)
       .then(() => {
         Swal.fire({
           icon: "success",
           title: "Edit Topic",
           background: "#222525",
           color: "#fff",
-          text: "Successfully edited",
+          text: "Topic has been successfully edited!",
         });
-        fetchTopicById(topi.id);
+        fetchTopicById(payload.id);
       })
-      .catch(() => {
+      .catch((err) => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          background: "#222525",
-          color: "#fff",
-          text: "Error Editing Topic",
+          text: "Error Editing topic",
         });
+        console.log(err);
       });
   };
-
-  const onChangeEdit = (e) =>
-    dispatch(
-      setTopicDetails({
-        ...topic.topicDetails,
-        [e.target.name]: e.target.value,
-      })
-    );
 
   return {
     ...topic,
@@ -209,7 +203,7 @@ const useTopic = () => {
     onCreateTopic,
     onDeleteTopic,
     fetchTopicById,
-    onChangeEdit,
+    handleChangeEdit,
     onUpdateTopic,
   };
 };
