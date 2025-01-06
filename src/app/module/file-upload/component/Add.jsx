@@ -1,80 +1,76 @@
 import { useRef, useState } from "react";
 import useFile from "../core/action";
-import { IoCloseSharp } from "react-icons/io5";
+import { FaTrashAlt } from "react-icons/fa";
 
 const Add = () => {
-  const { onCreateFile } = useFile();
-  const [files, setFiles] = useState(null);
+  const { onCreateFile, handleFileChangeAdd } = useFile();
+  const [files, setFiles] = useState({});
   const fileInputRef = useRef();
   const [error, setError] = useState(null);
   const [preview, setPreview] = useState(null);
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      const fileSizeInMB = selectedFile.size / (1024 * 1024);
-      if (fileSizeInMB > 1) {
-        setError(
-          `File size is ${fileSizeInMB.toFixed(2)}MB; must be under 1MB.`
-        );
-        fileInputRef.current.value = "";
-        setPreview(null);
-        return;
-      }
-      setError(null);
-      setFiles(selectedFile);
-      setPreview(URL.createObjectURL(selectedFile)); // Set image preview
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (files) {
-      const formData = new FormData();
-      formData.append("files", files);
-      onCreateFile(e, formData);
-    } else {
-      console.log("Please select a file before submitting.");
-    }
-  };
-
-  const handleDiscard = () => {
-    setFiles(null);
-    setPreview(null);
-    setError(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
-
   return (
-    <div
-      className="container text-light p-3 rounded-2"
-      style={{ background: "#212225" }}
-    >
+    <div className="d-flex gap-0 flex-column align-items-baseline">
       <div className="container p-3 d-flex align-items-start flex-column">
-        <h4 className="mb-0">Add File</h4>
+        <h4 className="mb-0 text-light">Add Topic</h4>
         <p className="fw-medium text-secondary">
-          File Upload <span className="ms-2 text-light">Add File</span>
+          Topic <span className="ms-2 text-light">Add Topic</span>
         </p>
       </div>
-      <div className="container bg-dark p-3 rounded-2">
+      <div
+        className="container text-light p-3 rounded-2"
+        style={{ background: "#212225" }}
+      >
         <form
-          onSubmit={handleSubmit}
+          onSubmit={(e) => onCreateFile(e, files)}
           className="form-control text-light border-0 bg-transparent"
         >
+          <div className="mb-3">
+            <label
+              htmlFor="file"
+              className={`form-label text-light text-start${
+                error && "text-danger fst-italic"
+              }`}
+            >
+              File Upload <span className="text-danger">*</span>{" "}
+              {error && (
+                <span className="text-danger" style={{ fontSize: "12px" }}>
+                  {error}
+                </span>
+              )}
+            </label>
+            <input
+              type="file"
+              className="form-control bg-dark text-light border-0"
+              id="file"
+              name="file"
+              ref={fileInputRef}
+              accept="image/*"
+              onChange={(e) =>
+                handleFileChangeAdd(
+                  e,
+                  setError,
+                  setFiles,
+                  files,
+                  fileInputRef,
+                  setPreview
+                )
+              }
+              required
+            />
+          </div>
+
           {preview && (
             <div className="mb-3">
-              <label className="form-label text-light text-start">
-                Preview
-              </label>
+              <label className="form-label text-start">Preview</label>
               <div
                 style={{
-                  width: "250px",
-                  height: "250px",
+                  width: "90px",
+                  height: "90px",
                   borderRadius: "8px",
-                  border: "2px solid #1e1e1e",
                   position: "relative",
+                  background: "#00ACEA",
+                  boxShadow: "0 1px 8px rgba(0, 0, 0, .5)",
                 }}
               >
                 <div
@@ -84,21 +80,21 @@ const Add = () => {
                   }}
                   style={{
                     position: "absolute",
-                    right: "-1rem",
-                    top: "50%",
-                    background: "red",
-                    width: "35px",
-                    height: "35px",
-                    transform: "translateY(-50%)",
+                    right: "-.5rem",
+                    top: "-.5rem",
+                    background: "lightcoral",
+                    width: "20px",
+                    height: "20px",
                     color: "white",
                     fontSize: "16px",
                     cursor: "pointer",
-                    borderRadius: "8px",
+                    borderRadius: "4px",
                     display: "grid",
                     placeContent: "center",
+                    boxShadow: "0 1px 8px rgba(0, 0, 0, 0.2)",
                   }}
                 >
-                  <IoCloseSharp style={{ fontSize: "24px" }} />
+                  <FaTrashAlt style={{ fontSize: "12px" }} />
                 </div>
                 <img
                   src={preview}
@@ -110,31 +106,10 @@ const Add = () => {
             </div>
           )}
 
-          <div className="mb-3">
-            <label htmlFor="file" className="form-label text-start">
-              File <span className="text-danger">*</span>
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              className="form-control bg-dark text-light"
-              id="file"
-              name="file"
-              ref={fileInputRef}
-              onChange={handleFileChange}
-              required
-            />
-            {error && (
-              <p className="mt-2 text-end text-danger" aria-live="polite">
-                {error}
-              </p>
-            )}
-          </div>
-
           <div className="mt-3 d-flex justify-content-center">
             <button
               type="button"
-              onClick={handleDiscard}
+              // onClick={handleDiscard}
               className="btn btn-secondary me-2"
             >
               Discard
