@@ -7,12 +7,7 @@ import {
   reqGetCategoryById,
   reqUpdateCategory,
 } from "./request";
-import {
-  resetCategoryInfo,
-  setCategory,
-  setCategoryDetails,
-  setCategoryInfo,
-} from "./reducer";
+import { setCategory, setCategoryDetails } from "./reducer";
 import Swal from "sweetalert2";
 import { reqCreateFile } from "../../file-upload/core/request";
 
@@ -76,7 +71,7 @@ const useCategory = () => {
 
     if (!payload.file) {
       Swal.fire({
-        icon: "error", 
+        icon: "error",
         background: "#222525",
         color: "#fff",
         title: "Oops...",
@@ -97,7 +92,7 @@ const useCategory = () => {
           background: "#222525",
           color: "#fff",
           title: "Oops...",
-          text: "mediaId is null. Please upload again.", 
+          text: "mediaId is null. Please upload again.",
         });
       }
 
@@ -121,7 +116,7 @@ const useCategory = () => {
         background: "#222525",
         color: "#fff",
         title: "Oops...",
-        text: err?.message || "Something went wrong. Please try again.", 
+        text: err?.message || "Something went wrong. Please try again.",
       });
 
       console.error("Error details:", err.response?.data || err);
@@ -138,6 +133,35 @@ const useCategory = () => {
       // console.log(updatedCategoryDetails);
       dispatch(setCategoryDetails(updatedCategoryDetails));
     });
+  };
+
+  const handleFileChangeAdd = (
+    e,
+    setError,
+    setPayload,
+    payload,
+    fileInputRef,
+    setPreview
+  ) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const fileSizeInMB = selectedFile.size / (1024 * 1024);
+      if (fileSizeInMB > 1) {
+        setError(
+          `File size is ${fileSizeInMB.toFixed(2)}MB; must be under 1MB.`
+        );
+        fileInputRef.current.value = "";
+        setPreview(null);
+        return;
+      }
+      setError(null);
+      setPayload({ ...payload, file: selectedFile });
+      setPreview(URL.createObjectURL(selectedFile));
+    }
+  };
+
+  const handleChangeAdd = (e, payload, setPayload) => {
+    setPayload({ ...payload, [e.target.name]: e.target.value });
   };
 
   const onChangeEdit = (e) =>
@@ -180,6 +204,8 @@ const useCategory = () => {
     navigate,
     fetchCategory,
     onDeleteCategory,
+    handleFileChangeAdd,
+    handleChangeAdd,
     onCreateCategory,
     fetchCategoryById,
     onChangeEdit,
