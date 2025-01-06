@@ -1,12 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useRole from "../../Role/core/action";
 import useUser from "../core/action";
-import useFile from "../../../file-upload/core/action";
+import { FaTrashAlt } from "react-icons/fa";
 
 const Add = () => {
   const { fetchRole, roles } = useRole();
-  const { userInfo, onChangeAdd, onCreateUser } = useUser();
-  const { fetchFiles, file } = useFile();
+  const { handleChangeAdd, handleFileChangeAdd, onCreateUser } = useUser();
+  const [payload, setPayload] = useState({
+    firstname: "",
+    lastname: "",
+    username: "",
+    email: "",
+    password: "",
+    phone: "",
+    address: "",
+    gender: "",
+    dob: "",
+  });
+  const fileInputRef = useRef();
+  const [error, setError] = useState("");
+  const [preview, setPreview] = useState(null);
 
   let {
     firstname,
@@ -18,16 +31,13 @@ const Add = () => {
     address,
     gender,
     dob,
-    fileMediaId,
-  } = userInfo;
+  } = payload;
+
+  // console.log(payload);
 
   useEffect(() => {
-    fetchFiles(20000, 1);
     fetchRole();
   }, []);
-
-  //   console.log(roles);
-  // console.log(userInfo);
 
   return (
     <div className="d-flex gap-0 flex-column align-items-baseline">
@@ -42,7 +52,7 @@ const Add = () => {
         style={{ background: "#212225" }}
       >
         <form
-          onSubmit={(e) => onCreateUser(e)}
+          onSubmit={(e) => onCreateUser(e, payload)}
           className="form-control border-0 bg-transparent text-light"
         >
           <div className="mb-3">
@@ -58,7 +68,7 @@ const Add = () => {
               id="firstname"
               name="firstname"
               value={firstname}
-              onChange={onChangeAdd}
+              onChange={(e) => handleChangeAdd(e, payload, setPayload)}
               required
             />
           </div>
@@ -76,7 +86,7 @@ const Add = () => {
               id="lastname"
               name="lastname"
               value={lastname}
-              onChange={onChangeAdd}
+              onChange={(e) => handleChangeAdd(e, payload, setPayload)}
               required
             />
           </div>
@@ -91,7 +101,7 @@ const Add = () => {
               id="username"
               name="username"
               value={username}
-              onChange={onChangeAdd}
+              onChange={(e) => handleChangeAdd(e, payload, setPayload)}
               required
             />
           </div>
@@ -106,7 +116,7 @@ const Add = () => {
               id="email"
               name="email"
               value={email}
-              onChange={onChangeAdd}
+              onChange={(e) => handleChangeAdd(e, payload, setPayload)}
               required
             />
           </div>
@@ -121,7 +131,7 @@ const Add = () => {
               id="password"
               name="password"
               value={password}
-              onChange={onChangeAdd}
+              onChange={(e) => handleChangeAdd(e, payload, setPayload)}
               required
             />
           </div>
@@ -136,7 +146,7 @@ const Add = () => {
               id="phone"
               name="phone"
               value={phone}
-              onChange={onChangeAdd}
+              onChange={(e) => handleChangeAdd(e, payload, setPayload)}
               required
             />
           </div>
@@ -154,7 +164,7 @@ const Add = () => {
               id="address"
               name="address"
               value={address}
-              onChange={onChangeAdd}
+              onChange={(e) => handleChangeAdd(e, payload, setPayload)}
               required
             />
           </div>
@@ -172,7 +182,7 @@ const Add = () => {
                   id="Male"
                   value="Male"
                   checked={gender === "Male"}
-                  onChange={onChangeAdd}
+                  onChange={(e) => handleChangeAdd(e, payload, setPayload)}
                 />
                 <label className="form-check-label text-light" htmlFor="Male">
                   Male
@@ -186,7 +196,7 @@ const Add = () => {
                   id="Female"
                   value="Female"
                   checked={gender === "Female"}
-                  onChange={onChangeAdd}
+                  onChange={(e) => handleChangeAdd(e, payload, setPayload)}
                 />
                 <label className="form-check-label text-light" htmlFor="Female">
                   Female
@@ -205,7 +215,7 @@ const Add = () => {
               id="dob"
               name="dob"
               value={dob}
-              onChange={onChangeAdd}
+              onChange={(e) => handleChangeAdd(e, payload, setPayload)}
               required
             />
           </div>
@@ -223,7 +233,7 @@ const Add = () => {
               name="roleId"
               required
               value={roles?.id}
-              onChange={onChangeAdd}
+              onChange={(e) => handleChangeAdd(e, payload, setPayload)}
             >
               <option value="" selected disabled>
                 Select Role <span className="text-danger">*</span>
@@ -238,29 +248,84 @@ const Add = () => {
 
           <div className="mb-3">
             <label
-              htmlFor="fileMediaId"
-              className="form-label text-light text-start"
+              htmlFor="file"
+              className={`form-label text-light text-start${
+                error && "text-danger fst-italic"
+              }`}
             >
-              File Media <span className="text-danger">*</span>
+              File Upload <span className="text-danger">*</span>{" "}
+              {error && (
+                <span className="text-danger" style={{ fontSize: "12px" }}>
+                  {error}
+                </span>
+              )}
             </label>
-            <select
-              className="form-select bg-dark text-light border-0"
-              id="fileMediaId"
-              name="fileMediaId"
+            <input
+              type="file"
+              className="form-control bg-dark text-light border-0"
+              id="file"
+              name="file"
+              ref={fileInputRef}
+              accept="image/*"
+              onChange={(e) =>
+                handleFileChangeAdd(
+                  e,
+                  setError,
+                  setPayload,
+                  payload,
+                  fileInputRef,
+                  setPreview
+                )
+              }
               required
-              value={fileMediaId || ""}
-              onChange={onChangeAdd}
-            >
-              <option value="" selected disabled>
-                Select Media Id <span className="text-danger">*</span>
-              </option>
-              {file?.map((fi) => (
-                <option key={fi?.id} value={fi?.id}>
-                  {fi?.fileName}
-                </option>
-              ))}
-            </select>
+            />
           </div>
+
+          {preview && (
+            <div className="mb-3">
+              <label className="form-label text-start">Preview</label>
+              <div
+                style={{
+                  width: "90px",
+                  height: "90px",
+                  borderRadius: "8px",
+                  position: "relative",
+                  background: "#00ACEA",
+                  boxShadow: "0 1px 8px rgba(0, 0, 0, .5)",
+                }}
+              >
+                <div
+                  onClick={() => {
+                    fileInputRef.current.value = "";
+                    setPreview(null);
+                  }}
+                  style={{
+                    position: "absolute",
+                    right: "-.5rem",
+                    top: "-.5rem",
+                    background: "lightcoral",
+                    width: "20px",
+                    height: "20px",
+                    color: "white",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                    borderRadius: "4px",
+                    display: "grid",
+                    placeContent: "center",
+                    boxShadow: "0 1px 8px rgba(0, 0, 0, 0.2)",
+                  }}
+                >
+                  <FaTrashAlt style={{ fontSize: "12px" }} />
+                </div>
+                <img
+                  src={preview}
+                  alt="File Preview"
+                  className="w-100 h-100"
+                  style={{ objectFit: "cover", borderRadius: "8px" }}
+                />
+              </div>
+            </div>
+          )}
 
           <div className="mt-3 d-flex align-items-center justify-content-center gap-2">
             <button

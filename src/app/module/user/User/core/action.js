@@ -15,6 +15,7 @@ import {
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import useRole from "../../Role/core/action";
+import { reqCreateFile } from "../../../file-upload/core/request";
 
 const useUser = () => {
   const user = useSelector((state) => state.user);
@@ -71,14 +72,68 @@ const useUser = () => {
     });
   };
 
-  const onChangeAdd = (e) =>
-    dispatch(setUserInfo({ name: e.target.name, value: e.target.value }));
+  const handleFileChangeAdd = (
+    e,
+    setError,
+    setPayload,
+    payload,
+    fileInputRef,
+    setPreview
+  ) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const fileSizeInMB = selectedFile.size / (1024 * 1024);
+      if (fileSizeInMB > 1) {
+        setError(
+          `File size is ${fileSizeInMB.toFixed(2)}MB; must be under 1MB.`
+        );
+        fileInputRef.current.value = "";
+        setPreview(null);
+        return;
+      }
+      setError(null);
+      setPayload({ ...payload, file: selectedFile });
+      setPreview(URL.createObjectURL(selectedFile));
+    }
+  };
 
-  const onCreateUser = async (e) => {
+  const handleChangeAdd = (e, payload, setPayload) => {
+    setPayload({ ...payload, [e.target.name]: e.target.value });
+  };
+
+  const onCreateUser = async (e, payload) => {
     e.preventDefault();
 
+    const formData = new FormData();
+
+    if (!payload) {
+      Swal.fire({
+        icon: "error",
+        background: "#222525",
+        color: "#fff",
+        title: "Oops...",
+        text: "Please upload a file.",
+      });
+      return;
+    }
+
     try {
-      await reqCreateUser(user.userInfo);
+      formData.append("files", payload.file);
+
+      const fileResponse = await reqCreateFile(formData);
+      const mediaId = fileResponse.data?.data?.[0]?.id;
+
+      if (!mediaId) {
+        Swal.fire({
+          icon: "error",
+          background: "#222525",
+          color: "#fff",
+          title: "Oops...",
+          text: "mediaId is null. Please upload again.",
+        });
+      }
+
+      await reqCreateUser({ ...payload, fileMediaId: mediaId });
       Swal.fire({
         background: "#222525",
         color: "#fff",
@@ -87,7 +142,6 @@ const useUser = () => {
         text: "User has been successfully created!",
       });
       navigate("/user");
-      dispatch(resetUserInfo());
     } catch (err) {
       const formattedErrors = err.response?.data?.data
         .map((message) => `<li>${message}</li>`)
@@ -177,7 +231,8 @@ const useUser = () => {
     onDeleteUser,
     fetchUserById,
     navigate,
-    onChangeAdd,
+    handleChangeAdd,
+    handleFileChangeAdd,
     onCreateUser,
     onChangeEdit,
     onUpdateUser,
