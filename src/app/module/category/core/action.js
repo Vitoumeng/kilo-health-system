@@ -47,7 +47,7 @@ const useCategory = () => {
               color: "#fff",
               icon: "success",
               title: `Delete Category ${id}`,
-              text: "Successfully deleted",
+              text: "Category has been successfully deleted!",
             });
             fetchCategory();
           })
@@ -209,7 +209,7 @@ const useCategory = () => {
           Swal.fire({
             icon: "success",
             title: "Edit Category",
-            text: "Successfully edited",
+            text: "Category has been successfully edited!",
           });
           fetchCategoryById(payload.id);
         })
@@ -240,13 +240,16 @@ const useCategory = () => {
           return;
         }
 
-        await reqUpdateCategory(payload.id, { ...payload, fileMediaId: mediaId });
+        await reqUpdateCategory(payload.id, {
+          ...payload,
+          fileMediaId: mediaId,
+        });
         Swal.fire({
           background: "#222525",
           color: "#fff",
           icon: "success",
           title: "Category Updated",
-          text: "Successfully edited",
+          text: "Category has been successfully edited!",
         });
 
         fetchCategoryById(payload.id);

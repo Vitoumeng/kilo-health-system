@@ -11,7 +11,6 @@ import { setPost, setPostDetails } from "./reducer";
 import Swal from "sweetalert2";
 import moment from "moment";
 import { reqCreateFile } from "../../file-upload/core/request";
-import React, { useState, useRef } from "react";
 
 const usePost = () => {
   const post = useSelector((state) => state.post);
@@ -49,7 +48,7 @@ const usePost = () => {
               color: "#fff",
               icon: "success",
               title: `Delete post ${id}`,
-              text: "Successfully deleted",
+              text: "Post has been successfully deleted!",
             });
             fetchPost();
           })
@@ -217,7 +216,7 @@ const usePost = () => {
           Swal.fire({
             icon: "success",
             title: "Edit Post",
-            text: "Successfully edited",
+            text: "Post has been successfully edited!",
           });
           fetchPostById(payload.id);
         })
@@ -225,7 +224,7 @@ const usePost = () => {
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Error Editing user",
+            text: "Error Editing Post",
           });
           console.log(err);
         });
@@ -254,7 +253,7 @@ const usePost = () => {
           color: "#fff",
           icon: "success",
           title: "Post Updated",
-          text: "Post has been successfully updated!",
+          text: "Post has been successfully edited!",
         });
 
         fetchPostById(payload.id);

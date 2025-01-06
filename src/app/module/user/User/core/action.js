@@ -7,9 +7,7 @@ import {
   reqUpdateUser,
 } from "./request";
 import {
-  resetUserInfo,
   setUserDetails,
-  setUserInfo,
   setUsers,
 } from "./reducer";
 import Swal from "sweetalert2";
@@ -54,7 +52,7 @@ const useUser = () => {
               color: "#fff",
               icon: "success",
               title: `Delete User ${id}`,
-              text: "Successfully deleted",
+              text: "User has been successfully deleted!",
             });
             fetchUsers();
           })
@@ -227,7 +225,7 @@ const useUser = () => {
           Swal.fire({
             icon: "success",
             title: "Edit User",
-            text: "Successfully edited",
+            text: "User has been successfully edited!",
           });
           fetchUserById(payload.id);
         })
@@ -262,7 +260,7 @@ const useUser = () => {
         Swal.fire({
           icon: "success",
           title: "Edit User",
-          text: "Successfully edited",
+          text: "Edit has been successfully edited!",
         });
         fetchUserById(payload.id);
       } catch (err) {
