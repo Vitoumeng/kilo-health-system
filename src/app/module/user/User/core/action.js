@@ -168,61 +168,114 @@ const useUser = () => {
       const updatedUserData = {
         ...userData,
         roleId: userData.role?.id || null,
+        fileMediaId: userData.fileMedia?.id || null,
       };
 
       dispatch(setUserDetails(updatedUserData));
     });
   };
 
-  const onChangeEdit = (e) => {
-    const { name, value } = e.target;
-
-    if (name === "roleId") {
-      const selectedRole = roles.find((role) => role.id === value);
-
-      dispatch(
-        setUserDetails({
-          ...user.userDetails,
-          role: selectedRole,
-          roleId: value,
-        })
-      );
-    } else {
-      dispatch(
-        setUserDetails({
-          ...user.userDetails,
-          [name]: value,
-        })
-      );
+  const handleFileChangeEdit = (
+    e,
+    setError,
+    setPayload,
+    payload,
+    fileInputRef,
+    setPreview
+  ) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const fileSizeInMB = selectedFile.size / (1024 * 1024);
+      if (fileSizeInMB > 1) {
+        setError(
+          `File size is ${fileSizeInMB.toFixed(2)}MB; must be under 1MB.`
+        );
+        fileInputRef.current.value = "";
+        setPreview(null);
+        return;
+      }
+      setError(null);
+      setPayload({ ...payload, file: selectedFile });
+      setPreview(URL.createObjectURL(selectedFile));
     }
   };
 
-  const onUpdateUser = (e) => {
+  const handleChangeEdit = (e, payload, setPayload) => {
+    const { name, value } = e.target;
+    if (name === "roleId") {
+      const selectedRole = roles.find((role) => role.id === value);
+
+      setPayload({ ...payload, role: selectedRole, roleId: value });
+    } else {
+      setPayload({ ...payload, [name]: value });
+    }
+  };
+
+  const onUpdateUser = async (e, payload) => {
     e.preventDefault();
 
-    let userDetails = { ...user.userDetails };
-    delete userDetails.role;
+    if (!payload.file) {
+      Swal.fire({
+        icon: "error",
+        background: "#222525",
+        color: "#fff",
+        title: "Oops...",
+        text: "Please upload a file.",
+      });
+      return reqUpdateUser(payload.id, payload)
+        .then(() => {
+          Swal.fire({
+            icon: "success",
+            title: "Edit User",
+            text: "Successfully edited",
+          });
+          fetchUserById(payload.id);
+        })
+        .catch((err) => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Error Editing user",
+          });
+          console.log(err);
+        });
+    } else {
+      const formData = new FormData();
+      formData.append("files", payload.file);
 
-    return reqUpdateUser(userDetails.id, userDetails)
-      .then(() => {
+      try {
+        const fileResponse = await reqCreateFile(formData);
+        const mediaId = fileResponse.data?.data?.[0]?.id;
+
+        if (!mediaId) {
+          Swal.fire({
+            icon: "error",
+            background: "#222525",
+            color: "#fff",
+            title: "Oops...",
+            text: "mediaId is null. Please upload again.",
+          });
+          return;
+        }
+
+        await reqUpdateUser(payload.id, { ...payload, fileMediaId: mediaId });
         Swal.fire({
           icon: "success",
           title: "Edit User",
-          background: "#222525",
-          color: "#fff",
           text: "Successfully edited",
         });
-        fetchUserById(userDetails.id);
-      })
-      .catch(() => {
+        fetchUserById(payload.id);
+      } catch (err) {
         Swal.fire({
           icon: "error",
-          title: "Oops...",
           background: "#222525",
           color: "#fff",
-          text: "Error Editing user",
+          title: "Oops...",
+          text: err?.message || "Something went wrong. Please try again.",
         });
-      });
+        console.error("Error details:", err.response?.data || err);
+      }
+    }
   };
 
   return {
@@ -234,7 +287,8 @@ const useUser = () => {
     handleChangeAdd,
     handleFileChangeAdd,
     onCreateUser,
-    onChangeEdit,
+    handleChangeEdit,
+    handleFileChangeEdit,
     onUpdateUser,
   };
 };

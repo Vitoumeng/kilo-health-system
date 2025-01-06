@@ -25,7 +25,7 @@ const Edit = () => {
   const [error, setError] = useState("");
   const [preview, setPreview] = useState(null);
   const [edit, setEdit] = useState(null);
-
+  
   useEffect(() => {
     fetchPostById(id);
     fetchTopic(20000, 1);
