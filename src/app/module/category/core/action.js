@@ -164,39 +164,103 @@ const useCategory = () => {
     setPayload({ ...payload, [e.target.name]: e.target.value });
   };
 
-  const onChangeEdit = (e) =>
-    dispatch(
-      setCategoryDetails({
-        ...category.categoryDetails,
-        [e.target.name]: e.target.value,
-      })
-    );
+  const handleFileChangeEdit = (
+    e,
+    setError,
+    setPayload,
+    payload,
+    fileInputRef,
+    setPreview
+  ) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const fileSizeInMB = selectedFile.size / (1024 * 1024);
+      if (fileSizeInMB > 1) {
+        setError(
+          `File size is ${fileSizeInMB.toFixed(2)}MB; must be under 1MB.`
+        );
+        fileInputRef.current.value = "";
+        setPreview(null);
+        return;
+      }
+      setError(null);
+      setPayload({ ...payload, file: selectedFile });
+      setPreview(URL.createObjectURL(selectedFile));
+    }
+  };
 
-  const onUpdateCategory = (e) => {
+  const handleChangeEdit = (e, payload, setPayload) => {
+    setPayload({ ...payload, [e.target.name]: e.target.value });
+  };
+
+  const onUpdateCategory = async (e, payload) => {
     e.preventDefault();
 
-    let cate = category.categoryDetails;
+    if (!payload.file) {
+      Swal.fire({
+        icon: "error",
+        background: "#222525",
+        color: "#fff",
+        title: "Oops...",
+        text: "Please upload a file.",
+      });
+      return reqUpdateCategory(payload.id, payload)
+        .then(() => {
+          Swal.fire({
+            icon: "success",
+            title: "Edit Category",
+            text: "Successfully edited",
+          });
+          fetchCategoryById(payload.id);
+        })
+        .catch((err) => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Error Editing Category",
+          });
+          console.log(err);
+        });
+    } else {
+      const formData = new FormData();
+      formData.append("files", payload.file);
 
-    return reqUpdateCategory(cate.id, cate)
-      .then(() => {
+      try {
+        const fileRes = await reqCreateFile(formData);
+        const mediaId = fileRes.data?.data?.[0]?.id;
+
+        if (!mediaId) {
+          Swal.fire({
+            icon: "error",
+            background: "#222525",
+            color: "#fff",
+            title: "Oops...",
+            text: "mediaId is null. Please upload again.",
+          });
+          return;
+        }
+
+        await reqUpdateCategory(payload.id, { ...payload, fileMediaId: mediaId });
         Swal.fire({
-          icon: "success",
-          title: "Edit Category",
           background: "#222525",
           color: "#fff",
+          icon: "success",
+          title: "Category Updated",
           text: "Successfully edited",
         });
-        fetchCategoryById(cate.id);
-      })
-      .catch(() => {
+
+        fetchCategoryById(payload.id);
+      } catch (err) {
         Swal.fire({
           icon: "error",
-          title: "Oops...",
           background: "#222525",
           color: "#fff",
-          text: "Error Editing Category",
+          title: "Oops...",
+          text: err?.message || "Something went wrong. Please try again.",
         });
-      });
+        console.error("Error details:", err.response?.data || err);
+      }
+    }
   };
 
   return {
@@ -208,7 +272,8 @@ const useCategory = () => {
     handleChangeAdd,
     onCreateCategory,
     fetchCategoryById,
-    onChangeEdit,
+    handleChangeEdit,
+    handleFileChangeEdit,
     onUpdateCategory,
   };
 };
