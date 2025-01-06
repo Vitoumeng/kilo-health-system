@@ -21,14 +21,14 @@ const Table = ({ data, navigate, handleDelete }) => {
               className="text-start fw-semibold text-light"
               style={{ fontSize: "14px" }}
             >
-              Category Name
+              Name
             </th>
             <th
               scope="col"
               className="text-start fw-semibold text-light"
               style={{ fontSize: "14px" }}
             >
-              Name
+              Category
             </th>
             <th
               scope="col"
@@ -59,13 +59,13 @@ const Table = ({ data, navigate, handleDelete }) => {
                 className="text-start fw-medium text-light"
                 style={{ fontSize: "14px" }}
               >
-                {categoryName}
+                {name}
               </td>
               <td
                 className="text-start fw-medium text-light"
                 style={{ fontSize: "14px" }}
               >
-                {name}
+                {categoryName}
               </td>
               <td className="text-start fw-medium text-secondary">
                 <img
