@@ -7,14 +7,9 @@ import {
   reqGetTopicById,
   reqUpdateTopic,
 } from "./request";
-import {
-  resetTopicInfo,
-  setTopic,
-  setTopicDetails,
-  setTopicInfo,
-} from "./reducer";
+import { setTopic, setTopicDetails } from "./reducer";
 import Swal from "sweetalert2";
-import { reqUpdateUser } from "../../user/User/core/request";
+import { reqCreateFile } from "../../file-upload/core/request";
 
 const useTopic = () => {
   const topic = useSelector((state) => state.topic);
@@ -32,16 +27,68 @@ const useTopic = () => {
       });
   };
 
-  const onChangeAdd = (e) =>
-    dispatch(setTopicInfo({ name: e.target.name, value: e.target.value }));
+  const handleFileChangeAdd = (
+    e,
+    setError,
+    setPayload,
+    payload,
+    fileInputRef,
+    setPreview
+  ) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const fileSizeInMB = selectedFile.size / (1024 * 1024);
+      if (fileSizeInMB > 1) {
+        setError(
+          `File size is ${fileSizeInMB.toFixed(2)}MB; must be under 1MB.`
+        );
+        fileInputRef.current.value = "";
+        setPreview(null);
+        return;
+      }
+      setError(null);
+      setPayload({ ...payload, file: selectedFile });
+      setPreview(URL.createObjectURL(selectedFile));
+    }
+  };
 
-  const onResetAdd = () => dispatch(resetTopicInfo());
+  const handleChangeAdd = (e, payload, setPayload) => {
+    setPayload({ ...payload, [e.target.name]: e.target.value });
+  };
 
-  const onCreateTopic = async (e) => {
+  const onCreateTopic = async (e, payload) => {
     e.preventDefault();
 
+    const formData = new FormData();
+
+    if (!payload) {
+      Swal.fire({
+        icon: "error",
+        background: "#222525",
+        color: "#fff",
+        title: "Oops...",
+        text: "Please fill in all required fields",
+      });
+      return;
+    }
+
     try {
-      await reqCreateTopic(topic.topicInfo);
+      formData.append("files", payload.file);
+
+      const fileResponse = await reqCreateFile(formData);
+      const mediaId = fileResponse.data?.data?.[0]?.id;
+
+      if (!mediaId) {
+        Swal.fire({
+          icon: "error",
+          background: "#222525",
+          color: "#fff",
+          title: "Oops...",
+          text: "Failed to upload file",
+        });
+      }
+
+      await reqCreateTopic({ ...payload, fileMediaId: mediaId });
       Swal.fire({
         background: "#222525",
         color: "#fff",
@@ -50,7 +97,6 @@ const useTopic = () => {
         text: "Topic has been successfully created!",
       });
       navigate("/topic");
-      onResetAdd();
     } catch (err) {
       Swal.fire({
         icon: "error",
@@ -158,7 +204,8 @@ const useTopic = () => {
     ...topic,
     navigate,
     fetchTopic,
-    onChangeAdd,
+    handleChangeAdd,
+    handleFileChangeAdd,
     onCreateTopic,
     onDeleteTopic,
     fetchTopicById,
