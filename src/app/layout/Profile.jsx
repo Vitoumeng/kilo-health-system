@@ -30,7 +30,7 @@ const Profile = ({ show, toggleProfile }) => {
         top: "0",
         left: "0",
         opacity: show ? "1" : "0",
-        zIndex: show ? "1000" : "0",
+        zIndex: show ? "1000" : "-1",
         backdropFilter: "blur(10px)",
         backgroundColor: "rgba(0, 0, 0, 0.6)",
       }}

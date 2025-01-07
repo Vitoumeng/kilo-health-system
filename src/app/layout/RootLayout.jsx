@@ -21,7 +21,7 @@ const RootLayout = () => {
 
         <Profile show={show} toggleProfile={() => setShow(false)} />
 
-        <main className="p-2 main">
+        <main className="p-2 main" style={{ zIndex: 100 }}>
           <Outlet />
         </main>
       </div>
