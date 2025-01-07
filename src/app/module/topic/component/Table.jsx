@@ -74,6 +74,9 @@ const Table = ({ data, navigate, handleDelete }) => {
                   style={{
                     width: "35px",
                     height: "35px",
+                    background: "#fff",
+                    borderRadius: "12px",
+                    overflow: "hidden",
                   }}
                   className=" object-fit-cover rounded-2 overflow-hidden"
                 />
