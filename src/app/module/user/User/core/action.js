@@ -37,7 +37,7 @@ const useUser = () => {
       color: "#fff",
       showCancelButton: true,
       confirmButtonColor: "lightcoral",
-      cancelButtonColor: "lightgrey",
+      cancelButtonColor: "gray",
       confirmButtonText: "OK",
       cancelButtonText: "Cancel",
     }).then((res) => {
