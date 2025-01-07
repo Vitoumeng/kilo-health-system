@@ -50,7 +50,7 @@ const useLogin = () => {
       showCancelButton: true,
       confirmButtonColor: "lightcoral",
       confirmButtonText: "OK",
-      cancelButtonColor: "lightgrey",
+      cancelButtonColor: "gray",
       cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {

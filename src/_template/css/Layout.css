@@ -40,22 +40,76 @@
   height: 35px;
   border-radius: 8px;
   padding: 5px 15px;
-  background: linear-gradient(to right, lightblue, lightpink);
+  background: linear-gradient(to right, cornflowerblue, crimson);
 }
 
-.dropdown-custome,
+.dropdown-profile,
 .dropdown-logout {
   cursor: pointer;
 }
 
 .dropdown-logout:hover,
 .dropdown-logout.active {
-  color: black !important;
-  background: rgb(255, 218, 223) !important;
+  color: #fff !important;
+  background: crimson !important;
+}
+
+.dropdown-profile:hover,
+.dropdown-profile.active {
+  color: #fff !important;
+  background-color: cornflowerblue !important;
 }
 
 /* Main */
 .main {
   margin-left: 260px;
   margin-top: 70px;
+}
+
+/* Profile */
+.profile-title {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.profile-text {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.card-profile {
+  background: linear-gradient(135deg, #23272a, #212529);
+  border-radius: 12px;
+}
+
+.card-header {
+  border-radius: 12px 12px 0 0;
+  text-align: center;
+  color: #ffffff;
+  font-weight: bold;
+  background: #212225;
+}
+
+.img-thumbnail {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+hr.bg-secondary {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.card-body p {
+  margin-bottom: 8px;
+}
+
+.position-fixed {
+  padding: 20px;
+}
+
+.row {
+  margin-bottom: 16px;
 }
