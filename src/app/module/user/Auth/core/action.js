@@ -26,16 +26,7 @@ const useLogin = () => {
       dispatch(setProfile(response.user));
       console.log(response?.user?.roleId);
       fetchSelfPermissions({ roleId: response.user.roleId });
-      Swal.fire({
-        icon: "success",
-        background: "#222525",
-        color: "#fff",
-        title: "Login Successful",
-        text: "Welcome back!",
-        confirmButtonText: "OK",
-      }).then(() => {
-        navigate("/");
-      });
+      navigate("/");
     } catch (err) {
       console.log("Error");
     }
