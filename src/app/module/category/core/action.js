@@ -208,6 +208,8 @@ const useCategory = () => {
         .then(() => {
           Swal.fire({
             icon: "success",
+            background: "#222525",
+            color: "#fff",
             title: "Edit Category",
             text: "Category has been successfully edited!",
           });
@@ -217,6 +219,8 @@ const useCategory = () => {
           Swal.fire({
             icon: "error",
             title: "Oops...",
+            background: "#222525",
+            color: "#fff",
             text: "Error Editing Category",
           });
           console.log(err);

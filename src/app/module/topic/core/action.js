@@ -10,13 +10,11 @@ import {
 import { setTopic, setTopicDetails } from "./reducer";
 import Swal from "sweetalert2";
 import { reqCreateFile } from "../../file-upload/core/request";
-import useCategory from "../../category/core/action";
 
 const useTopic = () => {
   const topic = useSelector((state) => state.topic);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { category } = useCategory();
 
   const fetchTopic = (size = 20, page = 1, search = "") => {
     return reqGetTopic({ page, size, search })
@@ -188,6 +186,8 @@ const useTopic = () => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
+          background: "#222525",
+          color: "#fff",
           text: "Error Editing topic",
         });
         console.log(err);

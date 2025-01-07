@@ -6,10 +6,7 @@ import {
   reqGetUserById,
   reqUpdateUser,
 } from "./request";
-import {
-  setUserDetails,
-  setUsers,
-} from "./reducer";
+import { setUserDetails, setUsers } from "./reducer";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import useRole from "../../Role/core/action";
@@ -224,6 +221,8 @@ const useUser = () => {
         .then(() => {
           Swal.fire({
             icon: "success",
+            background: "#222525",
+            color: "#fff",
             title: "Edit User",
             text: "User has been successfully edited!",
           });
@@ -233,6 +232,8 @@ const useUser = () => {
           Swal.fire({
             icon: "error",
             title: "Oops...",
+            background: "#222525",
+            color: "#fff",
             text: "Error Editing user",
           });
           console.log(err);
@@ -260,6 +261,8 @@ const useUser = () => {
         Swal.fire({
           icon: "success",
           title: "Edit User",
+          background: "#222525",
+          color: "#fff",
           text: "Edit has been successfully edited!",
         });
         fetchUserById(payload.id);
