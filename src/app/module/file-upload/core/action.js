@@ -28,7 +28,7 @@ const useFile = () => {
       color: "#fff",
       showCancelButton: true,
       confirmButtonColor: "lightcoral",
-      cancelButtonColor: "lightgrey",
+      cancelButtonColor: "gray",
       confirmButtonText: "OK",
       cancelButtonText: "Cancel",
     }).then((res) => {
@@ -58,27 +58,60 @@ const useFile = () => {
     });
   };
 
+  const handleFileChangeAdd = (
+    e,
+    setError,
+    setPayload,
+    payload,
+    fileInputRef,
+    setPreview
+  ) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const fileSizeInMB = selectedFile.size / (1024 * 1024);
+      if (fileSizeInMB > 1) {
+        setError(
+          `File size is ${fileSizeInMB.toFixed(2)}MB; must be under 1MB.`
+        );
+        fileInputRef.current.value = "";
+        setPreview(null);
+        return;
+      }
+      setError(null);
+      setPayload({ ...payload, file: selectedFile });
+      setPreview(URL.createObjectURL(selectedFile));
+    }
+  };
+
   const onCreateFile = async (e, payload) => {
     e.preventDefault();
 
-    try {
-      const res = await reqCreateFile(payload);
+    const formData = new FormData();
 
-      Swal.fire({
-        icon: "success",
-        title: "Upload File",
-        text: "Successfully uploaded file",
-      });
-      console.log(res.data);
-
-      navigate("/file");
-    } catch (err) {
+    if (!payload.file) {
       Swal.fire({
         icon: "error",
+        background: "#222525",
+        color: "#fff",
         title: "Oops...",
-        text: "Error Creating file",
+        text: "Please upload a file.",
       });
+      return;
     }
+
+    formData.append("files", payload.file);
+
+    return reqCreateFile(formData).then((res) => {
+      Swal.fire({
+        background: "#222525",
+        color: "#fff",
+        icon: "success",
+        title: "Upload File",
+        text: "File has been successfully uploaded!",
+      });
+
+      navigate("/file");
+    });
   };
 
   return {
@@ -87,6 +120,7 @@ const useFile = () => {
     fetchFiles,
     onDeleteFile,
     onCreateFile,
+    handleFileChangeAdd,
   };
 };
 

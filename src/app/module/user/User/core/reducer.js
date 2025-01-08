@@ -1,22 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initUser = {
-  username: "",
-  email: "",
-  address: "",
-  password: "",
-  phone: "",
-  firstname: "",
-  lastname: "",
-  dob: "",
-  gender: "Male",
-  fileMediaId: null,
-};
-
 const initialState = {
   users: [],
   paging: {},
-  userInfo: initUser,
   userDetails: [],
 };
 
@@ -28,20 +14,12 @@ const userSlice = createSlice({
       state.users = action.payload.data;
       state.paging = action.payload.paging;
     },
-    setUserInfo: (state, action) => {
-      const data = action.payload;
-      state.userInfo[data.name] = data.value;
-    },
-    resetUserInfo: (state) => {
-      state.userInfo = { ...initUser };
-    },
     setUserDetails: (state, action) => {
       state.userDetails = action.payload;
     },
   },
 });
 
-export const { setUsers, setUserInfo, resetUserInfo, setUserDetails } =
-  userSlice.actions;
+export const { setUsers, setUserDetails } = userSlice.actions;
 
 export default userSlice.reducer;

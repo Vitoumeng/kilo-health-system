@@ -81,11 +81,14 @@ const Table = ({ data, navigate, handleDelete }) => {
                 </td>
                 <td className="text-start fw-medium text-secondary">
                   <img
-                    src={photo}
+                    src={photo ? photo : "user.png"}
                     alt=""
                     style={{
                       width: "35px",
                       height: "35px",
+                      background: "#fff",
+                      borderRadius: "12px",
+                      overflow: "hidden",
                     }}
                     className=" object-fit-cover rounded-2 overflow-hidden"
                   />

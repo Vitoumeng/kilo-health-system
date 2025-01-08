@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import useFile from "../../file-upload/core/action";
 import useTopic from "../../topic/core/action";
 import usePost from "../core/action";
+import { FaTrashAlt } from "react-icons/fa";
 
 const Add = () => {
   const { fetchTopic, topic } = useTopic();
-  const { onCreatePost } = usePost();
+  const { onCreatePost, handleFileChangeAdd, handleChangeAdd } = usePost();
   const [payload, setPayload] = useState({
     title: "",
     subTitle: "",
@@ -15,31 +15,13 @@ const Add = () => {
   });
   const fileInputRef = useRef();
   const [error, setError] = useState("");
-
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      const fileSizeInMB = selectedFile.size / (1024 * 1024);
-      if (fileSizeInMB > 1) {
-        setError(
-          `File size is ${fileSizeInMB.toFixed(2)}MB; must be under 1MB.`
-        );
-        fileInputRef.current.value = "";
-        return;
-      }
-      setError(null);
-      setPayload({ ...payload, file: selectedFile });
-    }
-  };
+  const [preview, setPreview] = useState(null);
 
   useEffect(() => {
     fetchTopic(20000, 1);
   }, []);
 
   let { title, subTitle, description, publicAt, status, topic_id } = payload;
-
-  const onChangeAdd = (e) =>
-    setPayload({ ...payload, [e.target.name]: e.target.value });
 
   // console.log(payload);
 
@@ -69,7 +51,7 @@ const Add = () => {
               id="title"
               name="title"
               value={title}
-              onChange={onChangeAdd}
+              onChange={(e) => handleChangeAdd(e, payload, setPayload)}
               required
             />
           </div>
@@ -87,7 +69,7 @@ const Add = () => {
               id="subTitle"
               name="subTitle"
               value={subTitle}
-              onChange={onChangeAdd}
+              onChange={(e) => handleChangeAdd(e, payload, setPayload)}
               required
             />
           </div>
@@ -105,7 +87,7 @@ const Add = () => {
               id="publicAt"
               name="publicAt"
               value={publicAt}
-              onChange={onChangeAdd}
+              onChange={(e) => handleChangeAdd(e, payload, setPayload)}
               required
             />
           </div>
@@ -123,7 +105,7 @@ const Add = () => {
                   id="true"
                   value={true}
                   checked={status === true || status === "true"}
-                  onChange={onChangeAdd}
+                  onChange={(e) => handleChangeAdd(e, payload, setPayload)}
                 />
                 <label className="form-check-label text-light" htmlFor="true">
                   True
@@ -137,7 +119,7 @@ const Add = () => {
                   id="false"
                   value="false"
                   checked={status === false || status === "false"}
-                  onChange={onChangeAdd}
+                  onChange={(e) => handleChangeAdd(e, payload, setPayload)}
                 />
                 <label className="form-check-label text-light" htmlFor="false">
                   False
@@ -158,7 +140,7 @@ const Add = () => {
               id="description"
               name="description"
               value={description || ""}
-              onChange={onChangeAdd}
+              onChange={(e) => handleChangeAdd(e, payload, setPayload)}
               required
             ></textarea>
           </div>
@@ -176,7 +158,7 @@ const Add = () => {
               name="topic_id"
               required
               value={topic_id || ""}
-              onChange={onChangeAdd}
+              onChange={(e) => handleChangeAdd(e, payload, setPayload)}
             >
               <option value="" selected disabled>
                 Select Topic <span className="text-danger">*</span>
@@ -210,10 +192,65 @@ const Add = () => {
               name="file"
               ref={fileInputRef}
               accept="image/*"
-              onChange={handleFileChange}
+              onChange={(e) =>
+                handleFileChangeAdd(
+                  e,
+                  setError,
+                  setPayload,
+                  payload,
+                  fileInputRef,
+                  setPreview
+                )
+              }
               required
             />
           </div>
+
+          {preview && (
+            <div className="mb-3">
+              <label className="form-label text-start">Preview</label>
+              <div
+                style={{
+                  width: "90px",
+                  height: "90px",
+                  borderRadius: "8px",
+                  position: "relative",
+                  background: "#00ACEA",
+                  boxShadow: "0 1px 8px rgba(0, 0, 0, .5)",
+                }}
+              >
+                <div
+                  onClick={() => {
+                    fileInputRef.current.value = "";
+                    setPreview(null);
+                  }}
+                  style={{
+                    position: "absolute",
+                    right: "-.5rem",
+                    top: "-.5rem",
+                    background: "lightcoral",
+                    width: "20px",
+                    height: "20px",
+                    color: "white",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                    borderRadius: "4px",
+                    display: "grid",
+                    placeContent: "center",
+                    boxShadow: "0 1px 8px rgba(0, 0, 0, 0.2)",
+                  }}
+                >
+                  <FaTrashAlt style={{ fontSize: "12px" }} />
+                </div>
+                <img
+                  src={preview}
+                  alt="File Preview"
+                  className="w-100 h-100"
+                  style={{ objectFit: "cover", borderRadius: "8px" }}
+                />
+              </div>
+            </div>
+          )}
 
           <div className="mt-3 d-flex align-items-center justify-content-center gap-2">
             <button

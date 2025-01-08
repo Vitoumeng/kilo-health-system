@@ -7,7 +7,7 @@ import {
   reqGetPostById,
   reqUpdatePost,
 } from "./request";
-import { resetPostInfo, setPost, setPostDetails, setPostInfo } from "./reducer";
+import { setPost, setPostDetails } from "./reducer";
 import Swal from "sweetalert2";
 import moment from "moment";
 import { reqCreateFile } from "../../file-upload/core/request";
@@ -36,7 +36,7 @@ const usePost = () => {
       color: "#fff",
       showCancelButton: true,
       confirmButtonColor: "lightcoral",
-      cancelButtonColor: "lightgrey",
+      cancelButtonColor: "gray",
       confirmButtonText: "OK",
       cancelButtonText: "Cancel",
     }).then((res) => {
@@ -48,7 +48,7 @@ const usePost = () => {
               color: "#fff",
               icon: "success",
               title: `Delete post ${id}`,
-              text: "Successfully deleted",
+              text: "Post has been successfully deleted!",
             });
             fetchPost();
           })
@@ -64,6 +64,35 @@ const usePost = () => {
           });
       }
     });
+  };
+
+  const handleFileChangeAdd = (
+    e,
+    setError,
+    setPayload,
+    payload,
+    fileInputRef,
+    setPreview
+  ) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const fileSizeInMB = selectedFile.size / (1024 * 1024);
+      if (fileSizeInMB > 1) {
+        setError(
+          `File size is ${fileSizeInMB.toFixed(2)}MB; must be under 1MB.`
+        );
+        fileInputRef.current.value = "";
+        setPreview(null);
+        return;
+      }
+      setError(null);
+      setPayload({ ...payload, file: selectedFile });
+      setPreview(URL.createObjectURL(selectedFile));
+    }
+  };
+
+  const handleChangeAdd = (e, payload, setPayload) => {
+    setPayload({ ...payload, [e.target.name]: e.target.value });
   };
 
   const onCreatePost = async (e, payload) => {
@@ -104,7 +133,7 @@ const usePost = () => {
         });
       }
 
-      await reqCreatePost({...updatedPayload, mediaId: mediaId});
+      await reqCreatePost({ ...updatedPayload, mediaId: mediaId });
       Swal.fire({
         background: "#222525",
         color: "#fff",
@@ -142,36 +171,103 @@ const usePost = () => {
       });
   };
 
-  const onChangeEdit = (e) =>
-    dispatch(
-      setPostDetails({ ...post.postDetails, [e.target.name]: e.target.value })
-    );
+  const handleFileChangeEdit = (
+    e,
+    setError,
+    setPayload,
+    payload,
+    fileInputRef,
+    setPreview
+  ) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const fileSizeInMB = selectedFile.size / (1024 * 1024);
+      if (fileSizeInMB > 1) {
+        setError(
+          `File size is ${fileSizeInMB.toFixed(2)}MB; must be under 1MB.`
+        );
+        fileInputRef.current.value = "";
+        setPreview(null);
+        return;
+      }
+      setError(null);
+      setPayload({ ...payload, file: selectedFile });
+      setPreview(URL.createObjectURL(selectedFile));
+    }
+  };
 
-  const onUpdatePost = (e) => {
+  const handleChangeEdit = (e, payload, setPayload) => {
+    setPayload({ ...payload, [e.target.name]: e.target.value });
+  };
+
+  const onUpdatePost = async (e, payload) => {
     e.preventDefault();
 
-    let pos = post.postDetails;
+    if (!payload.file) {
+      Swal.fire({
+        icon: "error",
+        background: "#222525",
+        color: "#fff",
+        title: "Oops...",
+        text: "Please upload a file.",
+      });
+      return reqUpdatePost(payload.id, payload)
+        .then(() => {
+          Swal.fire({
+            icon: "success",
+            title: "Edit Post",
+            text: "Post has been successfully edited!",
+          });
+          fetchPostById(payload.id);
+        })
+        .catch((err) => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Error Editing Post",
+          });
+          console.log(err);
+        });
+    } else {
+      const formData = new FormData();
+      formData.append("files", payload.file);
 
-    return reqUpdatePost(pos.id, pos)
-      .then(() => {
+      try {
+        const fileRes = await reqCreateFile(formData);
+        const mediaId = fileRes.data?.data?.[0]?.id;
+
+        if (!mediaId) {
+          Swal.fire({
+            icon: "error",
+            background: "#222525",
+            color: "#fff",
+            title: "Oops...",
+            text: "mediaId is null. Please upload again.",
+          });
+          return;
+        }
+
+        await reqUpdatePost(payload.id, { ...payload, mediaId: mediaId });
         Swal.fire({
-          icon: "success",
-          title: "Edit Post",
           background: "#222525",
           color: "#fff",
-          text: "Successfully edited",
+          icon: "success",
+          title: "Post Updated",
+          text: "Post has been successfully edited!",
         });
-        fetchPostById(pos.id);
-      })
-      .catch(() => {
+
+        fetchPostById(payload.id);
+      } catch (err) {
         Swal.fire({
           icon: "error",
-          title: "Oops...",
           background: "#222525",
           color: "#fff",
-          text: "Error Editing Post",
+          title: "Oops...",
+          text: err?.message || "Something went wrong. Please try again.",
         });
-      });
+        console.error("Error details:", err.response?.data || err);
+      }
+    }
   };
 
   return {
@@ -180,8 +276,11 @@ const usePost = () => {
     navigate,
     onDeletePost,
     onCreatePost,
+    handleChangeAdd,
+    handleFileChangeAdd,
     fetchPostById,
-    onChangeEdit,
+    handleChangeEdit,
+    handleFileChangeEdit,
     onUpdatePost,
   };
 };

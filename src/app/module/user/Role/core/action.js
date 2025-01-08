@@ -48,7 +48,7 @@ const useRole = () => {
       .then(() => {
         Swal.fire({
           icon: "success",
-          title: "Create Role Successful",
+          title: "Role has been successfully created!",
           background: "#222525",
           color: "#fff",
           confirmButtonText: "OK",
@@ -77,7 +77,7 @@ const useRole = () => {
       showCancelButton: true,
       confirmButtonColor: "lightcoral",
       confirmButtonText: "OK",
-      cancelButtonColor: "lightgrey",
+      cancelButtonColor: "gray",
       cancelButtonText: "Cancel",
     }).then((res) => {
       if (res.isConfirmed) {
@@ -87,7 +87,7 @@ const useRole = () => {
               icon: "success",
               background: "#222525",
               color: "#fff",
-              title: "Delete Role Successful",
+              title: "Role has been successfully deleted!",
               confirmButtonText: "OK",
             });
             fetchRole();
@@ -148,7 +148,7 @@ const useRole = () => {
           icon: "success",
           background: "#222525",
           color: "#fff",
-          title: "Upadte Permissions Successful",
+          title: "Permission has been successfully udated!",
           confirmButtonText: "OK",
         });
         fetchPermission({ roleId: roles.id });
