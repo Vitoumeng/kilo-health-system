@@ -25,7 +25,7 @@ const Edit = () => {
   const [error, setError] = useState("");
   const [preview, setPreview] = useState(null);
   const [edit, setEdit] = useState(null);
-  
+
   useEffect(() => {
     fetchPostById(id);
     fetchTopic(20000, 1);
@@ -162,7 +162,7 @@ const Edit = () => {
           )}
 
           <div className="mb-3">
-            <label className="form-label text-start">Preview</label>
+            <label className="form-label text-start">Post Image</label>
             <div
               style={{
                 width: "90px",
@@ -210,7 +210,11 @@ const Edit = () => {
           <div className="mt-3 d-flex align-items-center justify-content-center gap-2">
             <button
               type="button"
-              onClick={() => fetchPostById(id)}
+              onClick={() => {
+                setPayload(postDetails);
+                setPreview(fileMedia?.fileUrl);
+                setEdit(null);
+              }}
               className="btn btn-outline-light me-2"
             >
               Discard
