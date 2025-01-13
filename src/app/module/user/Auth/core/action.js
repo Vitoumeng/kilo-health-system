@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { setAuth, setLogin, setProfile } from "./reducer";
+import { setAuth, setLogin, setLogout, setProfile } from "./reducer";
 import { reqLogin } from "./request";
 import Swal from "sweetalert2";
 import useRole from "../../Role/core/action";
@@ -26,16 +26,7 @@ const useLogin = () => {
       dispatch(setProfile(response.user));
       console.log(response?.user?.roleId);
       fetchSelfPermissions({ roleId: response.user.roleId });
-      Swal.fire({
-        icon: "success",
-        background: "#222525",
-        color: "#fff",
-        title: "Login Successful",
-        text: "Welcome back!",
-        confirmButtonText: "OK",
-      }).then(() => {
-        navigate("/");
-      });
+      navigate("/");
     } catch (err) {
       console.log("Error");
     }
@@ -57,6 +48,7 @@ const useLogin = () => {
         dispatch(setAuth(undefined));
         localStorage.removeItem("user");
         localStorage.removeItem("accessToken");
+        dispatch(setLogout());
         navigate("/login");
       }
     });

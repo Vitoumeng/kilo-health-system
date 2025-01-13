@@ -19,12 +19,12 @@ const Login = () => {
   return (
     <div
       className="d-flex justify-content-center align-items-center"
-      style={{ minHeight: "100vh", backgroundColor: "#1a1d1d" }}
+      style={{ minHeight: "100vh", backgroundColor: "#212529" }}
     >
       <div
         className="d-flex px-4 py-5 flex-column align-items-center justify-content-center shadow-sm"
         style={{
-          background: "#2c2f2f",
+          background: "#212225",
           borderRadius: "8px",
         }}
       >
@@ -49,7 +49,7 @@ const Login = () => {
             </label>
             <input
               onChange={handleChangeLogin}
-              className="form-control bg-dark text-white border-secondary"
+              className="form-control bg-dark border-0 text-white"
               type="email"
               value={email}
               name="email"
@@ -67,7 +67,7 @@ const Login = () => {
             </label>
             <input
               onChange={handleChangeLogin}
-              className="form-control bg-dark text-white border-secondary"
+              className="form-control bg-dark border-0 text-white"
               type="password"
               value={password}
               name="password"
