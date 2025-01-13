@@ -60,7 +60,8 @@
   cursor: pointer;
   place-content: center;
   display: grid;
-  padding: 0.5rem;
+  width: 35px;
+  height: 35px;
   color: gray;
   border-radius: 4px;
   transition: 0.4s;
@@ -71,13 +72,13 @@
 }
 
 .btn-1:hover {
-  background: lightskyblue;
+  background: cornflowerblue;
 }
 
 .btn-2:hover {
-  background: lightcoral;
+  background: crimson;
 }
 
 .btn-3:hover {
-  background: lightseagreen;
+  background: darkturquoise;
 }

@@ -6,15 +6,11 @@ import {
   reqGetUserById,
   reqUpdateUser,
 } from "./request";
-import {
-  resetUserInfo,
-  setUserDetails,
-  setUserInfo,
-  setUsers,
-} from "./reducer";
+import { setUserDetails, setUsers } from "./reducer";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import useRole from "../../Role/core/action";
+import { reqCreateFile } from "../../../file-upload/core/request";
 
 const useUser = () => {
   const user = useSelector((state) => state.user);
@@ -41,7 +37,7 @@ const useUser = () => {
       color: "#fff",
       showCancelButton: true,
       confirmButtonColor: "lightcoral",
-      cancelButtonColor: "lightgrey",
+      cancelButtonColor: "gray",
       confirmButtonText: "OK",
       cancelButtonText: "Cancel",
     }).then((res) => {
@@ -53,7 +49,7 @@ const useUser = () => {
               color: "#fff",
               icon: "success",
               title: `Delete User ${id}`,
-              text: "Successfully deleted",
+              text: "User has been successfully deleted!",
             });
             fetchUsers();
           })
@@ -71,14 +67,68 @@ const useUser = () => {
     });
   };
 
-  const onChangeAdd = (e) =>
-    dispatch(setUserInfo({ name: e.target.name, value: e.target.value }));
+  const handleFileChangeAdd = (
+    e,
+    setError,
+    setPayload,
+    payload,
+    fileInputRef,
+    setPreview
+  ) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const fileSizeInMB = selectedFile.size / (1024 * 1024);
+      if (fileSizeInMB > 1) {
+        setError(
+          `File size is ${fileSizeInMB.toFixed(2)}MB; must be under 1MB.`
+        );
+        fileInputRef.current.value = "";
+        setPreview(null);
+        return;
+      }
+      setError(null);
+      setPayload({ ...payload, file: selectedFile });
+      setPreview(URL.createObjectURL(selectedFile));
+    }
+  };
 
-  const onCreateUser = async (e) => {
+  const handleChangeAdd = (e, payload, setPayload) => {
+    setPayload({ ...payload, [e.target.name]: e.target.value });
+  };
+
+  const onCreateUser = async (e, payload) => {
     e.preventDefault();
 
+    const formData = new FormData();
+
+    if (!payload) {
+      Swal.fire({
+        icon: "error",
+        background: "#222525",
+        color: "#fff",
+        title: "Oops...",
+        text: "Please upload a file.",
+      });
+      return;
+    }
+
     try {
-      await reqCreateUser(user.userInfo);
+      formData.append("files", payload.file);
+
+      const fileResponse = await reqCreateFile(formData);
+      const mediaId = fileResponse.data?.data?.[0]?.id;
+
+      if (!mediaId) {
+        Swal.fire({
+          icon: "error",
+          background: "#222525",
+          color: "#fff",
+          title: "Oops...",
+          text: "mediaId is null. Please upload again.",
+        });
+      }
+
+      await reqCreateUser({ ...payload, fileMediaId: mediaId });
       Swal.fire({
         background: "#222525",
         color: "#fff",
@@ -87,7 +137,6 @@ const useUser = () => {
         text: "User has been successfully created!",
       });
       navigate("/user");
-      dispatch(resetUserInfo());
     } catch (err) {
       const formattedErrors = err.response?.data?.data
         .map((message) => `<li>${message}</li>`)
@@ -114,61 +163,124 @@ const useUser = () => {
       const updatedUserData = {
         ...userData,
         roleId: userData.role?.id || null,
+        fileMediaId: userData.fileMedia?.id || null,
       };
 
       dispatch(setUserDetails(updatedUserData));
     });
   };
 
-  const onChangeEdit = (e) => {
-    const { name, value } = e.target;
-
-    if (name === "roleId") {
-      const selectedRole = roles.find((role) => role.id === value);
-
-      dispatch(
-        setUserDetails({
-          ...user.userDetails,
-          role: selectedRole,
-          roleId: value,
-        })
-      );
-    } else {
-      dispatch(
-        setUserDetails({
-          ...user.userDetails,
-          [name]: value,
-        })
-      );
+  const handleFileChangeEdit = (
+    e,
+    setError,
+    setPayload,
+    payload,
+    fileInputRef,
+    setPreview
+  ) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const fileSizeInMB = selectedFile.size / (1024 * 1024);
+      if (fileSizeInMB > 1) {
+        setError(
+          `File size is ${fileSizeInMB.toFixed(2)}MB; must be under 1MB.`
+        );
+        fileInputRef.current.value = "";
+        setPreview(null);
+        return;
+      }
+      setError(null);
+      setPayload({ ...payload, file: selectedFile });
+      setPreview(URL.createObjectURL(selectedFile));
     }
   };
 
-  const onUpdateUser = (e) => {
+  const handleChangeEdit = (e, payload, setPayload) => {
+    const { name, value } = e.target;
+    if (name === "roleId") {
+      const selectedRole = roles.find((role) => role.id === value);
+
+      setPayload({ ...payload, role: selectedRole, roleId: value });
+    } else {
+      setPayload({ ...payload, [name]: value });
+    }
+  };
+
+  const onUpdateUser = async (e, payload) => {
     e.preventDefault();
 
-    let userDetails = { ...user.userDetails };
-    delete userDetails.role;
+    if (!payload.file) {
+      if (payload === user.userDetails) {
+        Swal.fire({
+          icon: "info",
+          background: "#222525",
+          color: "#fff",
+          title: "No Changes Detected",
+          text: "The user details remain unchanged.",
+        });
+        return;
+      }
 
-    return reqUpdateUser(userDetails.id, userDetails)
-      .then(() => {
+      return reqUpdateUser(payload.id, payload)
+        .then(() => {
+          Swal.fire({
+            icon: "success",
+            background: "#222525",
+            color: "#fff",
+            title: "Edit User",
+            text: "User has been successfully edited!",
+          });
+          fetchUserById(payload.id);
+        })
+        .catch((err) => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            background: "#222525",
+            color: "#fff",
+            text: "Error Editing user",
+          });
+          console.log(err);
+        });
+    } else {
+      const formData = new FormData();
+      formData.append("files", payload.file);
+
+      try {
+        const fileResponse = await reqCreateFile(formData);
+        const mediaId = fileResponse.data?.data?.[0]?.id;
+
+        if (!mediaId) {
+          Swal.fire({
+            icon: "error",
+            background: "#222525",
+            color: "#fff",
+            title: "Oops...",
+            text: "mediaId is null. Please upload again.",
+          });
+          return;
+        }
+
+        await reqUpdateUser(payload.id, { ...payload, fileMediaId: mediaId });
         Swal.fire({
           icon: "success",
           title: "Edit User",
           background: "#222525",
           color: "#fff",
-          text: "Successfully edited",
+          text: "Edit has been successfully edited!",
         });
-        fetchUserById(userDetails.id);
-      })
-      .catch(() => {
+        fetchUserById(payload.id);
+      } catch (err) {
         Swal.fire({
           icon: "error",
-          title: "Oops...",
           background: "#222525",
           color: "#fff",
-          text: "Error Editing user",
+          title: "Oops...",
+          text: err?.message || "Something went wrong. Please try again.",
         });
-      });
+        console.error("Error details:", err.response?.data || err);
+      }
+    }
   };
 
   return {
@@ -177,9 +289,11 @@ const useUser = () => {
     onDeleteUser,
     fetchUserById,
     navigate,
-    onChangeAdd,
+    handleChangeAdd,
+    handleFileChangeAdd,
     onCreateUser,
-    onChangeEdit,
+    handleChangeEdit,
+    handleFileChangeEdit,
     onUpdateUser,
   };
 };

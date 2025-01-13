@@ -1,7 +1,7 @@
 import useRole from "../core/action";
 
 const Add = () => {
-  const { onChangeAdd, onCreateRole, roleInfo } = useRole();
+  const { onChangeAdd, onResetAdd, onCreateRole, roleInfo } = useRole();
 
   let { name, code, module } = roleInfo;
 
@@ -74,7 +74,7 @@ const Add = () => {
           <div className="mt-3 d-flex align-items-center justify-content-center gap-2">
             <button
               type="button"
-              //   onClick={() => onResetRoleInfo()}
+              onClick={() => onResetAdd()}
               className="btn btn-secondary me-2"
             >
               Discard

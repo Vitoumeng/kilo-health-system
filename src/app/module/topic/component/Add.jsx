@@ -1,22 +1,27 @@
-import React, { useEffect } from "react";
-import useFile from "../../file-upload/core/action";
+import React, { useEffect, useRef, useState } from "react";
 import useCategory from "../../category/core/action";
 import useTopic from "../core/action";
+import { FaTrashAlt } from "react-icons/fa";
 
 const Add = () => {
-  const { file, fetchFiles } = useFile();
   const { fetchCategory, category } = useCategory();
-  const { onChangeAdd, topicInfo, onCreateTopic } = useTopic();
+  const { handleChangeAdd, handleFileChangeAdd, onCreateTopic } = useTopic();
+  const fileInputRef = useRef();
+  const [error, setError] = useState("");
+  const [preview, setPreview] = useState(null);
+  const [payload, setPayload] = useState({
+    name: "",
+    categoryId: null,
+  });
 
   useEffect(() => {
-    fetchFiles(20000, 1);
     fetchCategory(20000, 1);
   }, []);
 
-  let { name, fileMediaId, categoryId } = topicInfo;
+  let { name, categoryId } = payload;
 
   // console.log(category);
-  console.log(topicInfo);
+  // console.log(payload);
 
   return (
     <div className="d-flex gap-0 flex-column align-items-baseline">
@@ -31,7 +36,7 @@ const Add = () => {
         style={{ background: "#212225" }}
       >
         <form
-          onSubmit={(e) => onCreateTopic(e)}
+          onSubmit={(e) => onCreateTopic(e, payload)}
           className="form-control border-0 bg-transparent text-light"
         >
           <div className="mb-3">
@@ -44,7 +49,7 @@ const Add = () => {
               id="name"
               name="name"
               value={name}
-              onChange={onChangeAdd}
+              onChange={(e) => handleChangeAdd(e, payload, setPayload)}
               required
             />
           </div>
@@ -62,7 +67,7 @@ const Add = () => {
               name="categoryId"
               required
               value={categoryId || ""}
-              onChange={onChangeAdd}
+              onChange={(e) => handleChangeAdd(e, payload, setPayload)}
             >
               <option value="" selected disabled>
                 Select Category <span className="text-danger">*</span>
@@ -77,34 +82,96 @@ const Add = () => {
 
           <div className="mb-3">
             <label
-              htmlFor="mediaId"
-              className="form-label text-light text-start"
+              htmlFor="file"
+              className={`form-label text-light text-start${
+                error && "text-danger fst-italic"
+              }`}
             >
-              File Media <span className="text-danger">*</span>
+              File Upload <span className="text-danger">*</span>{" "}
+              {error && (
+                <span className="text-danger" style={{ fontSize: "12px" }}>
+                  {error}
+                </span>
+              )}
             </label>
-            <select
-              className="form-select bg-dark text-light border-0"
-              id="fileMediaId"
-              name="fileMediaId"
+            <input
+              type="file"
+              className="form-control bg-dark text-light border-0"
+              id="file"
+              name="file"
+              ref={fileInputRef}
+              accept="image/*"
+              onChange={(e) =>
+                handleFileChangeAdd(
+                  e,
+                  setError,
+                  setPayload,
+                  payload,
+                  fileInputRef,
+                  setPreview
+                )
+              }
               required
-              value={fileMediaId || ""}
-              onChange={onChangeAdd}
-            >
-              <option value="" selected disabled>
-                Select Media Id <span className="text-danger">*</span>
-              </option>
-              {file?.map((fi) => (
-                <option key={fi?.id} value={fi?.id}>
-                  {fi?.fileName}
-                </option>
-              ))}
-            </select>
+            />
           </div>
+
+          {preview && (
+            <div className="mb-3">
+              <label className="form-label text-start">Preview</label>
+              <div
+                style={{
+                  width: "90px",
+                  height: "90px",
+                  borderRadius: "8px",
+                  position: "relative",
+                  background: "#00ACEA",
+                  boxShadow: "0 1px 8px rgba(0, 0, 0, .5)",
+                }}
+              >
+                <div
+                  onClick={() => {
+                    fileInputRef.current.value = "";
+                    setPreview(null);
+                  }}
+                  style={{
+                    position: "absolute",
+                    right: "-.5rem",
+                    top: "-.5rem",
+                    background: "lightcoral",
+                    width: "20px",
+                    height: "20px",
+                    color: "white",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                    borderRadius: "4px",
+                    display: "grid",
+                    placeContent: "center",
+                    boxShadow: "0 1px 8px rgba(0, 0, 0, 0.2)",
+                  }}
+                >
+                  <FaTrashAlt style={{ fontSize: "12px" }} />
+                </div>
+                <img
+                  src={preview}
+                  alt="File Preview"
+                  className="w-100 h-100"
+                  style={{ objectFit: "cover", borderRadius: "8px" }}
+                />
+              </div>
+            </div>
+          )}
 
           <div className="mt-3 d-flex align-items-center justify-content-center gap-2">
             <button
               type="button"
-              //   onClick={() => fetchUserById(id)}
+              onClick={() => {
+                setPayload({
+                  name: "",
+                  categoryId: null,
+                });
+                setPreview(null);
+                fileInputRef.current.value = "";
+              }}
               className="btn btn-outline-light me-2"
             >
               Discard

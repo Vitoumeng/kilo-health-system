@@ -1,24 +1,28 @@
 import { useParams } from "react-router";
-import { useEffect } from "react";
-import useFile from "../../file-upload/core/action";
-import useCategory from "../../category/core/action";
+import { useEffect, useState } from "react";
 import useTopic from "../core/action";
 
 const Edit = () => {
-  const { fetchCategory, category } = useCategory();
   const { id } = useParams();
-  const { file, fetchFiles } = useFile();
-  const { fetchTopicById, topicDetails, onChangeEdit, onUpdateTopic } = useTopic();
+  const { fetchTopicById, topicDetails, handleChangeEdit, onUpdateTopic } =
+    useTopic();
+  const [payload, setPayload] = useState({
+    name: "",
+  });
 
   useEffect(() => {
-    fetchFiles(20000, 1);
-    fetchCategory(20000, 1);
     fetchTopicById(id);
-  }, [id]);
+  }, [id]); // eslint-disable-line
 
-  let { name, fileMediaId, categoryId } = topicDetails;
+  useEffect(() => {
+    if (topicDetails) {
+      setPayload(topicDetails);
+    }
+  }, [topicDetails]); // eslint-disable-line
 
-  // console.log(topicDetails);
+  let { name } = payload;
+
+  // console.log(payload);
 
   return (
     <div className="d-flex gap-0 flex-column align-items-baseline">
@@ -33,7 +37,7 @@ const Edit = () => {
         style={{ background: "#212225" }}
       >
         <form
-          onSubmit={(e) => onUpdateTopic(e)}
+          onSubmit={(e) => onUpdateTopic(e, payload)}
           className="form-control border-0 bg-transparent text-light"
         >
           <div className="mb-3">
@@ -46,61 +50,9 @@ const Edit = () => {
               id="name"
               name="name"
               value={name}
-              onChange={onChangeEdit}
+              onChange={(e) => handleChangeEdit(e, payload, setPayload)}
               required
             />
-          </div>
-
-          <div className="mb-3">
-            <label
-              htmlFor="categoryId"
-              className="form-label text-light text-start"
-            >
-              Category Id <span className="text-danger">*</span>
-            </label>
-            <select
-              className="form-select bg-dark text-light border-0"
-              id="categoryId"
-              name="categoryId"
-              required
-              value={categoryId}
-              onChange={onChangeEdit}
-            >
-              <option value="" selected disabled>
-                Select Category <span className="text-danger">*</span>
-              </option>
-              {category?.map((cat) => (
-                <option key={cat?.id} value={cat?.id}>
-                  {cat?.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="mb-3">
-            <label
-              htmlFor="fileMediaId"
-              className="form-label text-light text-start"
-            >
-              File Media <span className="text-danger">*</span>
-            </label>
-            <select
-              className="form-select bg-dark text-light border-0"
-              id="fileMediaId"
-              name="fileMediaId"
-              required
-              value={fileMediaId}
-              onChange={onChangeEdit}
-            >
-              <option value="" selected disabled>
-                Select Media Id <span className="text-danger">*</span>
-              </option>
-              {file?.map((fi) => (
-                <option key={fi?.id} value={fi?.id}>
-                  {fi?.fileName}
-                </option>
-              ))}
-            </select>
           </div>
 
           <div className="mt-3 d-flex align-items-center justify-content-center gap-2">
