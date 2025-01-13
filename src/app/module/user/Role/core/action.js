@@ -177,6 +177,7 @@ const useRole = () => {
     fetchRole,
     onCreateRole,
     onChangeAdd,
+    onResetAdd,
     navigate,
     onDeleteRole,
     fetchRoleById,
