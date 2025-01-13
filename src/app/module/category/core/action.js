@@ -259,7 +259,7 @@ const useCategory = () => {
           text: "Category has been successfully edited!",
         });
 
-        fetchCategoryById(payload.id);
+        navigate("/category");
       } catch (err) {
         Swal.fire({
           icon: "error",
