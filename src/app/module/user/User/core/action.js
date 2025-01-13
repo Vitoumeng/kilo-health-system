@@ -230,7 +230,7 @@ const useUser = () => {
             title: "Edit User",
             text: "User has been successfully edited!",
           });
-          fetchUserById(payload.id);
+          navigate("/user")
         })
         .catch((err) => {
           Swal.fire({
