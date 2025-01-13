@@ -204,13 +204,6 @@ const usePost = () => {
     e.preventDefault();
 
     if (!payload.file) {
-      Swal.fire({
-        icon: "error",
-        background: "#222525",
-        color: "#fff",
-        title: "Oops...",
-        text: "Please upload a file.",
-      });
       return reqUpdatePost(payload.id, payload)
         .then(() => {
           Swal.fire({
