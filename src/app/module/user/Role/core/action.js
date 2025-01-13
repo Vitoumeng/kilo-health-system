@@ -148,10 +148,10 @@ const useRole = () => {
           icon: "success",
           background: "#222525",
           color: "#fff",
-          title: "Permission has been successfully udated!",
+          title: "Permission has been successfully updated!",
           confirmButtonText: "OK",
         });
-        fetchPermission({ roleId: roles.id });
+        navigate("/role");
       })
       .catch((err) => {
         Swal.fire({
@@ -177,6 +177,7 @@ const useRole = () => {
     fetchRole,
     onCreateRole,
     onChangeAdd,
+    onResetAdd,
     navigate,
     onDeleteRole,
     fetchRoleById,

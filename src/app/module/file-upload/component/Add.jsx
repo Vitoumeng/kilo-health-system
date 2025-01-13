@@ -109,7 +109,12 @@ const Add = () => {
           <div className="mt-3 d-flex justify-content-center">
             <button
               type="button"
-              // onClick={handleDiscard}
+              onClick={() => {
+                fileInputRef.current.value = "";
+                setFiles({});
+                setError(null);
+                setPreview(null);
+              }}
               className="btn btn-secondary me-2"
             >
               Discard

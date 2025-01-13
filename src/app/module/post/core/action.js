@@ -204,25 +204,32 @@ const usePost = () => {
     e.preventDefault();
 
     if (!payload.file) {
-      Swal.fire({
-        icon: "error",
-        background: "#222525",
-        color: "#fff",
-        title: "Oops...",
-        text: "Please upload a file.",
-      });
+      if (payload === post.postDetails) {
+        Swal.fire({
+          icon: "info",
+          background: "#222525",
+          color: "#fff",
+          title: "No Changes Detected",
+          text: "The post details remain unchanged.",
+        });
+        return;
+      }
       return reqUpdatePost(payload.id, payload)
         .then(() => {
           Swal.fire({
             icon: "success",
             title: "Edit Post",
+            background: "#222525",
+            color: "#fff",
             text: "Post has been successfully edited!",
           });
-          fetchPostById(payload.id);
+          navigate("/post");
         })
         .catch((err) => {
           Swal.fire({
             icon: "error",
+            background: "#222525",
+            color: "#fff",
             title: "Oops...",
             text: "Error Editing Post",
           });

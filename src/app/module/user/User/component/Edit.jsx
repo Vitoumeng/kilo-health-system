@@ -41,17 +41,7 @@ const Edit = () => {
     }
   }, [userDetails]); // eslint-disable
 
-  let {
-    firstname,
-    lastname,
-    gender,
-    dob,
-    role,
-    address,
-    email,
-    phone,
-    fileMedia,
-  } = payload;
+  let { firstname, lastname, gender, dob, role, fileMedia } = payload;
 
   // console.log(payload);
 
@@ -160,54 +150,6 @@ const Edit = () => {
 
           <div className="mb-3">
             <label
-              htmlFor="address"
-              className="form-label text-light text-start"
-            >
-              Address <span className="text-danger">*</span>
-            </label>
-            <input
-              type="text"
-              className="form-control bg-dark text-light border-0"
-              id="address"
-              name="address"
-              value={address}
-              onChange={(e) => handleChangeEdit(e, payload, setPayload)}
-              required
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label text-light text-start">
-              Email <span className="text-danger">*</span>
-            </label>
-            <input
-              type="email"
-              className="form-control bg-dark text-light border-0"
-              id="email"
-              name="email"
-              value={email}
-              onChange={(e) => handleChangeEdit(e, payload, setPayload)}
-              required
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="phone" className="form-label text-light text-start">
-              Phone Number <span className="text-danger">*</span>
-            </label>
-            <input
-              type="number"
-              className="form-control bg-dark text-light border-0"
-              id="phone"
-              name="phone"
-              value={phone}
-              onChange={(e) => handleChangeEdit(e, payload, setPayload)}
-              required
-            />
-          </div>
-
-          <div className="mb-3">
-            <label
               htmlFor="roleId"
               className="form-label text-light text-start"
             >
@@ -269,7 +211,7 @@ const Edit = () => {
           )}
 
           <div className="mb-3">
-            <label className="form-label text-start">Preview</label>
+            <label className="form-label text-start">User Image</label>
             <div
               style={{
                 width: "90px",
@@ -317,7 +259,11 @@ const Edit = () => {
           <div className="mt-3 d-flex align-items-center justify-content-center gap-2">
             <button
               type="button"
-              onClick={() => fetchUserById(id)}
+              onClick={() => {
+                fetchUserById(id);
+                setPreview(fileMedia?.fileUrl);
+                setEdit(null);
+              }}
               className="btn btn-outline-light me-2"
             >
               Discard
