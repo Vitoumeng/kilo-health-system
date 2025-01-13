@@ -4,12 +4,12 @@ This project is a web-based system designed for managing various content types, 
 
 ## Features
 - **Dashboard**: Displays an overview of content statistics, such as the number of users, categories, posts, and topics.
-- **File Management**: Users can view, upload, and delete files.
-- **Category Management**: Users can view, add, edit, and delete categories.
-- **Post Management**: Users can view, add, edit, and delete posts.
-- **Topic Management**: Users can view, add, edit, and delete topics.
-- **User Management**: Users can view, add, edit, and delete other users.
-- **Role Management**: Users can view, add, and edit role permissions.
+- **File**: Users can view, upload, and delete files.
+- **Category**: Users can view, add, edit, and delete categories.
+- **Post**: Users can view, add, edit, and delete posts.
+- **Topic**: Users can view, add, edit, and delete topics.
+- **User**: Users can view, add, edit, and delete other users.
+- **Role**: Users can view, add, and edit role permissions.
 - **Permissions**: Users need to have specific permissions to access and manage different modules.
 
 ## Getting Started
@@ -24,6 +24,11 @@ git clone https://github.com/Vitoumeng/kilo-health-system.git
 Use the following credentials to log in as an administrator:
 - **Email**: `superadmin168@gmail.com`
 - **Password**: `aDm1n#25`
+
+### Login as viewer
+Use the following credentials to log in as an viewer:
+- **Email**: `viewer168@gmail.com`
+- **Password**: `v1W3r#25`
 
 ## Installation and Setup
 1. Navigate to the project directory:
