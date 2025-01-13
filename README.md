@@ -10,6 +10,7 @@ This project is a web-based system designed for managing various content types, 
 - **Topic Management**: Users can view, add, edit, and delete topics.
 - **User Management**: Users can view, add, edit, and delete other users.
 - **Role Management**: Users can view, add, and edit role permissions.
+- **Permissions**: Users need to have specific permissions to access and manage different modules.
 
 ## Getting Started
 
