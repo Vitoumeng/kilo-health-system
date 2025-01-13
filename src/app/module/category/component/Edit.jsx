@@ -151,7 +151,7 @@ const Edit = () => {
             <button
               type="button"
               onClick={() => {
-                setPayload(categoryDetails);
+                fetchCategoryById(id);
                 setPreview(fileMedia?.fileUrl);
                 setEdit(null);
               }}
