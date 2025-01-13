@@ -130,7 +130,12 @@ const Add = () => {
           <div className="mt-3 d-flex align-items-center justify-content-center gap-2">
             <button
               type="button"
-              //   onClick={() => fetchUserById(id)}
+              onClick={() => {
+                setPayload({ name: "", file: "" });
+                fileInputRef.current.value = "";
+                setPreview(null);
+                setError("");
+              }}
               className="btn btn-outline-light me-2"
             >
               Discard

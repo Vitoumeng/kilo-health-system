@@ -102,7 +102,7 @@ const Edit = () => {
           )}
 
           <div className="mb-3">
-            <label className="form-label text-start">Preview</label>
+            <label className="form-label text-start">Category Image</label>
             <div
               style={{
                 width: "90px",
@@ -150,7 +150,11 @@ const Edit = () => {
           <div className="mt-3 d-flex align-items-center justify-content-center gap-2">
             <button
               type="button"
-              onClick={() => fetchUserById(id)}
+              onClick={() => {
+                setPayload(categoryDetails);
+                setPreview(fileMedia?.fileUrl);
+                setEdit(null);
+              }}
               className="btn btn-outline-light me-2"
             >
               Discard
