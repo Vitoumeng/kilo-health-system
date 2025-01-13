@@ -197,13 +197,16 @@ const useCategory = () => {
     e.preventDefault();
 
     if (!payload.file) {
-      Swal.fire({
-        icon: "error",
-        background: "#222525",
-        color: "#fff",
-        title: "Oops...",
-        text: "Please upload a file.",
-      });
+      if (payload === category.categoryDetails) {
+        Swal.fire({
+          icon: "info",
+          background: "#222525",
+          color: "#fff",
+          title: "No Changes Detected",
+          text: "The category details remain unchanged.",
+        });
+        return;
+      }
       return reqUpdateCategory(payload.id, payload)
         .then(() => {
           Swal.fire({
@@ -213,7 +216,7 @@ const useCategory = () => {
             title: "Edit Category",
             text: "Category has been successfully edited!",
           });
-          fetchCategoryById(payload.id);
+          navigate("/category");
         })
         .catch((err) => {
           Swal.fire({
