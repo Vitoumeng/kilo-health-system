@@ -255,7 +255,17 @@ const Add = () => {
           <div className="mt-3 d-flex align-items-center justify-content-center gap-2">
             <button
               type="button"
-              //   onClick={() => fetchUserById(id)}
+              onClick={() => {
+                setPayload({
+                  title: "",
+                  subTitle: "",
+                  description: "",
+                  status: false,
+                  topic_id: null,
+                });
+                setPreview(null);
+                fileInputRef.current.value = "";
+              }}
               className="btn btn-outline-light me-2"
             >
               Discard
