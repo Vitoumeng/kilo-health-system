@@ -16,6 +16,7 @@ const Add = () => {
     address: "",
     gender: "",
     dob: "",
+    roleId: null,
   });
   const fileInputRef = useRef();
   const [error, setError] = useState("");
@@ -31,6 +32,7 @@ const Add = () => {
     address,
     gender,
     dob,
+    roleId
   } = payload;
 
   // console.log(payload);
@@ -232,7 +234,7 @@ const Add = () => {
               id="roleId"
               name="roleId"
               required
-              value={roles?.id}
+              value={roleId}
               onChange={(e) => handleChangeAdd(e, payload, setPayload)}
             >
               <option value="" selected disabled>
@@ -330,7 +332,22 @@ const Add = () => {
           <div className="mt-3 d-flex align-items-center justify-content-center gap-2">
             <button
               type="button"
-              //   onClick={() => fetchUserById(id)}
+              onClick={() => {
+                setPayload({
+                  firstname: "",
+                  lastname: "",
+                  username: "",
+                  email: "",
+                  password: "",
+                  phone: "",
+                  address: "",
+                  gender: "",
+                  dob: "",
+                  roleId: null,
+                });
+                setPreview(null);
+                fileInputRef.current.value = "";
+              }}
               className="btn btn-outline-light me-2"
             >
               Discard
