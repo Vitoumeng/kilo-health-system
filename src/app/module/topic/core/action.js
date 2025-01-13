@@ -171,6 +171,16 @@ const useTopic = () => {
   const onUpdateTopic = async (e, payload) => {
     e.preventDefault();
 
+    if (payload === topic.topicDetails) {
+      Swal.fire({
+        icon: "info",
+        background: "#222525",
+        color: "#fff",
+        title: "No Changes Detected",
+        text: "The topic details remain unchanged.",
+      });
+      return;
+    }
     return reqUpdateTopic(payload.id, payload)
       .then(() => {
         Swal.fire({
@@ -180,7 +190,7 @@ const useTopic = () => {
           color: "#fff",
           text: "Topic has been successfully edited!",
         });
-        fetchTopicById(payload.id);
+        navigate("/topic");
       })
       .catch((err) => {
         Swal.fire({
