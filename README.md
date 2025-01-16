@@ -42,7 +42,7 @@ Use the following credentials to log in as an administrator:
 
 ## Technologies Used
 - **Frontend**: HTML, Javascript, React.js
-- **Styling**:  Bootstrap
+- **Styling**: CSS, Bootstrap
 - **Other**: moment, axios, lodash, sweetalert2, react-icon
 
 ## Contributing
