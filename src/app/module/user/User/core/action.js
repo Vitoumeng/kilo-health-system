@@ -230,7 +230,7 @@ const useUser = () => {
             title: "Edit User",
             text: "User has been successfully edited!",
           });
-          navigate("/user")
+          navigate("/user");
         })
         .catch((err) => {
           Swal.fire({
@@ -269,7 +269,7 @@ const useUser = () => {
           color: "#fff",
           text: "Edit has been successfully edited!",
         });
-        fetchUserById(payload.id);
+        navigate("/user");
       } catch (err) {
         Swal.fire({
           icon: "error",
