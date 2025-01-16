@@ -20,15 +20,11 @@ Run the following command in your terminal to clone the repository:
 git clone https://github.com/Vitoumeng/kilo-health-system.git
 ```
 
-### Login as Administrator
+### Login
 Use the following credentials to log in as an administrator:
 - **Email**: `superadmin168@gmail.com`
 - **Password**: `aDm1n#25`
 
-### Login as viewer
-Use the following credentials to log in as an viewer:
-- **Email**: `viewer168@gmail.com`
-- **Password**: `v1W3r#25`
 
 ## Installation and Setup
 1. Navigate to the project directory:
@@ -45,9 +41,9 @@ Use the following credentials to log in as an viewer:
    ```
 
 ## Technologies Used
-- **Frontend**: React.js
-- **Styling**: Bootstrap *(mention styling tools used)*
-- **Other**: moment, axios, lodash, sweetalert2
+- **Frontend**: HTML, Javascript, React.js
+- **Styling**:  Bootstrap
+- **Other**: moment, axios, lodash, sweetalert2, react-icon
 
 ## Contributing
 Contributions are welcome! If you have suggestions or want to report a bug, please feel free to open an issue or create a pull request.
