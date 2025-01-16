@@ -14,8 +14,7 @@ const File = () => {
 
   const onChangeSearch = (e) => fetchFiles(20, 1, e.target.value);
 
-  console.log(file);
-  
+  // console.log(file);
 
   return (
     <div className="d-flex gap-0 flex-column">
