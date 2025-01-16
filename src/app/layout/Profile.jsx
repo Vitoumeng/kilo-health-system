@@ -21,6 +21,8 @@ const Profile = ({ show, toggleProfile }) => {
     username,
   } = profile;
 
+  // console.log(profile);
+
   return (
     <div
       className="position-fixed d-flex justify-content-center align-items-center"
@@ -70,7 +72,7 @@ const Profile = ({ show, toggleProfile }) => {
             <div className="row mb-3">
               <div className="col-md-4 text-center">
                 <img
-                  src={avatar || "https://via.placeholder.com/150"}
+                  src={avatar || "/user.png"}
                   alt="User Avatar"
                   className="img-thumbnail rounded-circle border border-secondary"
                   style={{
